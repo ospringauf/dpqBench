@@ -60,34 +60,6 @@ namespace Paguru.DpBench.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap _105 {
-            get {
-                object obj = ResourceManager.GetObject("_105", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap _155 {
-            get {
-                object obj = ResourceManager.GetObject("_155", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap _168 {
-            get {
-                object obj = ResourceManager.GetObject("_168", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap _96 {
-            get {
-                object obj = ResourceManager.GetObject("_96", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap arrow_down_16x16 {
             get {
                 object obj = ResourceManager.GetObject("arrow_down_16x16", resourceCulture);
@@ -154,6 +126,34 @@ namespace Paguru.DpBench.Properties {
         internal static System.Drawing.Bitmap check_alt_24x24 {
             get {
                 object obj = ResourceManager.GetObject("check_alt_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap plus_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("plus_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap plus_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("plus_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap plus_alt_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("plus_alt_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap plus_alt_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("plus_alt_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -21,7 +21,8 @@ namespace Paguru.DpBench.Model
     using System.Xml.Serialization;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// A detail area (crop rectangle) for the photos of a project. Consists of a name (eg. "center")
+    /// and the selected rectangle in image coordinates.
     /// </summary>
     public class DetailArea : INotifyPropertyChanged
     {

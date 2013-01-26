@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------------------------
-// DpBench - GroupLevelControl.cs
+// DpBench - GroupFilterControl.cs
 // http://sourceforge.net/projects/dpbench/
 // -----------------------------------------------------------------------------------------
 // Copyright 2013 Oliver Springauf
@@ -22,25 +22,25 @@ namespace Paguru.DpBench.Controls
 
     using Paguru.DpBench.Model;
 
-    public partial class GroupLevelControl : UserControl
+    public partial class GroupFilterControl : UserControl
     {
         #region Constructors and Destructors
 
-        public GroupLevelControl()
+        public GroupFilterControl()
         {
             InitializeComponent();
         }
 
-        public GroupLevelControl(GroupLevel groupLevel)
+        public GroupFilterControl(GroupFilter groupFilter)
         {
             InitializeComponent();
 
-            GroupLevel = groupLevel;
-            comboBoxParameter.DataSource = groupLevel.Parameters;
+            GroupFilter = groupFilter;
+            comboBoxParameter.DataSource = groupFilter.Parameters;
 
-            // comboBoxParameter.DataBindings.Add("Text", groupLevel, "Parameter");
-            GroupLevel.PropertyChanged += GlPropertyChanged;
-            GroupLevel.SelectedParameterValues.PropertyChanged += SelectedParameterValuesChanged;
+            // comboBoxParameter.DataBindings.Add("Text", GroupFilter, "Parameter");
+            GroupFilter.PropertyChanged += GlPropertyChanged;
+            GroupFilter.ParameterValues.PropertyChanged += SelectedParameterValuesChanged;
             comboBoxParameter.TextChanged += ParameterChanged;
             ParameterChanged(null, null);
         }
@@ -49,7 +49,7 @@ namespace Paguru.DpBench.Controls
 
         #region Public Properties
 
-        public GroupLevel GroupLevel { get; set; }
+        public GroupFilter GroupFilter { get; set; }
 
         #endregion
 
@@ -60,20 +60,20 @@ namespace Paguru.DpBench.Controls
             if (e.PropertyName == "Parameter")
             {
                 // parameter changed --> update values list
-                listOrderControl1.Values = GroupLevel.SelectedParameterValues;
+                listOrderControl1.Values = GroupFilter.ParameterValues;
             }
         }
 
         private void ParameterChanged(object sender, EventArgs e)
         {
-            GroupLevel.Parameter = comboBoxParameter.Text;
+            GroupFilter.Parameter = comboBoxParameter.Text;
         }
 
         private void SelectedParameterValuesChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Count")
             {
-                listOrderControl1.Values = GroupLevel.SelectedParameterValues;
+                listOrderControl1.Values = GroupFilter.ParameterValues;
             }
         }
 

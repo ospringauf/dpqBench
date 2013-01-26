@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------------------------
-// DpBench - GroupLevelsEditor.cs
+// DpBench - GroupFilterEditor.cs
 // http://sourceforge.net/projects/dpbench/
 // -----------------------------------------------------------------------------------------
 // Copyright 2013 Oliver Springauf
@@ -21,16 +21,17 @@ namespace Paguru.DpBench
 
     using Paguru.DpBench.Controls;
     using Paguru.DpBench.Model;
+    using Paguru.DpBench.Renderer;
 
-    public partial class GroupLevelsEditor : Form
+    public partial class GroupFilterEditor : Form
     {
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GroupLevelsEditor"/> class.
+        /// Initializes a new instance of the <see cref="GroupFilterEditor"/> class.
         /// </summary>
         /// <param name="root">The root.</param>
-        public GroupLevelsEditor(GroupLevel root)
+        public GroupFilterEditor(GroupFilter root)
         {
             InitializeComponent();
 
@@ -46,15 +47,15 @@ namespace Paguru.DpBench
 
         #region Public Properties
 
-        public GroupLevel Root { get; set; }
+        public GroupFilter Root { get; set; }
 
         #endregion
 
         #region Methods
 
-        private GroupLevelControl AddGroupLevelControl(GroupLevel root)
+        private GroupFilterControl AddGroupLevelControl(GroupFilter root)
         {
-            var glc = new GroupLevelControl(root);
+            var glc = new GroupFilterControl(root);
 
             glc.Height = tableLayoutPanel1.Height;
             glc.Width = 150;
@@ -65,7 +66,7 @@ namespace Paguru.DpBench
 
         private void AdjustGroupLevelControlSizes(object sender, EventArgs e)
         {
-            foreach (GroupLevelControl groupLevelControl in tableLayoutPanel1.Controls)
+            foreach (GroupFilterControl groupLevelControl in tableLayoutPanel1.Controls)
             {
                 groupLevelControl.Height = tableLayoutPanel1.Height;
             }
@@ -73,24 +74,33 @@ namespace Paguru.DpBench
 
         private void RemoveGroupControl(object sender, EventArgs e)
         {
-            var c = ((Control)sender).Parent as GroupLevelControl;
+            var c = ((Control)sender).Parent as GroupFilterControl;
             tableLayoutPanel1.Controls.Remove(c);
 
             // connect previous to next
-            var p = c.GroupLevel.PrevGroupLevel;
-            var n = c.GroupLevel.NextGroupLevel;
-            p.NextGroupLevel = n;
-            if (n != null)
-            {
-                n.PrevGroupLevel = p;
-            }
-        }
-
-        private void buttonAdd_Click(object sender, EventArgs e)
-        {
-            AddGroupLevelControl(Root.Last.BuildNextLevel());
+            c.GroupFilter.Remove();
+            //var p = c.GroupFilter.PrevGroupFilter;
+            //var n = c.GroupFilter.NextGroupFilter;
+            //p.NextGroupFilter = n;
+            //if (n != null)
+            //{
+            //    n.PrevGroupFilter = p;
+            //}
         }
 
         #endregion
+
+        private void buttonTest_Click(object sender, EventArgs e)
+        {
+            var r = new TextMosaicRenderer();
+            var x = r.Render(Root);
+
+            Console.Out.WriteLine(x);
+        }
+
+        private void buttonAddFilter_Click(object sender, EventArgs e)
+        {
+            AddGroupLevelControl(Root.Last.BuildNextLevel());
+        }
     }
 }

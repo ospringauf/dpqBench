@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------------------------
-// DpBench - GroupLevel.cs
+// DpBench - GroupFilter.cs
 // http://sourceforge.net/projects/dpbench/
 // -----------------------------------------------------------------------------------------
 // Copyright 2013 Oliver Springauf
@@ -23,7 +23,7 @@ namespace Paguru.DpBench.Model
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class GroupLevel : INotifyPropertyChanged
+    public class GroupFilter : INotifyPropertyChanged
     {
         // private static int seq = 0;
         #region Constants and Fields
@@ -38,14 +38,14 @@ namespace Paguru.DpBench.Model
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GroupLevel"/> class.
+        /// Initializes a new instance of the <see cref="GroupFilter"/> class.
         /// </summary>
         /// <param name="basis">The basis.</param>
-        public GroupLevel(PhotoDetailCollection basis)
+        public GroupFilter(PhotoDetailCollection basis)
         {
             Input = basis;
-            SelectedParameterValues = new SelectableValueList();
-            SelectedParameterValues.PropertyChanged += SelectedParametersChanged;
+            ParameterValues = new SelectableValueList<string>();
+            ParameterValues.PropertyChanged += SelectedParametersChanged;
         }
 
         #endregion
@@ -70,7 +70,7 @@ namespace Paguru.DpBench.Model
                 if (Parameter != null)
                 {
                     // merge values list
-                    SelectedParameterValues.Update(Input.FindAllValues(Parameter).ConvertAll(s => (object)s));
+                    ParameterValues.Update(Input.FindAllValues(Parameter)); //.ConvertAll(s => (object)s));
 
                     Propagate();
                 }
@@ -81,15 +81,23 @@ namespace Paguru.DpBench.Model
         /// <summary>
         /// Gets the last group level in the chain
         /// </summary>
-        public GroupLevel Last
+        public GroupFilter Last
         {
             get
             {
-                return NextGroupLevel != null ? NextGroupLevel.Last : this;
+                return NextGroupFilter != null ? NextGroupFilter.Last : this;
             }
         }
 
-        public GroupLevel NextGroupLevel { get; set; }
+        public bool IsLast
+        {
+            get
+            {
+                return this == Last;
+            }
+        }
+
+        public GroupFilter NextGroupFilter { get; set; }
 
         public PhotoDetailCollection Output
         {
@@ -98,7 +106,7 @@ namespace Paguru.DpBench.Model
                 // all matching images (having one of the selected values for the parameter)
                 return
                     new PhotoDetailCollection(
-                        Input.Where(pd => (Parameter == null) || SelectedParameterValues[pd.Parameters[Parameter]]));
+                        Input.Where(pd => (Parameter == null) || ParameterValues[pd.Parameters[Parameter]]));
 
                 // var n = new PhotoDetailCollection();
                 // foreach (var pd in Input)
@@ -106,7 +114,7 @@ namespace Paguru.DpBench.Model
                 // if (Parameter != null)
                 // {
                 // var pv = pd.Parameters[Parameter];
-                // if (SelectedParameterValues[pv])
+                // if (ParameterValues[pv])
                 // {
                 // n.Add(pd);
                 // }
@@ -116,6 +124,9 @@ namespace Paguru.DpBench.Model
             }
         }
 
+        /// <summary>
+        /// Gets or sets the name for the discriminating parameter for this level (eg. "Lens").
+        /// </summary>
         public string Parameter
         {
             get
@@ -125,15 +136,16 @@ namespace Paguru.DpBench.Model
             set
             {
                 parameter = value;
-                SelectedParameterValues.Clear();
+                ParameterValues.Clear();
                 if (value != null)
                 {
                     // build list of parameter values to choose from
                     // TODO if selected parameters exists, merge them with the new list
-                    foreach (var pv in Input.FindAllValues(value))
-                    {
-                        SelectedParameterValues.Add(new SelectableValue(pv));
-                    }
+                    ParameterValues.Update(Input.FindAllValues(parameter), true);
+                    //foreach (var pv in Input.FindAllValues(value))
+                    //{
+                    //    ParameterValues.Add(new SelectableValue(pv));
+                    //}
                 }
                 Propagate();
                 NotifyPropertyChanged("Parameter");
@@ -153,26 +165,52 @@ namespace Paguru.DpBench.Model
             }
         }
 
-        public GroupLevel PrevGroupLevel { get; set; }
+        public GroupFilter PrevGroupFilter { get; set; }
 
         /// <summary>
         /// Gets or sets the distinct values of <see cref="Parameter"/> in the <see cref="Input"/>
         /// </summary>
-        /// <value>
-        /// The selected parameter values.
-        /// </value>
-        public SelectableValueList SelectedParameterValues { get; set; }
+        public SelectableValueList<string> ParameterValues { get; set; }
 
         #endregion
 
         #region Public Methods
 
-        public GroupLevel BuildNextLevel()
+        public GroupFilter BuildNextLevel()
         {
             // add all matching images (having one of the selected values for the parameter)
-            var n = new GroupLevel(Output) { PrevGroupLevel = this };
-            NextGroupLevel = n;
+            var n = new GroupFilter(Output) { PrevGroupFilter = this };
+            NextGroupFilter = n;
             return n;
+        }
+
+        /// <summary>
+        /// Filters the details collection by the specified value.
+        /// </summary>
+        /// <param name="value">a parameter value (eg. "2.8" for parameter "Aperture").</param>
+        /// <param name="fromDetails">the input set of photo details</param>
+        /// <returns>the matching photo details</returns>
+        public PhotoDetailCollection Filter(string value, PhotoDetailCollection fromDetails = null)
+        {
+            fromDetails = fromDetails ?? Input;
+            return
+                    new PhotoDetailCollection(
+                        fromDetails.Where(pd => pd.Parameters[Parameter] == value));
+        }
+
+        /// <summary>
+        /// Removes this instance from the filter chain.
+        /// </summary>
+        public void Remove()
+        {
+            var p = PrevGroupFilter;
+            var n = NextGroupFilter;
+            p.NextGroupFilter = n;
+            if (n != null)
+            {
+                n.PrevGroupFilter = p;
+            }
+            p.Propagate();
         }
 
         #endregion
@@ -189,9 +227,9 @@ namespace Paguru.DpBench.Model
 
         private void Propagate()
         {
-            if (NextGroupLevel != null)
+            if (NextGroupFilter != null)
             {
-                NextGroupLevel.Input = Output;
+                NextGroupFilter.Input = Output;
             }
         }
 
