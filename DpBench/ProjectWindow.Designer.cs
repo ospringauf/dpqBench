@@ -35,6 +35,7 @@
             this.olvColumnLens = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumnAperture = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumnExposure = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumnFocalLength = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumnIso = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumnKeywords = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.contextMenuPhoto = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -43,7 +44,6 @@
             this.addFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupLevelEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.olvColumnFocalLength = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
             this.contextMenuPhoto.SuspendLayout();
             this.contextMenuStripProject.SuspendLayout();
@@ -59,6 +59,7 @@
             this.objectListView1.AllColumns.Add(this.olvColumnFocalLength);
             this.objectListView1.AllColumns.Add(this.olvColumnIso);
             this.objectListView1.AllColumns.Add(this.olvColumnKeywords);
+            this.objectListView1.AllowDrop = true;
             this.objectListView1.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.SingleClick;
             this.objectListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumnFilename,
@@ -103,7 +104,6 @@
             // 
             this.olvColumnLens.AspectName = "Lens";
             this.olvColumnLens.CellPadding = null;
-            this.olvColumnLens.DisplayIndex = 3;
             this.olvColumnLens.MinimumWidth = 10;
             this.olvColumnLens.Text = "Lens";
             // 
@@ -111,7 +111,6 @@
             // 
             this.olvColumnAperture.AspectName = "Aperture";
             this.olvColumnAperture.CellPadding = null;
-            this.olvColumnAperture.DisplayIndex = 2;
             this.olvColumnAperture.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.olvColumnAperture.MinimumWidth = 10;
             this.olvColumnAperture.Text = "Aperture";
@@ -121,17 +120,23 @@
             // 
             this.olvColumnExposure.AspectName = "Exposure";
             this.olvColumnExposure.CellPadding = null;
-            this.olvColumnExposure.DisplayIndex = 5;
             this.olvColumnExposure.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.olvColumnExposure.MinimumWidth = 10;
             this.olvColumnExposure.Text = "Exposure";
             this.olvColumnExposure.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // olvColumnFocalLength
+            // 
+            this.olvColumnFocalLength.AspectName = "FocalLength";
+            this.olvColumnFocalLength.CellPadding = null;
+            this.olvColumnFocalLength.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.olvColumnFocalLength.Text = "FocalLength";
+            this.olvColumnFocalLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // olvColumnIso
             // 
             this.olvColumnIso.AspectName = "Iso";
             this.olvColumnIso.CellPadding = null;
-            this.olvColumnIso.DisplayIndex = 4;
             this.olvColumnIso.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.olvColumnIso.MinimumWidth = 10;
             this.olvColumnIso.Text = "ISO";
@@ -141,7 +146,6 @@
             // 
             this.olvColumnKeywords.AspectName = "Keywords";
             this.olvColumnKeywords.CellPadding = null;
-            this.olvColumnKeywords.DisplayIndex = 6;
             this.olvColumnKeywords.MinimumWidth = 10;
             this.olvColumnKeywords.Text = "Keywords";
             // 
@@ -189,17 +193,9 @@
             this.groupLevelEditorToolStripMenuItem.Text = "Group Level Editor";
             this.groupLevelEditorToolStripMenuItem.Click += new System.EventHandler(this.groupLevelEditorToolStripMenuItem_Click);
             // 
-            // olvColumnFocalLength
-            // 
-            this.olvColumnFocalLength.AspectName = "FocalLength";
-            this.olvColumnFocalLength.CellPadding = null;
-            this.olvColumnFocalLength.DisplayIndex = 7;
-            this.olvColumnFocalLength.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.olvColumnFocalLength.Text = "FocalLength";
-            this.olvColumnFocalLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // ProjectWindow
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 412);
@@ -208,6 +204,9 @@
             this.Name = "ProjectWindow";
             this.TabPageContextMenuStrip = this.contextMenuStripProject;
             this.Text = "ProjectWindow";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ProjectWindow_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ProjectWindow_DragDrop);
+            this.DragOver += new System.Windows.Forms.DragEventHandler(this.ProjectWindow_DragDrop);
             ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
             this.contextMenuPhoto.ResumeLayout(false);
             this.contextMenuStripProject.ResumeLayout(false);

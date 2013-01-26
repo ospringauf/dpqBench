@@ -21,13 +21,26 @@ namespace Paguru.DpBench
     using Paguru.DpBench.Model;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Event triggered by the project window when a photo is selected.
+    /// <see cref="PhotoPropertyWindow"/> and <see cref="DetailEditor"/> are listening and updating themselves.
     /// </summary>
     public class PhotoSelectedEvent : EventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PhotoSelectedEvent"/> class.
+        /// </summary>
+        /// <param name="p">The p.</param>
+        public PhotoSelectedEvent(Photo p)
+        {
+            Photo = p;
+        }
+
         #region Public Properties
 
-        public Photo Photo { get; set; }
+        /// <summary>
+        /// Gets the currently selected photo.
+        /// </summary>
+        public Photo Photo { get; private set; }
 
         #endregion
     }

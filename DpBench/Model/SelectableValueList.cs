@@ -23,7 +23,7 @@ namespace Paguru.DpBench.Model
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class SelectableValueList : List<SelectableValue>, INotifyPropertyChanged
+    public class SelectableValueList<T> : List<SelectableValue>, INotifyPropertyChanged where T : class 
     {
         #region Public Events
 
@@ -33,11 +33,12 @@ namespace Paguru.DpBench.Model
 
         #region Public Properties
 
-        public List<object> SelectedValues
+        public List<T> SelectedValues
         {
             get
             {
-                return this.Where(v => v.Selected).Cast<object>().ToList();
+                // return this.Where(v => v.Selected).Cast<object>().ToList();
+                return (from x in this where x.Selected select x.Value).Cast<T>().ToList();
             }
         }
 
@@ -72,6 +73,11 @@ namespace Paguru.DpBench.Model
 
         #region Public Methods
 
+        private bool ContainsValue(T value)
+        {
+            return Find(x => Equals(x.Value, value)) != null;
+        }
+
         public void Add(SelectableValue v)
         {
             if (!Contains(v))
@@ -86,12 +92,12 @@ namespace Paguru.DpBench.Model
         /// Updates the values list to the specified new domain, keeping the existing selection
         /// </summary>
         /// <param name="newDomain">The new domain.</param>
-        public void Update(List<object> newDomain)
+        public void Update(List<T> newDomain, bool selected = false)
         {
             // add
             foreach (var x in newDomain)
             {
-                this[x] = this[x];
+                this[x] = ContainsValue(x) ? this[x] : selected;
             }
 
             // remove

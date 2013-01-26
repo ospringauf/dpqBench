@@ -1,6 +1,6 @@
 ﻿namespace Paguru.DpBench.Controls
 {
-    partial class GroupLevelControl
+    partial class GroupFilterControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.comboBoxParameter = new System.Windows.Forms.ComboBox();
             this.buttonClose = new System.Windows.Forms.Label();
-            this.listOrderControl1 = new ListOrderControl();
+            this.listOrderControl1 = new Paguru.DpBench.Controls.ListOrderControl();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // comboBoxParameter
@@ -58,6 +60,7 @@
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(24, 24);
             this.buttonClose.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.buttonClose, "delete group/filter");
             // 
             // listOrderControl1
             // 
@@ -70,14 +73,14 @@
             this.listOrderControl1.TabIndex = 0;
             this.listOrderControl1.Values = null;
             // 
-            // GroupLevelControl
+            // GroupFilterControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.comboBoxParameter);
             this.Controls.Add(this.listOrderControl1);
-            this.Name = "GroupLevelControl";
+            this.Name = "GroupFilterControl";
             this.Size = new System.Drawing.Size(212, 346);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -89,6 +92,7 @@
         public ListOrderControl listOrderControl1;
         public System.Windows.Forms.ComboBox comboBoxParameter;
         public System.Windows.Forms.Label buttonClose;
+        private System.Windows.Forms.ToolTip toolTip1;
 
     }
 }

@@ -79,7 +79,7 @@ namespace Paguru.DpBench
         {
             if (OnSelectPhoto != null)
             {
-                OnSelectPhoto(this, new PhotoSelectedEvent() { Photo = photo });
+                OnSelectPhoto(this, new PhotoSelectedEvent(photo));
             }
         }
 
@@ -151,5 +151,10 @@ namespace Paguru.DpBench
         }
 
         #endregion
+
+        public void ShowError(Exception exception)
+        {
+            MessageBox.Show(exception.Message);
+        }
     }
 }

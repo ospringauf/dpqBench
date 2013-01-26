@@ -38,6 +38,18 @@ namespace Paguru.DpBench
 
             // somehow, the list view does not properly refresh when the list changes .. so let's force it
             Project.Photos.ListChanged += RefreshListContent;
+
+            // support drag & drop of (jpeg) files into the project list
+            objectListView1.DragEnter += ProjectWindow_DragEnter;
+            objectListView1.DragDrop += ProjectWindow_DragDrop;
+        }
+
+        private void ProjectWindow_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
         }
 
         #endregion
@@ -93,7 +105,7 @@ namespace Paguru.DpBench
 
         private void groupLevelEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new GroupLevelsEditor(new GroupLevel(Project.CreateAllDetails())).Show();
+            new GroupFilterEditor(new GroupFilter(Project.CreateAllDetails())).Show();
         }
 
         private void objectListView1_SelectionChanged(object sender, EventArgs e)
@@ -116,5 +128,29 @@ namespace Paguru.DpBench
         }
 
         #endregion
+
+        private void ProjectWindow_DragDrop(object sender, DragEventArgs e)
+        {
+            //Console.Out.WriteLine(e);
+            //var t = e.Data.GetType();
+            //Console.Out.WriteLine(t);
+            //var d = e.Data.GetFormats();
+            //Console.Out.WriteLine(d);
+            //var f = e.Data.GetData("FileName");
+            //Console.Out.WriteLine(f);
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            try
+            {
+                foreach (string file in files)
+                {
+                    Project.AddFile(file);
+                }
+            }
+            catch (Exception ex)
+            {
+                MainWindow.Instance.ShowError(ex);
+            }
+            objectListView1.SetObjects(Project.Photos);
+        }
     }
 }

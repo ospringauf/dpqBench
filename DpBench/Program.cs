@@ -33,7 +33,7 @@ namespace Paguru.DpBench
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(MainWindow.Instance);
 
-            // Application.Run(new GroupLevelsEditor());
+            // Application.Run(new GroupFilterEditor());
         }
 
         #endregion
