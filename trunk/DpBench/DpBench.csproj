@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0D13E027-83FB-47C5-AB7E-2ADFF3F15B13}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Paguru.DpBench</RootNamespace>
+    <AssemblyName>DpBench</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\GroupLevelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\GroupLevelControl.Designer.cs">
+      <DependentUpon>GroupLevelControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GroupLevelsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GroupLevelsEditor.Designer.cs">
+      <DependentUpon>GroupLevelsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImagePreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImagePreview.Designer.cs">
+      <DependentUpon>ImagePreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ListOrderControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ListOrderControl.Designer.cs">
+      <DependentUpon>ListOrderControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GroupLevel.cs" />
+    <Compile Include="Model\PhotoDetail.cs" />
+    <Compile Include="Model\PhotoDetailCollection.cs" />
+    <Compile Include="Model\PhotoParameterAttribute.cs" />
+    <Compile Include="Model\Project.designer.cs">
+      <DependentUpon>Project.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SelectableValueList.cs" />
+    <Compile Include="PhotoPropertyWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PhotoPropertyWindow.Designer.cs">
+      <DependentUpon>PhotoPropertyWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImageConverter.cs" />
+    <Compile Include="DetailEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DetailEditor.Designer.cs">
+      <DependentUpon>DetailEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DetailArea.cs" />
+    <Compile Include="Model\Photo.cs" />
+    <Compile Include="Model\Project.cs" />
+    <Compile Include="PhotoSelectedEvent.cs" />
+    <Compile Include="ProjectWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectWindow.Designer.cs">
+      <DependentUpon>ProjectWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\SelectableValue.cs" />
+    <Compile Include="SelectionPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SelectionPictureBox.Designer.cs">
+      <DependentUpon>SelectionPictureBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextInputMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextInputMessage.Designer.cs">
+      <DependentUpon>TextInputMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Util.cs" />
+    <EmbeddedResource Include="Controls\GroupLevelControl.resx">
+      <DependentUpon>GroupLevelControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GroupLevelsEditor.resx">
+      <DependentUpon>GroupLevelsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImagePreview.resx">
+      <DependentUpon>ImagePreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ListOrderControl.resx">
+      <DependentUpon>ListOrderControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PhotoPropertyWindow.resx">
+      <DependentUpon>PhotoPropertyWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DetailEditor.resx">
+      <DependentUpon>DetailEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectWindow.resx">
+      <DependentUpon>ProjectWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="TextInputMessage.resx">
+      <DependentUpon>TextInputMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Model\Project.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExifMetadata\ExifMetadata.csproj">
+      <Project>{ABD4E13C-1A47-4082-8D77-8F1E9312B1FA}</Project>
+      <Name>ExifMetadata</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ObjectListView\ObjectListView2010.csproj">
+      <Project>{18FEDA0C-D147-4286-B39A-01204808106A}</Project>
+      <Name>ObjectListView2010</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WinFormsUI\WinFormsUI.csproj">
+      <Project>{C75532C4-765B-418E-B09B-46D36B2ABDB1}</Project>
+      <Name>WinFormsUI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\105.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\155.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\168.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_down_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_down_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_down_alt1_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_down_alt1_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_up_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_up_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_up_alt1_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_up_alt1_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\check_alt_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\check_alt_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\x_14x14.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\x_21x21.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\x_alt_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\x_alt_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Apache_License_2.0.txt" />
+    <Content Include="other_licenses.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
