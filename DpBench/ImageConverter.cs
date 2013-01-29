@@ -56,11 +56,11 @@ namespace Paguru.DpBench
             Rectangle destRect = new Rectangle(new Point(0, 0), detail.Size);
 
             Bitmap b = new Bitmap(detail.Size.Width, detail.Size.Height);
-            Graphics g = Graphics.FromImage((Image)b);
-            g.DrawImage(imgToCrop, destRect, detail, GraphicsUnit.Pixel);
-            g.Dispose();
-
-            return (Image)b;
+            using (Graphics g = Graphics.FromImage((Image)b))
+            {
+                g.DrawImage(imgToCrop, destRect, detail, GraphicsUnit.Pixel);
+                return (Image)b;
+            }
         }
 
         public static Size FitInto(Size orig, Size tgt, bool dontEnlarge = false)
@@ -108,30 +108,33 @@ namespace Paguru.DpBench
             int sourceWidth = imgToResize.Width;
             int sourceHeight = imgToResize.Height;
 
-            var nPercent = ScaleFactor(imgToResize.Size, targetSize);
+            var factor = ScaleFactor(imgToResize.Size, targetSize);
 
-            int destWidth = (int)(sourceWidth * nPercent);
-            int destHeight = (int)(sourceHeight * nPercent);
+            int destWidth = (int)(sourceWidth * factor);
+            int destHeight = (int)(sourceHeight * factor);
 
             Bitmap b = new Bitmap(destWidth, destHeight);
-            Graphics g = Graphics.FromImage((Image)b);
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-            g.DrawImage(imgToResize, 0, 0, destWidth, destHeight);
-            g.Dispose();
-
-            return (Image)b;
+            using (Graphics g = Graphics.FromImage((Image)b))
+            {
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.DrawImage(imgToResize, 0, 0, destWidth, destHeight);
+                return (Image)b;
+            }
         }
 
         public void CreateScaledImage(FileInfo srcFile, FileInfo tgtFile, int width, int height, int imageQuality)
         {
             System.Console.WriteLine("converting " + srcFile.FullName + " to " + tgtFile.FullName);
 
-            Bitmap big = new Bitmap(srcFile.FullName);
-            Size newSize = new Size(width, height);
-            Image newImage = resizeImage(big, newSize);
-            big.Dispose();
-            saveJpeg(tgtFile.FullName, (Bitmap)newImage, imageQuality);
+            using (Bitmap big = new Bitmap(srcFile.FullName))
+            {
+                Size newSize = new Size(width, height);
+                using (var newImage = resizeImage(big, newSize))
+                {
+                    big.Dispose();
+                    SaveJpeg(tgtFile.FullName, (Bitmap)newImage, imageQuality);
+                }
+            }
         }
 
         public void CreateThumb(FileInfo bigFile, FileInfo thumbFile)
@@ -139,13 +142,17 @@ namespace Paguru.DpBench
             System.Console.WriteLine("converting " + bigFile.FullName + " to " + thumbFile.FullName);
 
             // scale to thumbnail width
-            Bitmap big = new Bitmap(bigFile.FullName);
-            Image thumb = resizeImage(big, thumbWidth);
-
-            // crop center 
-            thumb = cropCenter(thumb, thumbHeight);
-
-            saveJpeg(thumbFile.FullName, (Bitmap)thumb, thumbQuality);
+            using (Bitmap big = new Bitmap(bigFile.FullName))
+            {
+                using (Image thumb1 = resizeImage(big, thumbWidth))
+                {
+                    // crop center 
+                    using (var croppedThumb = cropCenter(thumb1, thumbHeight))
+                    {
+                        SaveJpeg(thumbFile.FullName, (Bitmap)croppedThumb, thumbQuality);
+                    }
+                }
+            }
         }
 
         #endregion
@@ -166,11 +173,11 @@ namespace Paguru.DpBench
             Rectangle destRect = new Rectangle(0, 0, imgToCrop.Width, height);
 
             Bitmap b = new Bitmap(imgToCrop.Width, height);
-            Graphics g = Graphics.FromImage((Image)b);
-            g.DrawImage(imgToCrop, destRect, srcRect, GraphicsUnit.Pixel);
-            g.Dispose();
-
-            return (Image)b;
+            using (Graphics g = Graphics.FromImage((Image)b))
+            {
+                g.DrawImage(imgToCrop, destRect, srcRect, GraphicsUnit.Pixel);
+                return (Image)b;
+            }
         }
 
         private static Image resizeImage(Image imgToResize, int width)
@@ -184,16 +191,15 @@ namespace Paguru.DpBench
             int destHeight = (int)(sourceHeight * nPercent);
 
             Bitmap b = new Bitmap(destWidth, destHeight);
-            Graphics g = Graphics.FromImage((Image)b);
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-            g.DrawImage(imgToResize, 0, 0, destWidth, destHeight);
-            g.Dispose();
-
-            return (Image)b;
+            using (Graphics g = Graphics.FromImage((Image)b))
+            {
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.DrawImage(imgToResize, 0, 0, destWidth, destHeight);
+                return (Image)b;
+            }
         }
 
-        private ImageCodecInfo getEncoderInfo(string mimeType)
+        private static ImageCodecInfo getEncoderInfo(string mimeType)
         {
             // Get image codecs for all image formats
             ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
@@ -209,13 +215,13 @@ namespace Paguru.DpBench
             return null;
         }
 
-        private void saveJpeg(string path, Bitmap img, long quality)
+        public static void SaveJpeg(string path, Image img, long quality)
         {
             // Encoder parameter for image quality
-            EncoderParameter qualityParam = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
+            EncoderParameter qualityParam = new EncoderParameter(Encoder.Quality, quality);
 
             // Jpeg image codec
-            ImageCodecInfo jpegCodec = this.getEncoderInfo("image/jpeg");
+            ImageCodecInfo jpegCodec = getEncoderInfo("image/jpeg");
 
             if (jpegCodec == null)
             {

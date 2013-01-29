@@ -19,9 +19,10 @@ namespace Paguru.DpBench.Model
     using System;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Model property attribute for photo parameters
     /// </summary>
     public class PhotoParameterAttribute : Attribute
     {
+        public Type Sorter { get; set; }
     }
 }

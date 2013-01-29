@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GroupFilterEditor));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonTest = new System.Windows.Forms.Button();
+            this.groupBoxRendererSettings = new System.Windows.Forms.GroupBox();
+            this.panelRendererSettings = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.groupBoxRendererSettings.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -45,57 +49,72 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.AddColumns;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 16);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(624, 243);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(593, 255);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // buttonTest
+            // groupBoxRendererSettings
             // 
-            this.buttonTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonTest.Location = new System.Drawing.Point(664, 272);
-            this.buttonTest.Name = "buttonTest";
-            this.buttonTest.Size = new System.Drawing.Size(45, 23);
-            this.buttonTest.TabIndex = 2;
-            this.buttonTest.Text = "test";
-            this.buttonTest.UseVisualStyleBackColor = true;
-            this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
+            this.groupBoxRendererSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxRendererSettings.Controls.Add(this.panelRendererSettings);
+            this.groupBoxRendererSettings.Location = new System.Drawing.Point(12, 295);
+            this.groupBoxRendererSettings.Name = "groupBoxRendererSettings";
+            this.groupBoxRendererSettings.Size = new System.Drawing.Size(602, 149);
+            this.groupBoxRendererSettings.TabIndex = 3;
+            this.groupBoxRendererSettings.TabStop = false;
+            this.groupBoxRendererSettings.Text = "Renderer Settings";
+            // 
+            // panelRendererSettings
+            // 
+            this.panelRendererSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelRendererSettings.Location = new System.Drawing.Point(3, 16);
+            this.panelRendererSettings.Name = "panelRendererSettings";
+            this.panelRendererSettings.Size = new System.Drawing.Size(596, 130);
+            this.panelRendererSettings.TabIndex = 0;
             // 
             // groupBox1
             // 
-            this.groupBox1.Location = new System.Drawing.Point(12, 261);
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.linkLabel1);
+            this.groupBox1.Controls.Add(this.tableLayoutPanel1);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(624, 134);
-            this.groupBox1.TabIndex = 3;
+            this.groupBox1.Size = new System.Drawing.Size(602, 277);
+            this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Text = "Define group levels and filter parameter";
             // 
-            // button1
+            // linkLabel1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Image = global::Paguru.DpBench.Properties.Resources.plus_alt_16x16;
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(642, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(73, 34);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "add";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.buttonAddFilter_Click);
+            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(536, 0);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(50, 13);
+            this.linkLabel1.TabIndex = 1;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "add level";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // GroupFilterEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(727, 407);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(621, 456);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.buttonTest);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.groupBoxRendererSettings);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GroupFilterEditor";
-            this.Text = "GroupFilterEditor";
+            this.Text = "Group Filter / Render";
+            this.groupBoxRendererSettings.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -103,8 +122,9 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button buttonTest;
+        private System.Windows.Forms.GroupBox groupBoxRendererSettings;
+        private System.Windows.Forms.Panel panelRendererSettings;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }

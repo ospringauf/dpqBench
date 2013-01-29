@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------
 // DpBench - SelectionPictureBox.cs
 // http://sourceforge.net/projects/dpbench/
 // -----------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@
 // limitations under the License.
 // -----------------------------------------------------------------------------------------
 
-namespace Paguru.DpBench
+namespace Paguru.DpBench.Controls
 {
     using System;
     using System.Drawing;
@@ -22,6 +22,11 @@ namespace Paguru.DpBench
 
     using Paguru.DpBench.Model;
 
+    using ImageConverter = Paguru.DpBench.ImageConverter;
+
+    /// <summary>
+    /// A picture box that allows the user to draw selection rectangles
+    /// </summary>
     public partial class SelectionPictureBox : PictureBox
     {
         #region Constants and Fields
@@ -45,9 +50,9 @@ namespace Paguru.DpBench
             InitializeComponent();
 
             // SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            MouseDown += new MouseEventHandler(MyMouseDown);
-            MouseUp += new MouseEventHandler(MyMouseUp);
-            MouseMove += new MouseEventHandler(MyMouseMove);
+            MouseDown += MyMouseDown;
+            MouseUp += MyMouseUp;
+            MouseMove += MyMouseMove;
             bHaveMouse = false;
         }
 
@@ -55,6 +60,9 @@ namespace Paguru.DpBench
 
         #region Public Events
 
+        /// <summary>
+        /// Occurs when a rectangle selection is finished
+        /// </summary>
         public event EventHandler<EventArgs> OnDetailSelected;
 
         #endregion
@@ -84,7 +92,6 @@ namespace Paguru.DpBench
 
         #endregion
 
-        // Called when the left mouse button is pressed. 
         #region Public Methods
 
         public void MyMouseDown(object sender, MouseEventArgs e)
@@ -124,9 +131,8 @@ namespace Paguru.DpBench
             }
         }
 
-        // Convert and normalize the points and draw the reversible frame.
+        
 
-        // Called when the left mouse button is released.
         public void MyMouseUp(object sender, MouseEventArgs e)
         {
             // Set internal flag to know we no longer "have the mouse".
@@ -136,8 +142,8 @@ namespace Paguru.DpBench
             // to remove the lines.
             if (ptLast.X != -1)
             {
-                Point ptCurrent = new Point(e.X, e.Y);
-                StoreRect(ptOriginal, ptCurrent);
+                Point current = new Point(e.X, e.Y);
+                StoreRect(ptOriginal, current);
                 MyDrawReversibleRectangle(ptOriginal, ptLast);
             }
 
@@ -165,6 +171,9 @@ namespace Paguru.DpBench
             }
         }
 
+        /// <summary>
+        /// Convert and normalize the points and draw the reversible frame.
+        /// </summary>
         private void MyDrawReversibleRectangle(Point p1, Point p2)
         {
             Rectangle rc = new Rectangle();
@@ -219,7 +228,5 @@ namespace Paguru.DpBench
         }
 
         #endregion
-
-        // Called when the mouse is moved.
     }
 }

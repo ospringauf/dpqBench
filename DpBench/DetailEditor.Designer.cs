@@ -1,5 +1,7 @@
 ﻿namespace Paguru.DpBench
 {
+    using Paguru.DpBench.Controls;
+
     partial class DetailEditor
     {
         /// <summary>
@@ -33,14 +35,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownWidth = new System.Windows.Forms.NumericUpDown();
-            this.linkLabelApertureSeries = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.linkLabelTest = new System.Windows.Forms.LinkLabel();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.comboBoxCrop = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new SelectionPictureBox();
-            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWidth)).BeginInit();
@@ -49,21 +48,18 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.linkLabel3);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.numericUpDownHeight);
             this.panel1.Controls.Add(this.numericUpDownWidth);
-            this.panel1.Controls.Add(this.linkLabelApertureSeries);
             this.panel1.Controls.Add(this.linkLabel2);
-            this.panel1.Controls.Add(this.linkLabelTest);
             this.panel1.Controls.Add(this.buttonDelete);
             this.panel1.Controls.Add(this.comboBoxCrop);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 328);
+            this.panel1.Location = new System.Drawing.Point(0, 345);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(568, 90);
+            this.panel1.Size = new System.Drawing.Size(568, 73);
             this.panel1.TabIndex = 1;
             // 
             // label3
@@ -118,38 +114,16 @@
             this.numericUpDownWidth.Size = new System.Drawing.Size(60, 20);
             this.numericUpDownWidth.TabIndex = 9;
             // 
-            // linkLabelApertureSeries
-            // 
-            this.linkLabelApertureSeries.AutoSize = true;
-            this.linkLabelApertureSeries.Location = new System.Drawing.Point(126, 68);
-            this.linkLabelApertureSeries.Name = "linkLabelApertureSeries";
-            this.linkLabelApertureSeries.Size = new System.Drawing.Size(69, 13);
-            this.linkLabelApertureSeries.TabIndex = 8;
-            this.linkLabelApertureSeries.TabStop = true;
-            this.linkLabelApertureSeries.Text = "Blendenreihe";
-            this.linkLabelApertureSeries.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelApertureSeries_LinkClicked);
-            // 
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(91, 68);
+            this.linkLabel2.Location = new System.Drawing.Point(248, 38);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(29, 13);
+            this.linkLabel2.Size = new System.Drawing.Size(73, 13);
             this.linkLabel2.TabIndex = 7;
             this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Crop";
+            this.linkLabel2.Text = "Preview detail";
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
-            // 
-            // linkLabelTest
-            // 
-            this.linkLabelTest.AutoSize = true;
-            this.linkLabelTest.Location = new System.Drawing.Point(12, 68);
-            this.linkLabelTest.Name = "linkLabelTest";
-            this.linkLabelTest.Size = new System.Drawing.Size(73, 13);
-            this.linkLabelTest.TabIndex = 6;
-            this.linkLabelTest.TabStop = true;
-            this.linkLabelTest.Text = "Crop 200x200";
-            this.linkLabelTest.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // buttonDelete
             // 
@@ -194,17 +168,6 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.SizeChanged += new System.EventHandler(this.pictureBox1_SizeChanged);
             // 
-            // linkLabel3
-            // 
-            this.linkLabel3.AutoSize = true;
-            this.linkLabel3.Location = new System.Drawing.Point(201, 68);
-            this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(28, 13);
-            this.linkLabel3.TabIndex = 13;
-            this.linkLabel3.TabStop = true;
-            this.linkLabel3.Text = "Test";
-            this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
-            // 
             // DetailEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -232,13 +195,10 @@
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.ComboBox comboBoxCrop;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.LinkLabel linkLabelTest;
-        private System.Windows.Forms.LinkLabel linkLabelApertureSeries;
         private System.Windows.Forms.LinkLabel linkLabel2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numericUpDownHeight;
         private System.Windows.Forms.NumericUpDown numericUpDownWidth;
-        private System.Windows.Forms.LinkLabel linkLabel3;
     }
 }

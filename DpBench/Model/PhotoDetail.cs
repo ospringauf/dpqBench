@@ -22,7 +22,7 @@ namespace Paguru.DpBench.Model
     using ImageConverter = Paguru.DpBench.ImageConverter;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// A photo detail (image tile), defined by a crop area (rectangle) and a photo
     /// </summary>
     public class PhotoDetail
     {
@@ -46,8 +46,9 @@ namespace Paguru.DpBench.Model
         {
             get
             {
-                var img = Photo.Image;
-                img = ImageConverter.Crop(img, Area.Crop);
+                var pimg = Photo.Image;
+                var img = ImageConverter.Crop(pimg, Area.Crop);
+                pimg.Dispose();
                 return img;
             }
         }

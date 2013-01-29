@@ -27,7 +27,8 @@ namespace Paguru.DpBench.Model
     using LevDan.Exif;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// The dpqb project definition.
+    /// A collection of photos (images with metadata), detail areas and rendering filters.
     /// </summary>
     public class Project
     {
@@ -54,6 +55,7 @@ namespace Paguru.DpBench.Model
         [XmlElement(ElementName = "Details")]
         public List<DetailArea> DetailLoadSaveList { get; set; }
 
+        [XmlIgnore]
         public string Name { get; set; }
 
         /// <summary>
@@ -64,6 +66,8 @@ namespace Paguru.DpBench.Model
 
         [XmlIgnore]
         public BindingList<Photo> Photos { get; set; }
+
+        public GroupFilter RootFilter { get; set; }
 
         #endregion
 
@@ -107,7 +111,7 @@ namespace Paguru.DpBench.Model
             var photo = new Photo()
                 {
                     Project = this, 
-                    Filename = filename, 
+                    Filename = Util.RelativePath(filename), 
                     Aperture = (aperture != null) ? aperture.Value : null, 
                     Camera = (camera != null) ? camera.Value : null, 
                     Exposure = (exposure != null) ? exposure.Value : null, 
@@ -118,6 +122,10 @@ namespace Paguru.DpBench.Model
             Photos.Add(photo);
         }
 
+        /// <summary>
+        /// Creates all details (cross product of photos and detail areas)
+        /// </summary>
+        /// <returns></returns>
         public PhotoDetailCollection CreateAllDetails()
         {
             var l = new PhotoDetailCollection();
@@ -137,11 +145,6 @@ namespace Paguru.DpBench.Model
             foreach (var area in DetailAreas)
             {
                 var x = new Rectangle(new Point(0, 0), area.Crop.Size);
-
-                // if (boundingBox != null)
-                // {
-                // x.Intersect(new Rectangle(new Point(0, 0), boundingBox));
-                // }
                 result = Rectangle.Union(result, x);
             }
             return result.Size;
@@ -156,5 +159,16 @@ namespace Paguru.DpBench.Model
         }
 
         #endregion
+
+        public void AddFiles(string[] fileNames)
+        {
+            MainWindow.Instance.ScaleProgress("loading file(s)", fileNames.Length);
+            foreach (var fileName in fileNames)
+            {
+                AddFile(fileName);
+                MainWindow.Instance.Progress++;
+            }
+            MainWindow.Instance.ClearProgress();
+        }
     }
 }

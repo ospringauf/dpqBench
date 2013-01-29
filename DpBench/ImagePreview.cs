@@ -19,17 +19,39 @@ namespace Paguru.DpBench
     using System.Drawing;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// Image preview window with save to file option (context menu)
+    /// </summary>
     public partial class ImagePreview : Form
     {
-        #region Constructors and Destructors
+        private Image image;
 
+        #region Constructors and Destructors
+        
         public ImagePreview(Image img)
         {
+            image = img;
             InitializeComponent();
             pictureBox1.Image = img;
             pictureBox1.Size = img.Size;
+
+            FormClosing += (s, e) => img.Dispose();
         }
 
         #endregion
+
+        private void saveToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            var fd = new SaveFileDialog() { DefaultExt = ".jpg", Filter = "JPEG images|*.jpg" };
+            if (fd.ShowDialog(this) == DialogResult.OK)
+            {
+                ImageConverter.SaveJpeg(fd.FileName, image, 85);
+            }
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            Clipboard.SetImage(image);
+        }
     }
 }

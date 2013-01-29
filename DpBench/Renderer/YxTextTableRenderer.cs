@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------------------
-// DpBench - TextMosaicRenderer.cs
+// DpBench - YxTextTableRenderer.cs
 // http://sourceforge.net/projects/dpbench/
 // -----------------------------------------------------------------------------------------
 // Copyright 2013 Oliver Springauf
@@ -21,14 +21,15 @@ namespace Paguru.DpBench.Renderer
     using Paguru.DpBench.Model;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Row/column renderer, only for preview/testing of the layout logic.
+    /// Will only output the tile names.
     /// </summary>
-    public class TextMosaicRenderer : IRenderer
+    public class YxTextTableRenderer : IRenderer
     {
-        public object Render(GroupFilter gl)
+        public object Render(GroupFilter f)
         {
             string s = string.Empty;
-            var rows = RenderAsText(gl, gl.Input);
+            var rows = RenderAsText(f, f.Input);
             foreach (var row in rows)
             {
                 s += row + "\r\n";
@@ -56,11 +57,11 @@ namespace Paguru.DpBench.Renderer
 
                 // parallel execution might destroy the sort order defined by the user
                 //Parallel.ForEach(
-                //    gl.ParameterValues.SelectedValues,
+                //    gf.ParameterValues.SelectedValues,
                 //    x =>
                 //        {
                 //            var pv = x;
-                //            var renderedRows = RenderAsText(gl.NextGroupFilter, gl.Filter(pv as string, input));
+                //            var renderedRows = RenderAsText(gf.NextGroupFilter, gf.Filter(pv as string, input));
                 //            foreach (var row in renderedRows)
                 //            {
                 //                result.Add(string.Format("{0} | {1}", (pv as string).PadLeft(30), row));

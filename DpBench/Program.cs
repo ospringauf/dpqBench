@@ -17,7 +17,10 @@
 namespace Paguru.DpBench
 {
     using System;
+    using System.Threading;
     using System.Windows.Forms;
+
+    using Paguru.DpBench.Controls;
 
     internal static class Program
     {
@@ -27,13 +30,38 @@ namespace Paguru.DpBench
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main()
+        private static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(MainWindow.Instance);
+            if (args != null & args.Length > 0)
+            {
+                MainWindow.Instance.StartupProjectFile = args[0];
+            }
 
-            // Application.Run(new GroupFilterEditor());
+            // Add the event handler for handling UI thread exceptions to the event.
+            Application.ThreadException += HandleUIThreadException;
+
+            // Set the unhandled exception mode to force all Windows Forms errors to go through
+            // our handler.
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+
+            // Add the event handler for handling non-UI thread exceptions to the event. 
+            AppDomain.CurrentDomain.UnhandledException += HandleUnhandledException;
+
+            Application.Run(MainWindow.Instance);
+        }
+
+        private static void HandleUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Exception exception = (Exception)e.ExceptionObject;
+            new ExceptionDialog(exception).ShowDialog();
+        }
+
+        private static void HandleUIThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            Exception exception = e.Exception;
+            new ExceptionDialog(exception).ShowDialog();
         }
 
         #endregion

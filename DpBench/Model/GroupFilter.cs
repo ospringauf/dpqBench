@@ -19,9 +19,14 @@ namespace Paguru.DpBench.Model
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
+    using System.Xml.Serialization;
+
+    using Paguru.DpBench.Renderer;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// Defines the parameter (eg. "Lens"), parameter value filter and parameter value order for one grouping level.
+    /// Grouping filters can be chained into a double linked list that defines multiple grouping levels.
+    /// An <see cref="IRenderer"/> will then render a multi-level comparison chart based on the grouping/filter settings.
     /// </summary>
     public class GroupFilter : INotifyPropertyChanged
     {
@@ -41,10 +46,18 @@ namespace Paguru.DpBench.Model
         /// Initializes a new instance of the <see cref="GroupFilter"/> class.
         /// </summary>
         /// <param name="basis">The basis.</param>
-        public GroupFilter(PhotoDetailCollection basis)
+        public GroupFilter(PhotoDetailCollection basis) : this()
         {
             Input = basis;
-            ParameterValues = new SelectableValueList<string>();
+            Parameter = Parameters[0];
+        }
+
+        /// <summary>
+        /// Only for serializing
+        /// </summary>
+        public GroupFilter()
+        {
+            ParameterValues = new SelectableValueList();
             ParameterValues.PropertyChanged += SelectedParametersChanged;
         }
 
@@ -58,6 +71,7 @@ namespace Paguru.DpBench.Model
 
         #region Public Properties
 
+        [XmlIgnore]
         public PhotoDetailCollection Input
         {
             get
@@ -67,7 +81,7 @@ namespace Paguru.DpBench.Model
             set
             {
                 input = value;
-                if (Parameter != null)
+                if (Parameter != null && Input != null)
                 {
                     // merge values list
                     ParameterValues.Update(Input.FindAllValues(Parameter)); //.ConvertAll(s => (object)s));
@@ -81,6 +95,7 @@ namespace Paguru.DpBench.Model
         /// <summary>
         /// Gets the last group level in the chain
         /// </summary>
+        [XmlIgnore]
         public GroupFilter Last
         {
             get
@@ -89,6 +104,7 @@ namespace Paguru.DpBench.Model
             }
         }
 
+        [XmlIgnore]
         public bool IsLast
         {
             get
@@ -97,8 +113,37 @@ namespace Paguru.DpBench.Model
             }
         }
 
-        public GroupFilter NextGroupFilter { get; set; }
+        [XmlIgnore]
+        public int TotalTiles
+        {
+            get
+            {
+                return IsLast
+                           ? ParameterValues.SelectedValues.Count
+                           : ParameterValues.SelectedValues.Count * NextGroupFilter.TotalTiles;
+            }
+        }
 
+        private GroupFilter nextGroupFilter;
+
+        public GroupFilter NextGroupFilter
+        {
+            get
+            {
+                return nextGroupFilter;
+            }
+            set
+            {
+                nextGroupFilter = value;
+                if (nextGroupFilter != null)
+                {
+                    nextGroupFilter.PrevGroupFilter = this;
+                }
+                Propagate();
+            }
+        }
+
+        [XmlIgnore]
         public PhotoDetailCollection Output
         {
             get
@@ -107,20 +152,6 @@ namespace Paguru.DpBench.Model
                 return
                     new PhotoDetailCollection(
                         Input.Where(pd => (Parameter == null) || ParameterValues[pd.Parameters[Parameter]]));
-
-                // var n = new PhotoDetailCollection();
-                // foreach (var pd in Input)
-                // {
-                // if (Parameter != null)
-                // {
-                // var pv = pd.Parameters[Parameter];
-                // if (ParameterValues[pv])
-                // {
-                // n.Add(pd);
-                // }
-                // }
-                // }
-                // return n;
             }
         }
 
@@ -135,23 +166,26 @@ namespace Paguru.DpBench.Model
             }
             set
             {
-                parameter = value;
-                ParameterValues.Clear();
-                if (value != null)
+                if (!Equals(parameter, value))
                 {
-                    // build list of parameter values to choose from
-                    // TODO if selected parameters exists, merge them with the new list
-                    ParameterValues.Update(Input.FindAllValues(parameter), true);
-                    //foreach (var pv in Input.FindAllValues(value))
-                    //{
-                    //    ParameterValues.Add(new SelectableValue(pv));
-                    //}
+                    parameter = value;
+                    ParameterValues.Clear();
+                    if (value != null && Input != null)
+                    {
+                        // build list of parameter values to choose from
+                        // if selected parameters exists, merge them with the new list
+                        ParameterValues.Update(Input.FindAllValues(parameter), true);
+                    }
+                    Propagate();
+                    NotifyPropertyChanged("Parameter");
                 }
-                Propagate();
-                NotifyPropertyChanged("Parameter");
             }
         }
 
+        /// <summary>
+        /// Gets all available parameters (eg. "Lens", "Camera", "Aperture") for the input images.
+        /// </summary>
+        [XmlIgnore]
         public List<string> Parameters
         {
             get
@@ -165,12 +199,31 @@ namespace Paguru.DpBench.Model
             }
         }
 
+        [XmlIgnore]
         public GroupFilter PrevGroupFilter { get; set; }
 
         /// <summary>
-        /// Gets or sets the distinct values of <see cref="Parameter"/> in the <see cref="Input"/>
+        /// Gets or sets the distinct values of <see cref="Parameter"/> in the <see cref="Input"/>.
         /// </summary>
-        public SelectableValueList<string> ParameterValues { get; set; }
+        public SelectableValueList ParameterValues { get; set; }
+
+        [XmlIgnore]
+        public bool Valid
+        {
+            get
+            {
+                return Output.Count > 0;
+            }
+        }
+
+        [XmlIgnore]
+        public bool AllValid
+        {
+            get
+            {
+                return NextGroupFilter != null ? NextGroupFilter.AllValid && Valid : Valid;
+            }
+        }
 
         #endregion
 
@@ -199,7 +252,7 @@ namespace Paguru.DpBench.Model
         }
 
         /// <summary>
-        /// Removes this instance from the filter chain.
+        /// Removes this instance from the filter chain, linking the previous and next levels to each other.
         /// </summary>
         public void Remove()
         {
@@ -225,17 +278,28 @@ namespace Paguru.DpBench.Model
             }
         }
 
+        /// <summary>
+        /// Propagates the filter output (matching photo details) to the next filter level
+        /// </summary>
         private void Propagate()
         {
-            if (NextGroupFilter != null)
+            if (NextGroupFilter != null && Input != null)
             {
                 NextGroupFilter.Input = Output;
             }
         }
 
+        /// <summary>
+        /// Output set might have changed, update the next level.
+        /// </summary>
         private void SelectedParametersChanged(object sender, PropertyChangedEventArgs e)
         {
             Propagate();
+        }
+
+        public override string ToString()
+        {
+            return Parameter + "=" + string.Join(",", ParameterValues.SelectedValues);
         }
 
         #endregion

@@ -21,6 +21,7 @@ namespace Paguru.DpBench
     using System.Drawing;
     using System.Windows.Forms;
 
+    using Paguru.DpBench.Controls;
     using Paguru.DpBench.Model;
 
     using WeifenLuo.WinFormsUI.Docking;
@@ -34,6 +35,30 @@ namespace Paguru.DpBench
             InitializeComponent();
             MainWindow.Instance.OnSelectPhoto += ShowPreview;
             pictureBox1.OnDetailSelected += DetailSelected;
+
+            numericUpDownHeight.ValueChanged += (s, ea) =>
+                {
+                    if (Detail != null)
+                    {
+                        Detail.Height = (int)numericUpDownHeight.Value;
+                        pictureBox1.Invalidate();
+                    }
+                };
+            numericUpDownWidth.ValueChanged += (s, ea) =>
+            {
+                if (Detail != null)
+                {
+                    Detail.Width = (int)numericUpDownWidth.Value;
+                    pictureBox1.Invalidate();
+                }
+            };
+
+            // I would have like to data-bind the spinner controls to the crop area, but the value update
+            // does not work reliably
+            //numericUpDownWidth.DataBindings.Clear();
+            //numericUpDownHeight.DataBindings.Clear();
+            //numericUpDownWidth.DataBindings.Add("Value", detail, "Width");
+            //numericUpDownHeight.DataBindings.Add("Value", detail, "Height");
         }
 
         #endregion
@@ -41,6 +66,8 @@ namespace Paguru.DpBench
         #region Properties
 
         private Photo Photo { get; set; }
+
+        private DetailArea Detail { get; set; }
 
         #endregion
 
@@ -67,6 +94,7 @@ namespace Paguru.DpBench
 
         private void DrawDetails(object sender, ListChangedEventArgs e)
         {
+            Detail = comboBoxCrop.SelectedItem as DetailArea;
             pictureBox1.Invalidate();
         }
 
@@ -92,17 +120,21 @@ namespace Paguru.DpBench
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            Photo.Project.DetailAreas.Remove(comboBoxCrop.SelectedItem as DetailArea);
+            if (comboBoxCrop.SelectedItem != null)
+            {
+                Photo.Project.DetailAreas.Remove(comboBoxCrop.SelectedItem as DetailArea);
+            }
             Fill();
         }
 
         private void comboBoxCrop_SelectedValueChanged(object sender, EventArgs e)
         {
-            var detail = comboBoxCrop.SelectedItem as DetailArea;
-            numericUpDownWidth.DataBindings.Clear();
-            numericUpDownHeight.DataBindings.Clear();
-            numericUpDownWidth.DataBindings.Add("Value", detail, "Width");
-            numericUpDownHeight.DataBindings.Add("Value", detail, "Height");
+            Detail = comboBoxCrop.SelectedItem as DetailArea;
+            if (Detail != null)
+            {
+                numericUpDownHeight.Value = Detail.Crop.Height;
+                numericUpDownWidth.Value = Detail.Crop.Width;
+            }
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

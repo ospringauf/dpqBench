@@ -18,6 +18,7 @@ namespace Paguru.DpBench.Controls
 {
     using System;
     using System.ComponentModel;
+    using System.Drawing;
     using System.Windows.Forms;
 
     using Paguru.DpBench.Model;
@@ -36,13 +37,22 @@ namespace Paguru.DpBench.Controls
             InitializeComponent();
 
             GroupFilter = groupFilter;
-            comboBoxParameter.DataSource = groupFilter.Parameters;
+            comboBoxParameter.DataSource = GroupFilter.Parameters;
+            if (GroupFilter.Parameter != null)
+            {
+                comboBoxParameter.SelectedItem = GroupFilter.Parameter;
+            }
+            else
+            {
+                //GroupFilter.Parameter = GroupFilter.Parameters[0];
+            }
+            SelectableValueListControl1.Values = GroupFilter.ParameterValues;
 
             // comboBoxParameter.DataBindings.Add("Text", GroupFilter, "Parameter");
             GroupFilter.PropertyChanged += GlPropertyChanged;
             GroupFilter.ParameterValues.PropertyChanged += SelectedParameterValuesChanged;
             comboBoxParameter.TextChanged += ParameterChanged;
-            ParameterChanged(null, null);
+            CheckValid();
         }
 
         #endregion
@@ -60,7 +70,8 @@ namespace Paguru.DpBench.Controls
             if (e.PropertyName == "Parameter")
             {
                 // parameter changed --> update values list
-                listOrderControl1.Values = GroupFilter.ParameterValues;
+                SelectableValueListControl1.Values = GroupFilter.ParameterValues;
+                CheckValid();
             }
         }
 
@@ -73,12 +84,17 @@ namespace Paguru.DpBench.Controls
         {
             if (e.PropertyName == "Count")
             {
-                listOrderControl1.Values = GroupFilter.ParameterValues;
+                SelectableValueListControl1.Values = GroupFilter.ParameterValues;
             }
+
+            // also check if selection has changed
+            CheckValid();
         }
 
-        private void buttonClose_Click(object sender, EventArgs e)
+        private void CheckValid()
         {
+            comboBoxParameter.BackColor = GroupFilter.Valid ? Color.White : Color.LightCoral;
+
         }
 
         #endregion

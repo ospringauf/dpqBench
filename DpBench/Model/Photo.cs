@@ -16,14 +16,20 @@
 
 namespace Paguru.DpBench.Model
 {
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
     using System.IO;
+    using System.Reflection;
+    using System.Windows.Forms;
     using System.Xml.Serialization;
 
+    using BrightIdeasSoftware;
+
     /// <summary>
-    /// TODO: Update summary.
+    /// Model data for a photo (image + parameters)
     /// </summary>
     public class Photo : INotifyPropertyChanged
     {
@@ -45,6 +51,12 @@ namespace Paguru.DpBench.Model
 
         private string lens;
 
+        private string param1;
+
+        private string param2;
+
+        private string param3;
+
         #endregion
 
         #region Public Events
@@ -55,7 +67,8 @@ namespace Paguru.DpBench.Model
 
         #region Public Properties
 
-        [PhotoParameter]
+        [PhotoParameter(Sorter = typeof(FloatSorter))]
+        [OLVColumn("Aperture", Width = 70, DisplayIndex = 3, TextAlign = HorizontalAlignment.Right)]
         public string Aperture
         {
             get
@@ -80,6 +93,7 @@ namespace Paguru.DpBench.Model
         }
 
         [PhotoParameter]
+        [OLVColumn(Width = 70, DisplayIndex = 1)]
         public string Camera
         {
             get
@@ -93,7 +107,8 @@ namespace Paguru.DpBench.Model
             }
         }
 
-        [PhotoParameter]
+        [PhotoParameter(Sorter = typeof(FractionSorter))]
+        [OLVColumn("Exposure", Width = 70, DisplayIndex = 4, TextAlign = HorizontalAlignment.Right)]
         public string Exposure
         {
             get
@@ -107,6 +122,7 @@ namespace Paguru.DpBench.Model
             }
         }
 
+        [OLVColumn(Width = 170, DisplayIndex = 0, TextAlign = HorizontalAlignment.Right)]
         public string Filename
         {
             get
@@ -120,7 +136,8 @@ namespace Paguru.DpBench.Model
             }
         }
 
-        [PhotoParameter]
+        [PhotoParameter(Sorter = typeof(FloatSorter))]
+        [OLVColumn("FocalLength", Width = 70, DisplayIndex = 5, TextAlign = HorizontalAlignment.Right)]
         public string FocalLength
         {
             get
@@ -140,11 +157,12 @@ namespace Paguru.DpBench.Model
         {
             get
             {
-                return Image.FromFile(Filename);
+                return ImageCache.LoadImage(Filename);
             }
         }
 
-        [PhotoParameter]
+        [PhotoParameter(Sorter = typeof(FloatSorter))]
+        [OLVColumn(Title = "ISO", Width = 50, DisplayIndex = 6, TextAlign = HorizontalAlignment.Right)]
         public string Iso
         {
             get
@@ -158,6 +176,7 @@ namespace Paguru.DpBench.Model
             }
         }
 
+        [OLVColumn(Width = 150, DisplayIndex = 10)]
         public string Keywords
         {
             get
@@ -172,6 +191,7 @@ namespace Paguru.DpBench.Model
         }
 
         [PhotoParameter]
+        [OLVColumn(Width = 80, DisplayIndex = 2)]
         public string Lens
         {
             get
@@ -188,6 +208,48 @@ namespace Paguru.DpBench.Model
         [Browsable(false)]
         [XmlIgnore]
         public Project Project { get; set; }
+
+        [PhotoParameter]
+        [OLVColumn(Width = 50, DisplayIndex = 21)]
+        public string Param1
+        {
+            get
+            {
+                return param1;
+            }
+            set
+            {
+                param1 = value;
+            }
+        }
+
+        [PhotoParameter]
+        [OLVColumn(Width = 50, DisplayIndex = 22)]
+        public string Param2
+        {
+            get
+            {
+                return param2;
+            }
+            set
+            {
+                param2 = value;
+            }
+        }
+
+        [PhotoParameter]
+        [OLVColumn(Width = 50, DisplayIndex = 23)]
+        public string Param3
+        {
+            get
+            {
+                return param3;
+            }
+            set
+            {
+                param3 = value;
+            }
+        }
 
         #endregion
 
@@ -209,6 +271,40 @@ namespace Paguru.DpBench.Model
                 }
             }
             return result;
+        }
+
+        private static PropertyInfo GetPropertyByOlvName(string title)
+        {
+            foreach (var pi in typeof(Photo).GetProperties())
+            {
+                var att = pi.GetCustomAttributes(typeof(OLVColumnAttribute), false);
+                if (att.Length > 0)
+                {
+                    var catt = att[0] as OLVColumnAttribute;
+                    if (string.Equals(catt.Title, title, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return pi;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public static IComparer GetComparerForOlvColumn(string colName)
+        {
+            var pi = GetPropertyByOlvName(colName);
+            if (pi != null)
+            {
+                var att = pi.GetCustomAttributes(typeof(PhotoParameterAttribute), false);
+                if (att.Length > 0)
+                {
+                    var comparerType = ((PhotoParameterAttribute)att[0]).Sorter;
+                    var s = Activator.CreateInstance(comparerType);
+                    var c = (IComparer)s;
+                    return c;
+                }
+            }
+            return null;
         }
 
         #endregion

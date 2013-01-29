@@ -16,6 +16,7 @@
 
 namespace Paguru.DpBench.Model
 {
+    using System;
     using System.ComponentModel;
 
     /// <summary>
@@ -27,16 +28,23 @@ namespace Paguru.DpBench.Model
 
         private bool selected;
 
-        private object value;
+        private string value;
 
         #endregion
 
         #region Constructors and Destructors
 
-        public SelectableValue(object v, bool sel = true)
+        public SelectableValue(string v, bool sel = true)
         {
             value = v;
             selected = sel;
+        }
+
+        /// <summary>
+        /// Only for serializing
+        /// </summary>
+        public SelectableValue()
+        {
         }
 
         #endregion
@@ -57,12 +65,15 @@ namespace Paguru.DpBench.Model
             }
             set
             {
-                selected = value;
-                NotifyPropertyChanged("Selected");
+                if (selected != value)
+                {
+                    selected = value;
+                    NotifyPropertyChanged("Selected");
+                }
             }
         }
 
-        public object Value
+        public string Value
         {
             get
             {
@@ -70,8 +81,11 @@ namespace Paguru.DpBench.Model
             }
             set
             {
-                this.value = value;
-                NotifyPropertyChanged("Value");
+                if (!Equals(this.value, value))
+                {
+                    this.value = value;
+                    NotifyPropertyChanged("Value");
+                }
             }
         }
 

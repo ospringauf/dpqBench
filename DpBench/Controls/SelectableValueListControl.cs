@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------------------------
-// DpBench - ListOrderControl.cs
+// DpBench - SelectableValueListControl.cs
 // http://sourceforge.net/projects/dpbench/
 // -----------------------------------------------------------------------------------------
 // Copyright 2013 Oliver Springauf
@@ -23,7 +23,7 @@ namespace Paguru.DpBench.Controls
 
     using Paguru.DpBench.Model;
 
-    public partial class ListOrderControl : UserControl
+    public partial class SelectableValueListControl : UserControl
     {
         #region Constants and Fields
 
@@ -31,10 +31,9 @@ namespace Paguru.DpBench.Controls
 
         #endregion
 
-        // private List<string> selectedValues;
         #region Constructors and Destructors
 
-        public ListOrderControl()
+        public SelectableValueListControl()
         {
             InitializeComponent();
             checkedListBox1.KeyDown += MoveItem;

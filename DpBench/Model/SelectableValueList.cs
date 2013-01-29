@@ -19,11 +19,14 @@ namespace Paguru.DpBench.Model
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
+    using System.Xml.Serialization;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// List of selectable strings.
+    /// (I would have liked to make the value type generic, but the XML serializer chokes on generic collections 
+    /// with a CS0030 error.)
     /// </summary>
-    public class SelectableValueList<T> : List<SelectableValue>, INotifyPropertyChanged where T : class 
+    public class SelectableValueList : List<SelectableValue>, INotifyPropertyChanged
     {
         #region Public Events
 
@@ -33,12 +36,12 @@ namespace Paguru.DpBench.Model
 
         #region Public Properties
 
-        public List<T> SelectedValues
+        [XmlIgnore]
+        public List<string> SelectedValues
         {
             get
             {
-                // return this.Where(v => v.Selected).Cast<object>().ToList();
-                return (from x in this where x.Selected select x.Value).Cast<T>().ToList();
+                return (from x in this where x.Selected select x.Value).ToList();
             }
         }
 
@@ -46,7 +49,8 @@ namespace Paguru.DpBench.Model
 
         #region Public Indexers
 
-        public bool this[object v]
+        [XmlIgnore]
+        public bool this[string v]
         {
             get
             {
@@ -73,7 +77,7 @@ namespace Paguru.DpBench.Model
 
         #region Public Methods
 
-        private bool ContainsValue(T value)
+        private bool ContainsValue(string value)
         {
             return Find(x => Equals(x.Value, value)) != null;
         }
@@ -92,7 +96,7 @@ namespace Paguru.DpBench.Model
         /// Updates the values list to the specified new domain, keeping the existing selection
         /// </summary>
         /// <param name="newDomain">The new domain.</param>
-        public void Update(List<T> newDomain, bool selected = false)
+        public void Update(List<string> newDomain, bool selected = false)
         {
             // add
             foreach (var x in newDomain)

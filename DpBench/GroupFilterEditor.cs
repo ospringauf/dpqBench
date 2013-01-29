@@ -17,12 +17,16 @@
 namespace Paguru.DpBench
 {
     using System;
+    using System.Drawing;
     using System.Windows.Forms;
 
     using Paguru.DpBench.Controls;
     using Paguru.DpBench.Model;
     using Paguru.DpBench.Renderer;
 
+    /// <summary>
+    /// Editor for group levels, parameter order and filter
+    /// </summary>
     public partial class GroupFilterEditor : Form
     {
         #region Constructors and Destructors
@@ -31,16 +35,27 @@ namespace Paguru.DpBench
         /// Initializes a new instance of the <see cref="GroupFilterEditor"/> class.
         /// </summary>
         /// <param name="root">The root.</param>
-        public GroupFilterEditor(GroupFilter root)
+        public GroupFilterEditor(Project project, GroupFilter root)
         {
             InitializeComponent();
 
+            Project = project;
             Root = root;
-            var glc = AddGroupLevelControl(root);
-            glc.buttonClose.Enabled = glc.buttonClose.Visible = false;
+
+            var f = root;
+            while (f != null)
+            {
+                var glc = AddGroupFilterControl(f);
+
+                // enable close only on child filters
+                glc.buttonClose.Enabled = glc.buttonClose.Visible = glc.GroupFilter.PrevGroupFilter != null;
+                f = f.NextGroupFilter;
+            }
 
             // propagate size change to group columns
             this.Layout += AdjustGroupLevelControlSizes;
+
+            panelRendererSettings.Controls.Add(new YxTableRendererSettingsControl(new YxImageTableRenderer(project), Root));
         }
 
         #endregion
@@ -49,11 +64,13 @@ namespace Paguru.DpBench
 
         public GroupFilter Root { get; set; }
 
+        public Project Project { get; private set; }
+
         #endregion
 
         #region Methods
 
-        private GroupFilterControl AddGroupLevelControl(GroupFilter root)
+        private GroupFilterControl AddGroupFilterControl(GroupFilter root)
         {
             var glc = new GroupFilterControl(root);
 
@@ -79,28 +96,35 @@ namespace Paguru.DpBench
 
             // connect previous to next
             c.GroupFilter.Remove();
-            //var p = c.GroupFilter.PrevGroupFilter;
-            //var n = c.GroupFilter.NextGroupFilter;
-            //p.NextGroupFilter = n;
-            //if (n != null)
-            //{
-            //    n.PrevGroupFilter = p;
-            //}
         }
 
         #endregion
 
         private void buttonTest_Click(object sender, EventArgs e)
         {
-            var r = new TextMosaicRenderer();
+            var r = new YxTextTableRenderer();
             var x = r.Render(Root);
 
             Console.Out.WriteLine(x);
         }
 
-        private void buttonAddFilter_Click(object sender, EventArgs e)
+        private void buttonTestImage_Click(object sender, EventArgs e)
         {
-            AddGroupLevelControl(Root.Last.BuildNextLevel());
+            var r = new YxImageTableRenderer(Project);
+            r.BoundingBox = new Size(200, 200);
+            var img = r.Render(Root) as Image;
+            new ImagePreview(img).Show(this);
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            AddGroupFilterControl(Root.Last.BuildNextLevel());
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var xml = Util.SerializeToXmlDocument(Root);
+            Console.Out.WriteLine(xml.OuterXml);
         }
     }
 }
