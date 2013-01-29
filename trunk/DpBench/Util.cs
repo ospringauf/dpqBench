@@ -17,14 +17,14 @@
 namespace Paguru.DpBench
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Text;
+    using System.Windows.Forms;
     using System.Xml;
     using System.Xml.Serialization;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// helper functions
     /// </summary>
     public class Util
     {
@@ -68,8 +68,6 @@ namespace Paguru.DpBench
             return xmlObject;
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1059:MembersShouldNotExposeCertainConcreteTypes", 
-            Justification = "XmlDocument is OK here (not IXPathNavigable )")]
         public static XmlDocument SerializeToXmlDocument<T>(T obj)
         {
             var xmlDoc = new XmlDocument();
@@ -113,6 +111,27 @@ namespace Paguru.DpBench
                 var result = utf8e.GetString(memStrm.ToArray());
                 return result;
             }
+        }
+
+        public static string FilterString(string s, string allowedCharacters)
+        {
+            var r = String.Empty;
+            for (int i = 0; i < s.Length; ++i)
+            {
+                if (allowedCharacters.IndexOf(s[i]) >= 0)
+                {
+                    r += s[i];
+                }
+            }
+            return r; //.Replace(',', '.');
+        }
+
+        public static string RelativePath(string filepath)
+        {
+            Uri uri1 = new Uri(filepath);
+            Uri uri2 = new Uri(Application.StartupPath);
+            Uri relativeUri = uri2.MakeRelativeUri(uri1);
+            return "..\\" + relativeUri.ToString().Replace('/', '\\');
         }
 
         #endregion

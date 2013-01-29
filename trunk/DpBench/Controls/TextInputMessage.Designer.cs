@@ -1,4 +1,4 @@
-﻿namespace Paguru.DpBench
+namespace Paguru.DpBench.Controls
 {
     partial class TextInputMessage
     {

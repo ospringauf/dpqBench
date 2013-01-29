@@ -130,6 +130,13 @@ namespace Paguru.DpBench.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap icon {
+            get {
+                object obj = ResourceManager.GetObject("icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap plus_16x16 {
             get {
                 object obj = ResourceManager.GetObject("plus_16x16", resourceCulture);
@@ -154,6 +161,13 @@ namespace Paguru.DpBench.Properties {
         internal static System.Drawing.Bitmap plus_alt_24x24 {
             get {
                 object obj = ResourceManager.GetObject("plus_alt_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap text4201 {
+            get {
+                object obj = ResourceManager.GetObject("text4201", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

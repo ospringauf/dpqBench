@@ -17,15 +17,22 @@
 namespace Paguru.DpBench
 {
     using System;
+    using System.IO;
     using System.Linq;
     using System.Windows.Forms;
 
+    using Paguru.DpBench.Controls;
     using Paguru.DpBench.Model;
 
     using WeifenLuo.WinFormsUI.Docking;
 
     public partial class MainWindow : Form
     {
+        /// <summary>
+        /// Gets or sets the startup project file (command line parameter).
+        /// </summary>
+        public string StartupProjectFile { get; set; }
+
         #region Constants and Fields
 
         private static MainWindow _instance;
@@ -37,6 +44,7 @@ namespace Paguru.DpBench
         private MainWindow()
         {
             InitializeComponent();
+            dockPanel.DocumentStyle = DocumentStyle.DockingMdi;
         }
 
         #endregion
@@ -89,65 +97,50 @@ namespace Paguru.DpBench
 
         private void MainWindow_Shown(object sender, EventArgs e)
         {
-            newProjectToolStripMenuItem_Click(null, null);
-            propertiesToolStripMenuItem_Click(null, null);
-            detailEditorToolStripMenuItem_Click(null, null);
+            if (StartupProjectFile != null)
+            {
+                OpenProjectWindow(Project.Load(StartupProjectFile));
+            }
+            else
+            {
+                OpenProjectWindow(new Project());
+            }
+            MenuPropertiesClick(null, null);
+            MenuDetailEditorClick(null, null);
         }
 
         private void OpenProjectWindow(Project p)
         {
             var projectWindow = new ProjectWindow(p);
-            if (dockPanel.DocumentStyle == DocumentStyle.SystemMdi)
-            {
-                projectWindow.MdiParent = this;
-                projectWindow.Show();
-            }
-            else
-            {
-                projectWindow.Show(dockPanel);
-            }
+            projectWindow.Show(dockPanel);
         }
 
-        private void detailEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MenuDetailEditorClick(object sender, EventArgs e)
         {
             var detailEditor = new DetailEditor();
-            if (dockPanel.DocumentStyle == DocumentStyle.SystemMdi)
-            {
-                detailEditor.MdiParent = this;
-                detailEditor.Show();
-            }
-            else
-            {
-                detailEditor.Show(dockPanel);
-            }
+            detailEditor.Show(dockPanel);
         }
 
-        private void newProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MenuNewProjectClick(object sender, EventArgs e)
         {
             OpenProjectWindow(new Project());
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MenuOpenClick(object sender, EventArgs e)
         {
-            var fod = new OpenFileDialog() { DefaultExt = ".xml" };
+            var fod = new OpenFileDialog() { DefaultExt = ".xml", Filter = "Project files (*.xml)|*.xml" };
             if (fod.ShowDialog(this) == DialogResult.OK)
             {
-                OpenProjectWindow(Project.Load(fod.FileName));
+                var project = Project.Load(fod.FileName);
+                project.Name = Path.GetFileNameWithoutExtension(fod.FileName);
+                OpenProjectWindow(project);
             }
         }
 
-        private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MenuPropertiesClick(object sender, EventArgs e)
         {
             var propertyWindow = new PhotoPropertyWindow();
-            if (dockPanel.DocumentStyle == DocumentStyle.SystemMdi)
-            {
-                propertyWindow.MdiParent = this;
-                propertyWindow.Show();
-            }
-            else
-            {
-                propertyWindow.Show(dockPanel);
-            }
+            propertyWindow.Show(dockPanel);
         }
 
         #endregion
@@ -155,6 +148,38 @@ namespace Paguru.DpBench
         public void ShowError(Exception exception)
         {
             MessageBox.Show(exception.Message);
+        }
+
+        public void ScaleProgress(string processStep, int max)
+        {
+            toolStripProgressBar1.Maximum = max;
+            toolStripStatusLabel1.Text = processStep;
+            statusStrip1.Update();
+        }
+
+        public void ClearProgress()
+        {
+            toolStripStatusLabel1.Text = string.Empty;
+            toolStripProgressBar1.Value = 0;
+            statusStrip1.Update();
+        }
+
+        public int Progress
+        {
+            get
+            {
+                return toolStripProgressBar1.Value;
+            }
+            set
+            {
+                toolStripProgressBar1.Value = value;
+                statusStrip1.Update();
+            }
+        }
+
+        private void MenuFileAboutClick(object sender, EventArgs e)
+        {
+            new AboutDialog().ShowDialog(this);
         }
     }
 }

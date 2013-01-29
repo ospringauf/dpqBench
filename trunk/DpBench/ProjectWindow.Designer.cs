@@ -30,206 +30,130 @@
         {
             this.components = new System.ComponentModel.Container();
             this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
-            this.olvColumnFilename = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumnCamera = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumnLens = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumnAperture = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumnExposure = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumnFocalLength = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumnIso = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.olvColumnKeywords = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.contextMenuPhoto = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStripProject = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupLevelEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addFilesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.createBenchmarkChartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
             this.contextMenuPhoto.SuspendLayout();
-            this.contextMenuStripProject.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // objectListView1
             // 
-            this.objectListView1.AllColumns.Add(this.olvColumnFilename);
-            this.objectListView1.AllColumns.Add(this.olvColumnCamera);
-            this.objectListView1.AllColumns.Add(this.olvColumnLens);
-            this.objectListView1.AllColumns.Add(this.olvColumnAperture);
-            this.objectListView1.AllColumns.Add(this.olvColumnExposure);
-            this.objectListView1.AllColumns.Add(this.olvColumnFocalLength);
-            this.objectListView1.AllColumns.Add(this.olvColumnIso);
-            this.objectListView1.AllColumns.Add(this.olvColumnKeywords);
             this.objectListView1.AllowDrop = true;
             this.objectListView1.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.SingleClick;
-            this.objectListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.olvColumnFilename,
-            this.olvColumnCamera,
-            this.olvColumnLens,
-            this.olvColumnAperture,
-            this.olvColumnExposure,
-            this.olvColumnFocalLength,
-            this.olvColumnIso,
-            this.olvColumnKeywords});
             this.objectListView1.ContextMenuStrip = this.contextMenuPhoto;
             this.objectListView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectListView1.FullRowSelect = true;
             this.objectListView1.GridLines = true;
             this.objectListView1.Location = new System.Drawing.Point(0, 0);
             this.objectListView1.Name = "objectListView1";
-            this.objectListView1.Size = new System.Drawing.Size(625, 412);
+            this.objectListView1.ShowCommandMenuOnRightClick = true;
+            this.objectListView1.ShowGroups = false;
+            this.objectListView1.Size = new System.Drawing.Size(699, 320);
+            this.objectListView1.SortGroupItemsByPrimaryColumn = false;
+            this.objectListView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.objectListView1.TabIndex = 1;
             this.objectListView1.UseCompatibleStateImageBehavior = false;
             this.objectListView1.View = System.Windows.Forms.View.Details;
             this.objectListView1.SelectionChanged += new System.EventHandler(this.objectListView1_SelectionChanged);
-            // 
-            // olvColumnFilename
-            // 
-            this.olvColumnFilename.AspectName = "Filename";
-            this.olvColumnFilename.CellPadding = null;
-            this.olvColumnFilename.Groupable = false;
-            this.olvColumnFilename.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.olvColumnFilename.MinimumWidth = 100;
-            this.olvColumnFilename.Text = "File";
-            this.olvColumnFilename.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.olvColumnFilename.Width = 100;
-            // 
-            // olvColumnCamera
-            // 
-            this.olvColumnCamera.AspectName = "Camera";
-            this.olvColumnCamera.CellPadding = null;
-            this.olvColumnCamera.MinimumWidth = 10;
-            this.olvColumnCamera.Text = "Camera";
-            // 
-            // olvColumnLens
-            // 
-            this.olvColumnLens.AspectName = "Lens";
-            this.olvColumnLens.CellPadding = null;
-            this.olvColumnLens.MinimumWidth = 10;
-            this.olvColumnLens.Text = "Lens";
-            // 
-            // olvColumnAperture
-            // 
-            this.olvColumnAperture.AspectName = "Aperture";
-            this.olvColumnAperture.CellPadding = null;
-            this.olvColumnAperture.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.olvColumnAperture.MinimumWidth = 10;
-            this.olvColumnAperture.Text = "Aperture";
-            this.olvColumnAperture.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // olvColumnExposure
-            // 
-            this.olvColumnExposure.AspectName = "Exposure";
-            this.olvColumnExposure.CellPadding = null;
-            this.olvColumnExposure.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.olvColumnExposure.MinimumWidth = 10;
-            this.olvColumnExposure.Text = "Exposure";
-            this.olvColumnExposure.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // olvColumnFocalLength
-            // 
-            this.olvColumnFocalLength.AspectName = "FocalLength";
-            this.olvColumnFocalLength.CellPadding = null;
-            this.olvColumnFocalLength.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.olvColumnFocalLength.Text = "FocalLength";
-            this.olvColumnFocalLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // olvColumnIso
-            // 
-            this.olvColumnIso.AspectName = "Iso";
-            this.olvColumnIso.CellPadding = null;
-            this.olvColumnIso.HeaderTextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.olvColumnIso.MinimumWidth = 10;
-            this.olvColumnIso.Text = "ISO";
-            this.olvColumnIso.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // olvColumnKeywords
-            // 
-            this.olvColumnKeywords.AspectName = "Keywords";
-            this.olvColumnKeywords.CellPadding = null;
-            this.olvColumnKeywords.MinimumWidth = 10;
-            this.olvColumnKeywords.Text = "Keywords";
             // 
             // contextMenuPhoto
             // 
             this.contextMenuPhoto.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteToolStripMenuItem});
             this.contextMenuPhoto.Name = "contextMenuPhoto";
-            this.contextMenuPhoto.Size = new System.Drawing.Size(153, 48);
+            this.contextMenuPhoto.Size = new System.Drawing.Size(108, 26);
             // 
             // deleteToolStripMenuItem
             // 
+            this.deleteToolStripMenuItem.Image = global::Paguru.DpBench.Properties.Resources.x_14x14;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
-            // contextMenuStripProject
+            // menuStrip1
             // 
-            this.contextMenuStripProject.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addFilesToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.groupLevelEditorToolStripMenuItem});
-            this.contextMenuStripProject.Name = "contextMenuStrip1";
-            this.contextMenuStripProject.Size = new System.Drawing.Size(172, 92);
+            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.projectToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(22, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(64, 24);
+            this.menuStrip1.TabIndex = 2;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // addFilesToolStripMenuItem
+            // projectToolStripMenuItem
             // 
-            this.addFilesToolStripMenuItem.Name = "addFilesToolStripMenuItem";
-            this.addFilesToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.addFilesToolStripMenuItem.Text = "Add File(s) ...";
-            this.addFilesToolStripMenuItem.Click += new System.EventHandler(this.addFilesToolStripMenuItem_Click);
+            this.projectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem1,
+            this.addFilesToolStripMenuItem1,
+            this.createBenchmarkChartToolStripMenuItem});
+            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
+            this.projectToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.projectToolStripMenuItem.Text = "Project";
             // 
-            // saveToolStripMenuItem
+            // saveToolStripMenuItem1
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(215, 22);
+            this.saveToolStripMenuItem1.Text = "Save ...";
+            this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
-            // groupLevelEditorToolStripMenuItem
+            // addFilesToolStripMenuItem1
             // 
-            this.groupLevelEditorToolStripMenuItem.Name = "groupLevelEditorToolStripMenuItem";
-            this.groupLevelEditorToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.groupLevelEditorToolStripMenuItem.Text = "Group Level Editor";
-            this.groupLevelEditorToolStripMenuItem.Click += new System.EventHandler(this.groupLevelEditorToolStripMenuItem_Click);
+            this.addFilesToolStripMenuItem1.Name = "addFilesToolStripMenuItem1";
+            this.addFilesToolStripMenuItem1.Size = new System.Drawing.Size(215, 22);
+            this.addFilesToolStripMenuItem1.Text = "Add File(s) ...";
+            this.addFilesToolStripMenuItem1.Click += new System.EventHandler(this.addFilesToolStripMenuItem_Click);
+            // 
+            // createBenchmarkChartToolStripMenuItem
+            // 
+            this.createBenchmarkChartToolStripMenuItem.Name = "createBenchmarkChartToolStripMenuItem";
+            this.createBenchmarkChartToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.createBenchmarkChartToolStripMenuItem.Text = "Create Benchmark Chart ...";
+            this.createBenchmarkChartToolStripMenuItem.Click += new System.EventHandler(this.groupLevelEditorToolStripMenuItem_Click);
             // 
             // ProjectWindow
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(625, 412);
+            this.ClientSize = new System.Drawing.Size(699, 320);
             this.Controls.Add(this.objectListView1);
+            this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "ProjectWindow";
-            this.TabPageContextMenuStrip = this.contextMenuStripProject;
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "ProjectWindow";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ProjectWindow_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ProjectWindow_DragDrop);
             this.DragOver += new System.Windows.Forms.DragEventHandler(this.ProjectWindow_DragDrop);
             ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
             this.contextMenuPhoto.ResumeLayout(false);
-            this.contextMenuStripProject.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private BrightIdeasSoftware.ObjectListView objectListView1;
-        private BrightIdeasSoftware.OLVColumn olvColumnFilename;
-        private BrightIdeasSoftware.OLVColumn olvColumnAperture;
-        private BrightIdeasSoftware.OLVColumn olvColumnCamera;
-        private BrightIdeasSoftware.OLVColumn olvColumnLens;
-        private BrightIdeasSoftware.OLVColumn olvColumnIso;
-        private BrightIdeasSoftware.OLVColumn olvColumnExposure;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStripProject;
-        private System.Windows.Forms.ToolStripMenuItem addFilesToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuPhoto;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private BrightIdeasSoftware.OLVColumn olvColumnKeywords;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem groupLevelEditorToolStripMenuItem;
-        private BrightIdeasSoftware.OLVColumn olvColumnFocalLength;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem addFilesToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem createBenchmarkChartToolStripMenuItem;
     }
 }

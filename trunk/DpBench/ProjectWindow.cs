@@ -20,10 +20,15 @@ namespace Paguru.DpBench
     using System.ComponentModel;
     using System.Windows.Forms;
 
+    using BrightIdeasSoftware;
+
     using Paguru.DpBench.Model;
 
     using WeifenLuo.WinFormsUI.Docking;
 
+    /// <summary>
+    /// Project window, consists of a list of the photos to be analyzed.
+    /// </summary>
     public partial class ProjectWindow : DockContent
     {
         #region Constructors and Destructors
@@ -32,6 +37,15 @@ namespace Paguru.DpBench
         {
             Project = project;
             InitializeComponent();
+
+            // generate columns from model annotations
+            Generator.GenerateColumns(objectListView1, typeof(Photo));
+
+            objectListView1.CustomSorter = (column, order) =>
+                {
+                    objectListView1.ListViewItemSorter = new ProjectColumnComparer(column, order);
+                };
+
             Text = project.Name ?? "New Project";
 
             objectListView1.SetObjects(Project.Photos);
@@ -68,11 +82,11 @@ namespace Paguru.DpBench
             ofd.Multiselect = true;
             if (ofd.ShowDialog(this) == DialogResult.OK)
             {
-                foreach (var fileName in ofd.FileNames)
+                using (Suspender.ShowSandTimerAndSuspend(this))
                 {
-                    Project.AddFile(fileName);
+                    Project.AddFiles(ofd.FileNames);
+                    objectListView1.SetObjects(Project.Photos);
                 }
-                objectListView1.SetObjects(Project.Photos);
             }
         }
 
@@ -105,7 +119,24 @@ namespace Paguru.DpBench
 
         private void groupLevelEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new GroupFilterEditor(new GroupFilter(Project.CreateAllDetails())).Show();
+            if (Project.DetailAreas.Count == 0)
+            {
+                MessageBox.Show("Please define at least one detail area in the detail editor");
+            }
+            else
+            {
+                // TODO do not assume that there is only one filter
+                if (Project.RootFilter != null)
+                {
+                    Project.RootFilter.Input = Project.CreateAllDetails();
+                }
+                else
+                {
+                    Project.RootFilter = new GroupFilter(Project.CreateAllDetails());
+                }
+                
+                new GroupFilterEditor(Project, Project.RootFilter).Show();
+            }
         }
 
         private void objectListView1_SelectionChanged(object sender, EventArgs e)
@@ -129,21 +160,19 @@ namespace Paguru.DpBench
 
         #endregion
 
+        /// <summary>
+        /// Called when a file is dropped in the project window
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.DragEventArgs"/> instance containing the event data.</param>
         private void ProjectWindow_DragDrop(object sender, DragEventArgs e)
         {
-            //Console.Out.WriteLine(e);
-            //var t = e.Data.GetType();
-            //Console.Out.WriteLine(t);
-            //var d = e.Data.GetFormats();
-            //Console.Out.WriteLine(d);
-            //var f = e.Data.GetData("FileName");
-            //Console.Out.WriteLine(f);
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             try
             {
-                foreach (string file in files)
+                using (Suspender.ShowSandTimerAndSuspend(this))
                 {
-                    Project.AddFile(file);
+                    Project.AddFiles(files);
                 }
             }
             catch (Exception ex)

@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.comboBoxParameter = new System.Windows.Forms.ComboBox();
             this.buttonClose = new System.Windows.Forms.Label();
-            this.listOrderControl1 = new Paguru.DpBench.Controls.ListOrderControl();
+            this.SelectableValueListControl1 = new Paguru.DpBench.Controls.SelectableValueListControl();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
@@ -62,16 +62,16 @@
             this.buttonClose.TabIndex = 2;
             this.toolTip1.SetToolTip(this.buttonClose, "delete group/filter");
             // 
-            // listOrderControl1
+            // SelectableValueListControl1
             // 
-            this.listOrderControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.SelectableValueListControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.listOrderControl1.Location = new System.Drawing.Point(3, 31);
-            this.listOrderControl1.Name = "listOrderControl1";
-            this.listOrderControl1.Size = new System.Drawing.Size(205, 315);
-            this.listOrderControl1.TabIndex = 0;
-            this.listOrderControl1.Values = null;
+            this.SelectableValueListControl1.Location = new System.Drawing.Point(3, 31);
+            this.SelectableValueListControl1.Name = "SelectableValueListControl1";
+            this.SelectableValueListControl1.Size = new System.Drawing.Size(205, 315);
+            this.SelectableValueListControl1.TabIndex = 0;
+            this.SelectableValueListControl1.Values = null;
             // 
             // GroupFilterControl
             // 
@@ -79,7 +79,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.comboBoxParameter);
-            this.Controls.Add(this.listOrderControl1);
+            this.Controls.Add(this.SelectableValueListControl1);
             this.Name = "GroupFilterControl";
             this.Size = new System.Drawing.Size(212, 346);
             this.ResumeLayout(false);
@@ -89,7 +89,7 @@
 
         #endregion
 
-        public ListOrderControl listOrderControl1;
+        public SelectableValueListControl SelectableValueListControl1;
         public System.Windows.Forms.ComboBox comboBoxParameter;
         public System.Windows.Forms.Label buttonClose;
         private System.Windows.Forms.ToolTip toolTip1;

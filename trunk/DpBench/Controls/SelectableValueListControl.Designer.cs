@@ -1,6 +1,6 @@
 ﻿namespace Paguru.DpBench.Controls
 {
-    partial class ListOrderControl
+    partial class SelectableValueListControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -103,7 +103,7 @@
             this.toolTip1.SetToolTip(this.labelDown, "move down (Ctrl+Down)");
             this.labelDown.Click += new System.EventHandler(this.labelDown_Click);
             // 
-            // ListOrderControl
+            // SelectableValueListControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -112,7 +112,7 @@
             this.Controls.Add(this.labelUp);
             this.Controls.Add(this.labelDown);
             this.Controls.Add(this.checkedListBox1);
-            this.Name = "ListOrderControl";
+            this.Name = "SelectableValueListControl";
             this.Size = new System.Drawing.Size(157, 294);
             this.ResumeLayout(false);
             this.PerformLayout();

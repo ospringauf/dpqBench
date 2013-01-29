@@ -1,5 +1,5 @@
-﻿// -----------------------------------------------------------------------------------------
-// DpBench - Form1.cs
+// -----------------------------------------------------------------------------------------
+// DpBench - TextInputMessage.cs
 // http://sourceforge.net/projects/dpbench/
 // -----------------------------------------------------------------------------------------
 // Copyright 2013 Oliver Springauf
@@ -14,29 +14,33 @@
 // limitations under the License.
 // -----------------------------------------------------------------------------------------
 
-namespace Paguru.DpBench
+namespace Paguru.DpBench.Controls
 {
-    using System.Collections.Generic;
+    using System;
     using System.Windows.Forms;
 
-    using Paguru.DpBench.Model;
-
-    public partial class Form1 : Form
+    public partial class TextInputMessage : Form
     {
         #region Constructors and Destructors
 
-        public Form1()
+        public TextInputMessage()
         {
             InitializeComponent();
+        }
 
-            var v = new List<SelectableValue> {
-                    new SelectableValue("a"), 
-                    new SelectableValue("b", false), 
-                    new SelectableValue("c"), 
-                    new SelectableValue("d", false), 
-                    new SelectableValue("e"), 
-                };
-            listOrderControl1.Values = v;
+        #endregion
+
+        #region Public Properties
+
+        public string InputText { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        private void textInput_TextChanged(object sender, EventArgs e)
+        {
+            InputText = textInput.Text;
         }
 
         #endregion
