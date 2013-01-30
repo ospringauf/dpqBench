@@ -38,7 +38,7 @@ namespace Paguru.DpBench.Renderer
             Renderer = renderer;
             Root = root;
             
-            linkLabelFont.Text = "Font: " + Renderer.LabelFont.Name + "...";
+            SetFontLabel();
             numericUpDownBBHeight.Value = renderer.BoundingBox.Height;
             numericUpDownBBWidth.Value = renderer.BoundingBox.Width;
             numericUpDownPadding.Value = renderer.Padding;
@@ -53,13 +53,20 @@ namespace Paguru.DpBench.Renderer
 
         #endregion
 
+        private void SetFontLabel()
+        {
+            var font = Renderer.LabelFont;
+            var fontname = string.Format("{0} {1}pt {2}", font.Name, font.SizeInPoints, font.Style);
+            linkLabelFont.Text = "Font: " + fontname;
+        }
+
         private void linkLabelFont_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var fsd = new FontDialog() { Font = Renderer.LabelFont };
             if (fsd.ShowDialog(this) == DialogResult.OK)
             {
                 Renderer.LabelFont = fsd.Font;
-                linkLabelFont.Text = Renderer.LabelFont.Name + "...";
+                SetFontLabel();
             }
         }
 

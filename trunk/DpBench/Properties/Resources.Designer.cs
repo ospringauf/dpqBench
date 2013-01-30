@@ -88,6 +88,62 @@ namespace Paguru.DpBench.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap arrow_left_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("arrow_left_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap arrow_left_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("arrow_left_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap arrow_left_alt1_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("arrow_left_alt1_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap arrow_left_alt1_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("arrow_left_alt1_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap arrow_right_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("arrow_right_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap arrow_right_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("arrow_right_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap arrow_right_alt1_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("arrow_right_alt1_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap arrow_right_alt1_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("arrow_right_alt1_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap arrow_up_16x16 {
             get {
                 object obj = ResourceManager.GetObject("arrow_up_16x16", resourceCulture);
@@ -116,6 +172,20 @@ namespace Paguru.DpBench.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap check_16x13 {
+            get {
+                object obj = ResourceManager.GetObject("check_16x13", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap check_24x19 {
+            get {
+                object obj = ResourceManager.GetObject("check_24x19", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap check_alt_16x16 {
             get {
                 object obj = ResourceManager.GetObject("check_alt_16x16", resourceCulture);
@@ -130,9 +200,16 @@ namespace Paguru.DpBench.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap icon {
+        internal static System.Drawing.Icon icon {
             get {
                 object obj = ResourceManager.GetObject("icon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap icon1 {
+            get {
+                object obj = ResourceManager.GetObject("icon1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -79,13 +79,20 @@ namespace Paguru.DpBench.Controls
             }
             set
             {
+                //if (Image != null)
+                //{
+                //    Image.Dispose();
+                //}
                 _photo = value;
-                if (_photo != null)
+                if (_photo != null && (Size.Width * Size.Height > 0))
                 {
-                    var img = Image.FromFile(_photo.Filename);
-                    _scaleFactor = ImageConverter.ScaleFactor(img.Size, Size);
-                    img = ImageConverter.resizeImage(img, Size);
-                    Image = img;
+                    var imgToResize = _photo.Image; // Image.FromFile(_photo.Filename);
+                    if (imgToResize != null)
+                    {
+                        _scaleFactor = ImageConverter.ScaleFactor(imgToResize.Size, Size);
+                        Image = ImageConverter.resizeImage(imgToResize, Size);
+                        imgToResize.Dispose();
+                    }
                 }
             }
         }
@@ -96,6 +103,10 @@ namespace Paguru.DpBench.Controls
 
         public void MyMouseDown(object sender, MouseEventArgs e)
         {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
             // Make a note that we "have the mouse".
             bHaveMouse = true;
 
@@ -111,6 +122,10 @@ namespace Paguru.DpBench.Controls
 
         public void MyMouseMove(object sender, MouseEventArgs e)
         {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
             Point ptCurrent = new Point(e.X, e.Y);
 
             // If we "have the mouse", then we draw our lines.
@@ -131,10 +146,12 @@ namespace Paguru.DpBench.Controls
             }
         }
 
-        
-
         public void MyMouseUp(object sender, MouseEventArgs e)
         {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
             // Set internal flag to know we no longer "have the mouse".
             bHaveMouse = false;
 
@@ -161,13 +178,33 @@ namespace Paguru.DpBench.Controls
         protected override void OnPaint(PaintEventArgs pe)
         {
             base.OnPaint(pe);
+            PaintDetailAreas(pe.Graphics);
+        }
+
+        private void PaintDetailAreas(Graphics g)
+        {
             if (Photo != null)
             {
                 foreach (var detail in Photo.Project.DetailAreas)
                 {
                     var pen = new Pen(Color.Orange, 3);
-                    pe.Graphics.DrawRectangle(pen, ImageConverter.ScaleRectangle(detail.Crop, _scaleFactor));
+                    g.DrawRectangle(pen, ImageConverter.ScaleRectangle(detail.Crop, _scaleFactor));
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets the image with detail rectangle areas (same size as current display).
+        /// </summary>
+        /// <returns></returns>
+        public Image GetImageWithDetailAreas()
+        {
+            Bitmap b = new Bitmap(Image.Width, Image.Height);
+            using (Graphics g = Graphics.FromImage((Image)b))
+            {
+                g.DrawImage(Image, 0, 0);
+                PaintDetailAreas(g);
+                return (Image)b;
             }
         }
 
@@ -225,6 +262,9 @@ namespace Paguru.DpBench.Controls
             {
                 OnDetailSelected(this, new EventArgs());
             }
+
+            // delete the reversible rectangle
+            MyDrawReversibleRectangle(p1, p2);
         }
 
         #endregion

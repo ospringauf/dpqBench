@@ -40,6 +40,7 @@ namespace Paguru.DpBench.Model
             PhotoLoadSaveList = new List<Photo>();
             DetailAreas = new BindingList<DetailArea>();
             Photos = new BindingList<Photo>();
+            Filters = new List<GroupFilter>();
         }
 
         #endregion
@@ -58,6 +59,18 @@ namespace Paguru.DpBench.Model
         [XmlIgnore]
         public string Name { get; set; }
 
+        [XmlIgnore]
+        public string ProjectFile { get; set; }
+        
+        [XmlIgnore]
+        public string ProjectDir
+        {
+            get
+            {
+                return string.IsNullOrEmpty(ProjectFile) ? null : Path.GetDirectoryName(ProjectFile);
+            }
+        }
+
         /// <summary>
         /// Gets or sets the photo load save list - only for serialization -.
         /// </summary>
@@ -67,7 +80,28 @@ namespace Paguru.DpBench.Model
         [XmlIgnore]
         public BindingList<Photo> Photos { get; set; }
 
-        public GroupFilter RootFilter { get; set; }
+        public List<GroupFilter> Filters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the default filter.
+        /// TODO: management of more than one filter
+        /// </summary>
+        [XmlIgnore]
+        public GroupFilter DefaultFilter
+        {
+            get
+            {
+                return (Filters.Count > 0) ? Filters[0] : null;
+            }
+            set
+            {
+                Filters.Clear();
+                if (value != null)
+                {
+                    Filters.Add(value);
+                }
+            }
+        }
 
         #endregion
 
@@ -76,6 +110,7 @@ namespace Paguru.DpBench.Model
         public static Project Load(string filename)
         {
             var project = Util.DeserializeFromXmlFile<Project>(filename);
+            project.ProjectFile = filename;
             project.Name = project.Name ?? Path.GetFileNameWithoutExtension(filename);
 
             project.PhotoLoadSaveList.ForEach(
@@ -83,6 +118,7 @@ namespace Paguru.DpBench.Model
                     {
                         project.Photos.Add(p);
                         p.Project = project;
+                        p.AbsFile = Path.Combine(Path.GetDirectoryName(filename), p.RelFile);
                     });
             project.DetailLoadSaveList.ForEach(project.DetailAreas.Add);
 
@@ -111,7 +147,8 @@ namespace Paguru.DpBench.Model
             var photo = new Photo()
                 {
                     Project = this, 
-                    Filename = Util.RelativePath(filename), 
+                    RelFile = Util.RelativePath(filename, ProjectDir), 
+                    AbsFile = Path.GetFullPath(filename),
                     Aperture = (aperture != null) ? aperture.Value : null, 
                     Camera = (camera != null) ? camera.Value : null, 
                     Exposure = (exposure != null) ? exposure.Value : null, 
@@ -152,6 +189,12 @@ namespace Paguru.DpBench.Model
 
         public void Save(string filename)
         {
+            foreach (var photo in Photos)
+            {
+                // adjust relative path
+                photo.RelFile = Util.RelativePath(photo.AbsFile, Path.GetDirectoryName(filename));
+            }
+            ProjectFile = filename;
             PhotoLoadSaveList = new List<Photo>(Photos);
             DetailLoadSaveList = new List<DetailArea>(DetailAreas);
             Name = Path.GetFileNameWithoutExtension(filename);
