@@ -30,7 +30,6 @@ namespace Paguru.DpBench.Model
     /// </summary>
     public class GroupFilter : INotifyPropertyChanged
     {
-        // private static int seq = 0;
         #region Constants and Fields
 
         private PhotoDetailCollection input;
@@ -39,7 +38,6 @@ namespace Paguru.DpBench.Model
 
         #endregion
 
-        // private int id = seq++;
         #region Constructors and Destructors
 
         /// <summary>
@@ -57,6 +55,7 @@ namespace Paguru.DpBench.Model
         /// </summary>
         public GroupFilter()
         {
+            Name = "GroupFilter";
             ParameterValues = new SelectableValueList();
             ParameterValues.PropertyChanged += SelectedParametersChanged;
         }
@@ -112,6 +111,8 @@ namespace Paguru.DpBench.Model
                 return this == Last;
             }
         }
+
+        public string Name { get; set; }
 
         [XmlIgnore]
         public int TotalTiles
@@ -299,7 +300,7 @@ namespace Paguru.DpBench.Model
 
         public override string ToString()
         {
-            return Parameter + "=" + string.Join(",", ParameterValues.SelectedValues);
+            return Parameter + "=" + string.Join(",", ParameterValues.SelectedValues.ToArray());
         }
 
         #endregion

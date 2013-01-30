@@ -17,7 +17,10 @@
 namespace Paguru.DpBench
 {
     using System;
+    using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
+    using System.Reflection;
     using System.Text;
     using System.Windows.Forms;
     using System.Xml;
@@ -126,12 +129,43 @@ namespace Paguru.DpBench
             return r; //.Replace(',', '.');
         }
 
-        public static string RelativePath(string filepath)
+        public static string RelativePath(string filepath, string projectDir)
         {
+            var workdir = projectDir; // Environment.CurrentDirectory;
+            if (string.IsNullOrEmpty(workdir))
+            {
+                return filepath;
+            }
+
             Uri uri1 = new Uri(filepath);
-            Uri uri2 = new Uri(Application.StartupPath);
+            Uri uri2 = new Uri(workdir + Path.DirectorySeparatorChar);
             Uri relativeUri = uri2.MakeRelativeUri(uri1);
-            return "..\\" + relativeUri.ToString().Replace('/', '\\');
+
+            string relativePath =
+                Uri.UnescapeDataString(relativeUri.ToString().Replace('/', Path.DirectorySeparatorChar));
+            return relativePath;
+        }
+
+        public static T GetAttribute<T>(PropertyInfo pi) where T : Attribute
+        {
+            if (pi.GetCustomAttributes(typeof(T), true).Length > 0)
+            {
+                object[] a = pi.GetCustomAttributes(typeof(T), true);
+                var typeAtt = a[0] as T;
+                return typeAtt;
+            }
+            return null;
+        }
+
+        public static bool HasAttribute<T>(PropertyInfo pi) where T : Attribute
+        {
+            return pi.GetCustomAttributes(typeof(T), true).Length > 0;
+        }
+
+        public static char DecimalPoint()
+        {
+            var s = string.Format(CultureInfo.CurrentCulture, "{0}", 1.1f);
+            return s[1];
         }
 
         #endregion

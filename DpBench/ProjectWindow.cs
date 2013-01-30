@@ -126,16 +126,16 @@ namespace Paguru.DpBench
             else
             {
                 // TODO do not assume that there is only one filter
-                if (Project.RootFilter != null)
+                if (Project.DefaultFilter != null)
                 {
-                    Project.RootFilter.Input = Project.CreateAllDetails();
+                    Project.DefaultFilter.Input = Project.CreateAllDetails();
                 }
                 else
                 {
-                    Project.RootFilter = new GroupFilter(Project.CreateAllDetails());
+                    Project.DefaultFilter = new GroupFilter(Project.CreateAllDetails());
                 }
                 
-                new GroupFilterEditor(Project, Project.RootFilter).Show();
+                new GroupFilterEditor(Project, Project.DefaultFilter).Show();
             }
         }
 
@@ -144,13 +144,20 @@ namespace Paguru.DpBench
             var x = objectListView1.SelectedObject as Photo;
             if (x != null)
             {
-                MainWindow.Instance.ShowPreview(x);
+                try
+                {
+                    MainWindow.Instance.ShowPreview(x);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Could not show preview", ex);
+                }
             }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fsd = new SaveFileDialog() { DefaultExt = ".xml", AddExtension = true };
+            var fsd = new SaveFileDialog() { DefaultExt = ".xml", AddExtension = true, Filter = "Project files (*.xml)|*.xml" };
             if (fsd.ShowDialog(this) == DialogResult.OK)
             {
                 Project.Save(fsd.FileName);

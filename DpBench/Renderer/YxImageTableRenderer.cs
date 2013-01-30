@@ -255,7 +255,7 @@ namespace Paguru.DpBench.Renderer
                 // -90 degrees
                 g.TranslateTransform(destRect.X, destRect.Bottom);
                 g.RotateTransform(270);
-                g.DrawString(labelText, LabelFont, Brushes.DarkSlateGray, new RectangleF(0, 0, destRect.Height, destRect.Width), format);
+                g.DrawString(labelText, LabelFont, Brushes.Black, new RectangleF(0, 0, destRect.Height, destRect.Width), format);
                 g.ResetTransform();
             }
             else

@@ -41,7 +41,9 @@ namespace Paguru.DpBench.Model
 
         private string exposure;
 
-        private string filename;
+        private string relFilePath;
+
+        private string absFilePath;
 
         private string focalLength;
 
@@ -88,7 +90,7 @@ namespace Paguru.DpBench.Model
         {
             get
             {
-                return Path.GetFileName(Filename);
+                return Path.GetFileName(absFilePath);
             }
         }
 
@@ -122,17 +124,34 @@ namespace Paguru.DpBench.Model
             }
         }
 
+        [XmlElement("File")]
+        [Browsable(false)]
         [OLVColumn(Width = 170, DisplayIndex = 0, TextAlign = HorizontalAlignment.Right)]
-        public string Filename
+        public string RelFile
         {
             get
             {
-                return filename;
+                return relFilePath;
             }
             set
             {
-                filename = value;
+                relFilePath = value;
                 NotifyPropertyChanged("Filename");
+            }
+        }
+
+        //[OLVColumn(Width = 170, DisplayIndex = 0, TextAlign = HorizontalAlignment.Right)]
+        [Browsable(false)]
+        [XmlIgnore]
+        public string AbsFile
+        {
+            get
+            {
+                return absFilePath;
+            }
+            set
+            {
+                absFilePath = value;
             }
         }
 
@@ -157,7 +176,15 @@ namespace Paguru.DpBench.Model
         {
             get
             {
-                return ImageCache.LoadImage(Filename);
+                try
+                {
+                    return ImageCache.LoadImage(absFilePath);
+                }
+                catch (Exception e)
+                {
+                    // TODO show error image?
+                    return null;
+                }
             }
         }
 
@@ -273,35 +300,22 @@ namespace Paguru.DpBench.Model
             return result;
         }
 
-        private static PropertyInfo GetPropertyByOlvName(string title)
+        /// <summary>
+        /// Gets the comparer for olv column.
+        /// </summary>
+        /// <param name="columnTitle">column title</param>
+        /// <returns></returns>
+        public static IComparer GetComparerForOlvColumn(string columnTitle)
         {
             foreach (var pi in typeof(Photo).GetProperties())
             {
-                var att = pi.GetCustomAttributes(typeof(OLVColumnAttribute), false);
-                if (att.Length > 0)
+                var olvca = Util.GetAttribute<OLVColumnAttribute>(pi);
+                var ppa = Util.GetAttribute<PhotoParameterAttribute>(pi);
+                if (olvca != null && ppa != null &&
+                    string.Equals(olvca.Title, columnTitle, StringComparison.OrdinalIgnoreCase))
                 {
-                    var catt = att[0] as OLVColumnAttribute;
-                    if (string.Equals(catt.Title, title, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return pi;
-                    }
-                }
-            }
-            return null;
-        }
-
-        public static IComparer GetComparerForOlvColumn(string colName)
-        {
-            var pi = GetPropertyByOlvName(colName);
-            if (pi != null)
-            {
-                var att = pi.GetCustomAttributes(typeof(PhotoParameterAttribute), false);
-                if (att.Length > 0)
-                {
-                    var comparerType = ((PhotoParameterAttribute)att[0]).Sorter;
-                    var s = Activator.CreateInstance(comparerType);
-                    var c = (IComparer)s;
-                    return c;
+                    var s = Activator.CreateInstance(ppa.Sorter);
+                    return (IComparer)s;
                 }
             }
             return null;

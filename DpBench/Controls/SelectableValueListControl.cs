@@ -75,7 +75,7 @@ namespace Paguru.DpBench.Controls
             {
                 l.Add(x.ToString());
             }
-            Console.Out.WriteLine(string.Join(",", l));
+            Console.Out.WriteLine(string.Join(",", l.ToArray()));
         }
 
         private void ItemChecked(object sender, ItemCheckEventArgs e)

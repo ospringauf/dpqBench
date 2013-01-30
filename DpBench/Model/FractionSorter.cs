@@ -27,6 +27,7 @@ namespace Paguru.DpBench.Model
     {
         #region Constants and Fields
 
+        private char decimalPoint = Util.DecimalPoint();
         private const string allowed = "+-0123456789.,/";
 
         #endregion
@@ -55,7 +56,8 @@ namespace Paguru.DpBench.Model
             {
                 return 0;
             }
-            x = x.Replace(',', '.');
+            x = x.Replace(',', decimalPoint);
+            x = x.Replace('.', decimalPoint);
             return x.Contains("/")
                        ? Convert.ToDouble(x.Split('/')[0]) / Convert.ToDouble(x.Split('/')[1])
                        : Convert.ToDouble(x);

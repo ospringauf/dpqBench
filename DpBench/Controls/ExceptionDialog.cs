@@ -38,7 +38,7 @@ namespace Paguru.DpBench.Controls
             var inner = e;
             while (inner != null)
             {
-                m += inner.Message + "\r\n";
+                m += inner.GetType().Name + ": " + inner.Message + "\r\n";
                 inner = inner.InnerException;
             }
             labelErrorMessage.Text = m;

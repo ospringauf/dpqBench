@@ -17,6 +17,7 @@
 namespace Paguru.DpBench
 {
     using System;
+    using System.Globalization;
     using System.Threading;
     using System.Windows.Forms;
 
@@ -32,13 +33,6 @@ namespace Paguru.DpBench
         [STAThread]
         private static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            if (args != null & args.Length > 0)
-            {
-                MainWindow.Instance.StartupProjectFile = args[0];
-            }
-
             // Add the event handler for handling UI thread exceptions to the event.
             Application.ThreadException += HandleUIThreadException;
 
@@ -48,6 +42,14 @@ namespace Paguru.DpBench
 
             // Add the event handler for handling non-UI thread exceptions to the event. 
             AppDomain.CurrentDomain.UnhandledException += HandleUnhandledException;
+
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            if (args != null & args.Length > 0)
+            {
+                MainWindow.Instance.StartupProjectFile = args[0];
+            }
 
             Application.Run(MainWindow.Instance);
         }
