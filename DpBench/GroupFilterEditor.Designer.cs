@@ -53,7 +53,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(593, 255);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(593, 283);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // groupBoxRendererSettings
@@ -61,9 +61,9 @@
             this.groupBoxRendererSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxRendererSettings.Controls.Add(this.panelRendererSettings);
-            this.groupBoxRendererSettings.Location = new System.Drawing.Point(12, 295);
+            this.groupBoxRendererSettings.Location = new System.Drawing.Point(12, 323);
             this.groupBoxRendererSettings.Name = "groupBoxRendererSettings";
-            this.groupBoxRendererSettings.Size = new System.Drawing.Size(602, 149);
+            this.groupBoxRendererSettings.Size = new System.Drawing.Size(602, 121);
             this.groupBoxRendererSettings.TabIndex = 3;
             this.groupBoxRendererSettings.TabStop = false;
             this.groupBoxRendererSettings.Text = "Renderer Settings";
@@ -73,7 +73,7 @@
             this.panelRendererSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelRendererSettings.Location = new System.Drawing.Point(3, 16);
             this.panelRendererSettings.Name = "panelRendererSettings";
-            this.panelRendererSettings.Size = new System.Drawing.Size(596, 130);
+            this.panelRendererSettings.Size = new System.Drawing.Size(596, 102);
             this.panelRendererSettings.TabIndex = 0;
             // 
             // groupBox1
@@ -85,7 +85,7 @@
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(602, 277);
+            this.groupBox1.Size = new System.Drawing.Size(602, 305);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Define group levels and filter parameter";

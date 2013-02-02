@@ -18,6 +18,7 @@ namespace Paguru.DpBench.Model
 {
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Drawing;
     using System.Linq;
     using System.Xml.Serialization;
 
@@ -34,6 +35,8 @@ namespace Paguru.DpBench.Model
 
         private PhotoDetailCollection input;
 
+        private GroupFilter nextGroupFilter;
+
         private string parameter;
 
         #endregion
@@ -44,7 +47,8 @@ namespace Paguru.DpBench.Model
         /// Initializes a new instance of the <see cref="GroupFilter"/> class.
         /// </summary>
         /// <param name="basis">The basis.</param>
-        public GroupFilter(PhotoDetailCollection basis) : this()
+        public GroupFilter(PhotoDetailCollection basis)
+            : this()
         {
             Input = basis;
             Parameter = Parameters[0];
@@ -71,6 +75,15 @@ namespace Paguru.DpBench.Model
         #region Public Properties
 
         [XmlIgnore]
+        public bool AllValid
+        {
+            get
+            {
+                return NextGroupFilter != null ? NextGroupFilter.AllValid && Valid : Valid;
+            }
+        }
+
+        [XmlIgnore]
         public PhotoDetailCollection Input
         {
             get
@@ -83,11 +96,20 @@ namespace Paguru.DpBench.Model
                 if (Parameter != null && Input != null)
                 {
                     // merge values list
-                    ParameterValues.Update(Input.FindAllValues(Parameter)); //.ConvertAll(s => (object)s));
+                    ParameterValues.Update(Input.FindAllValues(Parameter)); // .ConvertAll(s => (object)s));
 
                     Propagate();
                 }
                 NotifyPropertyChanged("Input");
+            }
+        }
+
+        [XmlIgnore]
+        public bool IsLast
+        {
+            get
+            {
+                return this == Last;
             }
         }
 
@@ -103,29 +125,7 @@ namespace Paguru.DpBench.Model
             }
         }
 
-        [XmlIgnore]
-        public bool IsLast
-        {
-            get
-            {
-                return this == Last;
-            }
-        }
-
         public string Name { get; set; }
-
-        [XmlIgnore]
-        public int TotalTiles
-        {
-            get
-            {
-                return IsLast
-                           ? ParameterValues.SelectedValues.Count
-                           : ParameterValues.SelectedValues.Count * NextGroupFilter.TotalTiles;
-            }
-        }
-
-        private GroupFilter nextGroupFilter;
 
         public GroupFilter NextGroupFilter
         {
@@ -184,6 +184,11 @@ namespace Paguru.DpBench.Model
         }
 
         /// <summary>
+        /// Gets or sets the distinct values of <see cref="Parameter"/> in the <see cref="Input"/>.
+        /// </summary>
+        public SelectableValueList ParameterValues { get; set; }
+
+        /// <summary>
         /// Gets all available parameters (eg. "Lens", "Camera", "Aperture") for the input images.
         /// </summary>
         [XmlIgnore]
@@ -203,10 +208,16 @@ namespace Paguru.DpBench.Model
         [XmlIgnore]
         public GroupFilter PrevGroupFilter { get; set; }
 
-        /// <summary>
-        /// Gets or sets the distinct values of <see cref="Parameter"/> in the <see cref="Input"/>.
-        /// </summary>
-        public SelectableValueList ParameterValues { get; set; }
+        [XmlIgnore]
+        public int TotalTiles
+        {
+            get
+            {
+                return IsLast
+                           ? ParameterValues.SelectedValues.Count
+                           : ParameterValues.SelectedValues.Count * NextGroupFilter.TotalTiles;
+            }
+        }
 
         [XmlIgnore]
         public bool Valid
@@ -214,15 +225,6 @@ namespace Paguru.DpBench.Model
             get
             {
                 return Output.Count > 0;
-            }
-        }
-
-        [XmlIgnore]
-        public bool AllValid
-        {
-            get
-            {
-                return NextGroupFilter != null ? NextGroupFilter.AllValid && Valid : Valid;
             }
         }
 
@@ -247,9 +249,28 @@ namespace Paguru.DpBench.Model
         public PhotoDetailCollection Filter(string value, PhotoDetailCollection fromDetails = null)
         {
             fromDetails = fromDetails ?? Input;
-            return
-                    new PhotoDetailCollection(
-                        fromDetails.Where(pd => pd.Parameters[Parameter] == value));
+            return new PhotoDetailCollection(fromDetails.Where(pd => pd.Parameters[Parameter] == value));
+        }
+
+        /// <summary>
+        /// Gets the max size of the output tiles.
+        /// </summary>
+        public Size GetMaxOutputTileSize()
+        {
+            var result = new Rectangle();
+            if (IsLast)
+            {
+                foreach (var pd in Output)
+                {
+                    var x = new Rectangle(new Point(0, 0), pd.Area.Crop.Size);
+                    result = Rectangle.Union(result, x);
+                }
+                return result.Size;
+            }
+            else
+            {
+                return NextGroupFilter.GetMaxOutputTileSize();
+            }
         }
 
         /// <summary>
@@ -265,6 +286,11 @@ namespace Paguru.DpBench.Model
                 n.PrevGroupFilter = p;
             }
             p.Propagate();
+        }
+
+        public override string ToString()
+        {
+            return Parameter + "=" + string.Join(",", ParameterValues.SelectedValues.ToArray());
         }
 
         #endregion
@@ -296,11 +322,6 @@ namespace Paguru.DpBench.Model
         private void SelectedParametersChanged(object sender, PropertyChangedEventArgs e)
         {
             Propagate();
-        }
-
-        public override string ToString()
-        {
-            return Parameter + "=" + string.Join(",", ParameterValues.SelectedValues.ToArray());
         }
 
         #endregion
