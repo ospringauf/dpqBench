@@ -22,7 +22,7 @@ namespace Paguru.DpBench.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Paguru.DpBench.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Paguru.DpBench.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Paguru.DpBench.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -60,217 +60,217 @@ namespace Paguru.DpBench.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_down_16x16 {
+        public static System.Drawing.Bitmap arrow_down_16x16 {
             get {
                 object obj = ResourceManager.GetObject("arrow_down_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_down_24x24 {
+        public static System.Drawing.Bitmap arrow_down_24x24 {
             get {
                 object obj = ResourceManager.GetObject("arrow_down_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_down_alt1_16x16 {
+        public static System.Drawing.Bitmap arrow_down_alt1_16x16 {
             get {
                 object obj = ResourceManager.GetObject("arrow_down_alt1_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_down_alt1_24x24 {
+        public static System.Drawing.Bitmap arrow_down_alt1_24x24 {
             get {
                 object obj = ResourceManager.GetObject("arrow_down_alt1_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_left_16x16 {
+        public static System.Drawing.Bitmap arrow_left_16x16 {
             get {
                 object obj = ResourceManager.GetObject("arrow_left_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_left_24x24 {
+        public static System.Drawing.Bitmap arrow_left_24x24 {
             get {
                 object obj = ResourceManager.GetObject("arrow_left_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_left_alt1_16x16 {
+        public static System.Drawing.Bitmap arrow_left_alt1_16x16 {
             get {
                 object obj = ResourceManager.GetObject("arrow_left_alt1_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_left_alt1_24x24 {
+        public static System.Drawing.Bitmap arrow_left_alt1_24x24 {
             get {
                 object obj = ResourceManager.GetObject("arrow_left_alt1_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_right_16x16 {
+        public static System.Drawing.Bitmap arrow_right_16x16 {
             get {
                 object obj = ResourceManager.GetObject("arrow_right_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_right_24x24 {
+        public static System.Drawing.Bitmap arrow_right_24x24 {
             get {
                 object obj = ResourceManager.GetObject("arrow_right_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_right_alt1_16x16 {
+        public static System.Drawing.Bitmap arrow_right_alt1_16x16 {
             get {
                 object obj = ResourceManager.GetObject("arrow_right_alt1_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_right_alt1_24x24 {
+        public static System.Drawing.Bitmap arrow_right_alt1_24x24 {
             get {
                 object obj = ResourceManager.GetObject("arrow_right_alt1_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_up_16x16 {
+        public static System.Drawing.Bitmap arrow_up_16x16 {
             get {
                 object obj = ResourceManager.GetObject("arrow_up_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_up_24x24 {
+        public static System.Drawing.Bitmap arrow_up_24x24 {
             get {
                 object obj = ResourceManager.GetObject("arrow_up_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_up_alt1_16x16 {
+        public static System.Drawing.Bitmap arrow_up_alt1_16x16 {
             get {
                 object obj = ResourceManager.GetObject("arrow_up_alt1_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap arrow_up_alt1_24x24 {
+        public static System.Drawing.Bitmap arrow_up_alt1_24x24 {
             get {
                 object obj = ResourceManager.GetObject("arrow_up_alt1_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap check_16x13 {
+        public static System.Drawing.Bitmap check_16x13 {
             get {
                 object obj = ResourceManager.GetObject("check_16x13", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap check_24x19 {
+        public static System.Drawing.Bitmap check_24x19 {
             get {
                 object obj = ResourceManager.GetObject("check_24x19", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap check_alt_16x16 {
+        public static System.Drawing.Bitmap check_alt_16x16 {
             get {
                 object obj = ResourceManager.GetObject("check_alt_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap check_alt_24x24 {
+        public static System.Drawing.Bitmap check_alt_24x24 {
             get {
                 object obj = ResourceManager.GetObject("check_alt_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Icon icon {
+        public static System.Drawing.Icon icon {
             get {
                 object obj = ResourceManager.GetObject("icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap icon1 {
+        public static System.Drawing.Bitmap icon1 {
             get {
                 object obj = ResourceManager.GetObject("icon1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap plus_16x16 {
+        public static System.Drawing.Bitmap plus_16x16 {
             get {
                 object obj = ResourceManager.GetObject("plus_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap plus_24x24 {
+        public static System.Drawing.Bitmap plus_24x24 {
             get {
                 object obj = ResourceManager.GetObject("plus_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap plus_alt_16x16 {
+        public static System.Drawing.Bitmap plus_alt_16x16 {
             get {
                 object obj = ResourceManager.GetObject("plus_alt_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap plus_alt_24x24 {
+        public static System.Drawing.Bitmap plus_alt_24x24 {
             get {
                 object obj = ResourceManager.GetObject("plus_alt_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap text4201 {
+        public static System.Drawing.Bitmap text4201 {
             get {
                 object obj = ResourceManager.GetObject("text4201", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap x_14x14 {
+        public static System.Drawing.Bitmap x_14x14 {
             get {
                 object obj = ResourceManager.GetObject("x_14x14", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap x_21x21 {
+        public static System.Drawing.Bitmap x_21x21 {
             get {
                 object obj = ResourceManager.GetObject("x_21x21", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap x_alt_16x16 {
+        public static System.Drawing.Bitmap x_alt_16x16 {
             get {
                 object obj = ResourceManager.GetObject("x_alt_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap x_alt_24x24 {
+        public static System.Drawing.Bitmap x_alt_24x24 {
             get {
                 object obj = ResourceManager.GetObject("x_alt_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));

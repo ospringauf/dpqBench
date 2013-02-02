@@ -16,8 +16,6 @@
 
 namespace Paguru.DpBench
 {
-    using System.Windows.Forms;
-
     using WeifenLuo.WinFormsUI.Docking;
 
     public partial class PhotoPropertyWindow : DockContent
@@ -27,20 +25,13 @@ namespace Paguru.DpBench
         public PhotoPropertyWindow()
         {
             InitializeComponent();
-            MainWindow.Instance.OnSelectPhoto += ShowPhotoProperties;
         }
 
         #endregion
 
         #region Methods
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-            MainWindow.Instance.OnSelectPhoto -= ShowPhotoProperties;
-        }
-
-        private void ShowPhotoProperties(object sender, PhotoSelectedEvent e)
+        public void ShowPhotoProperties(object sender, PhotoSelectedEvent e)
         {
             propertyGrid.SelectedObject = e.Photo;
         }

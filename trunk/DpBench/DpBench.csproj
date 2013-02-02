@@ -195,7 +195,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>
       </SubType>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Renderer\YxTableRendererSettingsControl.resx">
