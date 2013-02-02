@@ -56,7 +56,7 @@ namespace Paguru.DpBench.Renderer
         /// <param name="p">The project</param>
         public YxImageTableRenderer(Project p)
         {
-            TileSize = p.MaxCropSize();
+            //TileSize = p.MaxCropSize();
             LabelFont = new Font("Calibri", 12, FontStyle.Bold);
             Padding = 2;
             BoundingBox = new Size(250, 250);
@@ -72,6 +72,7 @@ namespace Paguru.DpBench.Renderer
         /// </returns>
         public object Render(GroupFilter f)
         {
+            TileSize = f.GetMaxOutputTileSize();
             using (var ic = ImageCache.CreateCache())
             {
                 MainWindow.Instance.ScaleProgress("rendering", f.TotalTiles);
@@ -196,7 +197,7 @@ namespace Paguru.DpBench.Renderer
                         var photoDetail = tiles[0];
                         using (var tileImg = photoDetail.Image)
                         {
-                            using (var scaledTileImg = ImageConverter.resizeImage(tileImg, boxSize))
+                            using (var scaledTileImg = ImageConverter.ResizeImage(tileImg, boxSize))
                             {
                                 g.DrawImage(scaledTileImg, destRect.Location);
                             }

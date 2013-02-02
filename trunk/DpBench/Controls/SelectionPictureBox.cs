@@ -90,7 +90,7 @@ namespace Paguru.DpBench.Controls
                     if (imgToResize != null)
                     {
                         _scaleFactor = ImageConverter.ScaleFactor(imgToResize.Size, Size);
-                        Image = ImageConverter.resizeImage(imgToResize, Size);
+                        Image = ImageConverter.ResizeImage(imgToResize, Size);
                         imgToResize.Dispose();
                     }
                 }

@@ -20,9 +20,9 @@ namespace Paguru.DpBench.Model
     using System.ComponentModel;
     using System.Drawing;
     using System.IO;
-    using System.Linq;
-    using System.Windows.Media.Imaging;
     using System.Xml.Serialization;
+
+    using DeepZoomPublisher;
 
     using LevDan.Exif;
 
@@ -134,15 +134,30 @@ namespace Paguru.DpBench.Model
             var exposure = exif.Find(t => t.Id == 0x829A);
             var focalLength = exif.Find(t => t.Id == 0x920A);
 
-            // var img1 = Image.FromFile(filename);
-            // var pi = img1.PropertyItems;
-            // var pil = img1.PropertyIdList;
-            var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
-            var decoder = new JpegBitmapDecoder(stream, BitmapCreateOptions.None, BitmapCacheOption.None);
-            var metadata = decoder.Frames[0].Metadata as BitmapMetadata;
-            string keywords = (metadata != null && metadata.Keywords != null)
-                                  ? metadata.Keywords.Aggregate((old, val) => old + "; " + val)
-                                  : null;
+            var keywords = string.Empty;
+
+            // read the IPTC keywords
+            // http://stackoverflow.com/questions/680654/reading-iptc-information-with-c-net-framework-2
+            // we could do this with the .NET 3.5 WPF libs (see below), but I prefer the simple solution
+            JpegParser parser = new JpegParser(filename);
+            if (parser.ParseDocument())
+            {
+                //Console.WriteLine("Parsed {0} {1}", System.IO.Path.GetFileName(filename), parser.Title);
+                //Console.WriteLine("Tags: {0}", parser.KeywordString);
+                //Console.WriteLine("Description: {0}", parser.Description);
+                //Console.WriteLine("Title: {0}", parser.Title);
+                //Console.WriteLine("Rating: {0}", parser.Rating);
+
+                keywords = parser.KeywordString;
+            }
+
+            // this is the WPF solution
+            //var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+            //var decoder = new JpegBitmapDecoder(stream, BitmapCreateOptions.None, BitmapCacheOption.None);
+            //var metadata = decoder.Frames[0].Metadata as BitmapMetadata;
+            //string keywords = (metadata != null && metadata.Keywords != null)
+            //                      ? metadata.Keywords.Aggregate((old, val) => old + "; " + val)
+            //                      : null;
 
             var photo = new Photo()
                 {

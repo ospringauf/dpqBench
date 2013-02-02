@@ -176,7 +176,12 @@ namespace Paguru.DpBench
             toolStripStatusLabel1.Text = s;
             statusStrip1.Update();
             var t = new Timer() { Interval = 1000 };
-            t.Tick += delegate { toolStripStatusLabel1.Text = string.Empty; };
+            t.Tick += delegate
+                {
+                    toolStripStatusLabel1.Text = string.Empty;
+                    t.Stop();
+                    t.Dispose();
+                };
             t.Start();
         }
 
