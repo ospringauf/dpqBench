@@ -213,7 +213,6 @@
     <EmbeddedResource Include="ProjectWindow.resx">
       <DependentUpon>ProjectWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -267,7 +266,7 @@
     <None Include="Resources\x_alt_24x24.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="doc\Apache_License_2.0.txt">
+    <Content Include="Apache_License_2.0.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\arrow_left_16x16.png" />
@@ -281,7 +280,7 @@
     <None Include="Resources\check_16x13.png" />
     <None Include="Resources\check_24x19.png" />
     <Content Include="Resources\icon.ico" />
-    <Content Include="doc\other_licenses.txt">
+    <Content Include="README.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\text4201.png" />

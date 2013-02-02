@@ -144,11 +144,14 @@ namespace Paguru.DpBench
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var detail = comboBoxCrop.SelectedItem as DetailArea;
-            var pimg = Photo.Image;
-            var img = ImageConverter.Crop(pimg, detail.Crop);
-            pimg.Dispose();
-            new ImagePreview(img).Show(this);
+            Detail = comboBoxCrop.SelectedItem as DetailArea;
+            if (Detail != null)
+            {
+                var pimg = Photo.Image;
+                var img = ImageConverter.Crop(pimg, Detail.Crop);
+                pimg.Dispose();
+                new ImagePreview(img).Show(this);
+            }
         }
 
         private void pictureBox1_SizeChanged(object sender, EventArgs e)
