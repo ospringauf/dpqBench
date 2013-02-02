@@ -189,10 +189,13 @@ namespace Paguru.DpBench.Model
 
         public void Save(string filename)
         {
-            foreach (var photo in Photos)
+            if (!string.Equals(filename, ProjectFile))
             {
-                // adjust relative path
-                photo.RelFile = Util.RelativePath(photo.AbsFile, Path.GetDirectoryName(filename));
+                foreach (var photo in Photos)
+                {
+                    // adjust photos' relative path to new project location
+                    photo.RelFile = Util.RelativePath(photo.AbsFile, Path.GetDirectoryName(filename));
+                }
             }
             ProjectFile = filename;
             PhotoLoadSaveList = new List<Photo>(Photos);

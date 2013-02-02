@@ -50,7 +50,6 @@ namespace Paguru.DpBench
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HideOnClose = true;
             this.Menu = this.mainMenu1;
             this.Name = "PhotoPropertyWindow";
             this.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);

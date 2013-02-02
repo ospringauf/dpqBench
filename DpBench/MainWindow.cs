@@ -28,14 +28,13 @@ namespace Paguru.DpBench
 
     public partial class MainWindow : Form
     {
-        /// <summary>
-        /// Gets or sets the startup project file (command line parameter).
-        /// </summary>
-        public string StartupProjectFile { get; set; }
-
         #region Constants and Fields
 
         private static MainWindow _instance;
+
+        private DetailEditor detailEditor;
+
+        private PhotoPropertyWindow propertyWindow;
 
         #endregion
 
@@ -65,6 +64,68 @@ namespace Paguru.DpBench
             }
         }
 
+        public DetailEditor DetailEditor
+        {
+            get
+            {
+                return detailEditor;
+            }
+            set
+            {
+                detailEditor = value;
+                imagePreviewToolStripMenuItem.Image = detailEditor != null ? Properties.Resources.check_16x13 : null;
+                if (detailEditor != null)
+                {
+                    OnSelectPhoto += DetailEditor.ShowPreview;
+                    DetailEditor.FormClosing += (s, ev) =>
+                    {
+                        OnSelectPhoto -= DetailEditor.ShowPreview;
+                        DetailEditor = null;
+                    };
+                }
+            }
+        }
+
+        public int Progress
+        {
+            get
+            {
+                return toolStripProgressBar1.Value;
+            }
+            set
+            {
+                toolStripProgressBar1.Value = value;
+                statusStrip1.Update();
+            }
+        }
+
+        public PhotoPropertyWindow PropertyWindow
+        {
+            get
+            {
+                return propertyWindow;
+            }
+            set
+            {
+                propertyWindow = value;
+                propertiesToolStripMenuItem.Image = propertyWindow != null ? Properties.Resources.check_16x13 : null;
+                if (propertyWindow != null)
+                {
+                    OnSelectPhoto += PropertyWindow.ShowPhotoProperties;
+                    PropertyWindow.FormClosing += (s, ev) =>
+                    {
+                        OnSelectPhoto -= PropertyWindow.ShowPhotoProperties;
+                        PropertyWindow = null;
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the startup project file (command line parameter).
+        /// </summary>
+        public string StartupProjectFile { get; set; }
+
         #endregion
 
         #region Properties
@@ -83,12 +144,40 @@ namespace Paguru.DpBench
 
         #region Public Methods
 
+        public void ClearProgress()
+        {
+            toolStripStatusLabel1.Text = string.Empty;
+            toolStripProgressBar1.Value = 0;
+            statusStrip1.Update();
+        }
+
+        public void ScaleProgress(string processStep, int max)
+        {
+            toolStripProgressBar1.Maximum = max;
+            toolStripStatusLabel1.Text = processStep;
+            statusStrip1.Update();
+        }
+
+        public void ShowError(Exception exception)
+        {
+            MessageBox.Show(exception.Message);
+        }
+
         public void ShowPreview(Photo photo)
         {
             if (OnSelectPhoto != null)
             {
                 OnSelectPhoto(this, new PhotoSelectedEvent(photo));
             }
+        }
+
+        public void StatusMessage(string s)
+        {
+            toolStripStatusLabel1.Text = s;
+            statusStrip1.Update();
+            var t = new Timer() { Interval = 1000 };
+            t.Tick += delegate { toolStripStatusLabel1.Text = string.Empty; };
+            t.Start();
         }
 
         #endregion
@@ -109,16 +198,22 @@ namespace Paguru.DpBench
             MenuDetailEditorClick(null, null);
         }
 
-        private void OpenProjectWindow(Project p)
-        {
-            var projectWindow = new ProjectWindow(p);
-            projectWindow.Show(dockPanel);
-        }
-
         private void MenuDetailEditorClick(object sender, EventArgs e)
         {
-            var detailEditor = new DetailEditor();
-            detailEditor.Show(dockPanel);
+            if (DetailEditor != null)
+            {
+                DetailEditor.Close();
+            }
+            else
+            {
+                DetailEditor = new DetailEditor();
+                DetailEditor.Show(dockPanel);
+            }
+        }
+
+        private void MenuFileAboutClick(object sender, EventArgs e)
+        {
+            new AboutDialog().ShowDialog(this);
         }
 
         private void MenuNewProjectClick(object sender, EventArgs e)
@@ -139,47 +234,23 @@ namespace Paguru.DpBench
 
         private void MenuPropertiesClick(object sender, EventArgs e)
         {
-            var propertyWindow = new PhotoPropertyWindow();
-            propertyWindow.Show(dockPanel);
+            if (PropertyWindow != null)
+            {
+                PropertyWindow.Close();
+            }
+            else
+            {
+                PropertyWindow = new PhotoPropertyWindow();
+                PropertyWindow.Show(dockPanel);
+            }
+        }
+
+        private void OpenProjectWindow(Project p)
+        {
+            var projectWindow = new ProjectWindow(p);
+            projectWindow.Show(dockPanel);
         }
 
         #endregion
-
-        public void ShowError(Exception exception)
-        {
-            MessageBox.Show(exception.Message);
-        }
-
-        public void ScaleProgress(string processStep, int max)
-        {
-            toolStripProgressBar1.Maximum = max;
-            toolStripStatusLabel1.Text = processStep;
-            statusStrip1.Update();
-        }
-
-        public void ClearProgress()
-        {
-            toolStripStatusLabel1.Text = string.Empty;
-            toolStripProgressBar1.Value = 0;
-            statusStrip1.Update();
-        }
-
-        public int Progress
-        {
-            get
-            {
-                return toolStripProgressBar1.Value;
-            }
-            set
-            {
-                toolStripProgressBar1.Value = value;
-                statusStrip1.Update();
-            }
-        }
-
-        private void MenuFileAboutClick(object sender, EventArgs e)
-        {
-            new AboutDialog().ShowDialog(this);
-        }
     }
 }

@@ -157,12 +157,15 @@ namespace Paguru.DpBench
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fsd = new SaveFileDialog() { DefaultExt = ".xml", AddExtension = true, Filter = "Project files (*.xml)|*.xml" };
-            if (fsd.ShowDialog(this) == DialogResult.OK)
+            if (Project.ProjectFile != null)
             {
-                Project.Save(fsd.FileName);
+                Project.Save(Project.ProjectFile);
             }
-            Text = Project.Name ?? "New Project";
+            else
+            {
+                saveAsToolStripMenuItem_Click(sender, e);
+            }
+            MainWindow.Instance.StatusMessage("project saved");
         }
 
         #endregion
@@ -187,6 +190,16 @@ namespace Paguru.DpBench
                 MainWindow.Instance.ShowError(ex);
             }
             objectListView1.SetObjects(Project.Photos);
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fsd = new SaveFileDialog() { DefaultExt = ".xml", AddExtension = true, Filter = "Project files (*.xml)|*.xml" };
+            if (fsd.ShowDialog(this) == DialogResult.OK)
+            {
+                Project.Save(fsd.FileName);
+            }
+            Text = Project.Name ?? "New Project";
         }
     }
 }

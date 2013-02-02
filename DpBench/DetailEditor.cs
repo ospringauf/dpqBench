@@ -32,7 +32,7 @@ namespace Paguru.DpBench
         public DetailEditor()
         {
             InitializeComponent();
-            MainWindow.Instance.OnSelectPhoto += ShowPreview;
+            //MainWindow.Instance.OnSelectPhoto += ShowPreview;
             pictureBox1.OnDetailSelected += DetailSelected;
 
             numericUpDownHeight.ValueChanged += (s, ea) =>
@@ -72,11 +72,11 @@ namespace Paguru.DpBench
 
         #region Methods
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            base.OnFormClosing(e);
-            MainWindow.Instance.OnSelectPhoto -= ShowPreview;
-        }
+        //protected override void OnFormClosing(FormClosingEventArgs e)
+        //{
+        //    base.OnFormClosing(e);
+        //    MainWindow.Instance.OnSelectPhoto -= ShowPreview;
+        //}
 
         private void DetailSelected(object sender, EventArgs e)
         {
@@ -117,7 +117,7 @@ namespace Paguru.DpBench
             }
         }
 
-        private void ShowPreview(object sender, PhotoSelectedEvent e)
+        public void ShowPreview(object sender, PhotoSelectedEvent e)
         {
             Photo = e.Photo;
             Fill();
