@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0D13E027-83FB-47C5-AB7E-2ADFF3F15B13}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Paguru.DpBench</RootNamespace>
+    <AssemblyName>DpqBench</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ExifMetadata, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\3rdparty\ExifMetadata.dll</HintPath>
+    </Reference>
+    <Reference Include="ObjectListView, Version=2.5.1.20720, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\3rdparty\ObjectListView.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.7.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\3rdparty\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\AboutDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\AboutDialog.Designer.cs">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ExceptionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\ExceptionDialog.Designer.cs">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GroupFilterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\GroupFilterControl.Designer.cs">
+      <DependentUpon>GroupFilterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SelectionPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\SelectionPictureBox.Designer.cs">
+      <DependentUpon>SelectionPictureBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TextInputMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\TextInputMessage.Designer.cs">
+      <DependentUpon>TextInputMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GroupFilterEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GroupFilterEditor.Designer.cs">
+      <DependentUpon>GroupFilterEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImageCache.cs" />
+    <Compile Include="ImagePreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImagePreview.Designer.cs">
+      <DependentUpon>ImagePreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SelectableValueListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SelectableValueListControl.Designer.cs">
+      <DependentUpon>SelectableValueListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FloatSorter.cs" />
+    <Compile Include="Model\FractionSorter.cs" />
+    <Compile Include="Model\GroupFilter.cs" />
+    <Compile Include="Model\PhotoDetail.cs" />
+    <Compile Include="Model\PhotoDetailCollection.cs" />
+    <Compile Include="Model\PhotoParameterAttribute.cs" />
+    <Compile Include="Model\Project.designer.cs">
+      <DependentUpon>Project.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProjectColumnComparer.cs" />
+    <Compile Include="Model\SelectableValueList.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Renderer\YxTableRendererSettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Renderer\YxTableRendererSettingsControl.Designer.cs">
+      <DependentUpon>YxTableRendererSettingsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PhotoPropertyWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PhotoPropertyWindow.Designer.cs">
+      <DependentUpon>PhotoPropertyWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImageConverter.cs" />
+    <Compile Include="DetailEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DetailEditor.Designer.cs">
+      <DependentUpon>DetailEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DetailArea.cs" />
+    <Compile Include="Model\Photo.cs" />
+    <Compile Include="Model\Project.cs" />
+    <Compile Include="PhotoSelectedEvent.cs" />
+    <Compile Include="ProjectWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectWindow.Designer.cs">
+      <DependentUpon>ProjectWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\SelectableValue.cs" />
+    <Compile Include="Renderer\YxImageTableRenderer.cs" />
+    <Compile Include="Renderer\IRenderer.cs" />
+    <Compile Include="Renderer\YxTextTableRenderer.cs" />
+    <Compile Include="Suspender.cs" />
+    <Compile Include="Util.cs" />
+    <EmbeddedResource Include="Controls\AboutDialog.resx">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ExceptionDialog.resx">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GroupFilterControl.resx">
+      <DependentUpon>GroupFilterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TextInputMessage.resx">
+      <DependentUpon>TextInputMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GroupFilterEditor.resx">
+      <DependentUpon>GroupFilterEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImagePreview.resx">
+      <DependentUpon>ImagePreview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SelectableValueListControl.resx">
+      <DependentUpon>SelectableValueListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>
+      </SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Renderer\YxTableRendererSettingsControl.resx">
+      <DependentUpon>YxTableRendererSettingsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PhotoPropertyWindow.resx">
+      <DependentUpon>PhotoPropertyWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DetailEditor.resx">
+      <DependentUpon>DetailEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectWindow.resx">
+      <DependentUpon>ProjectWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_down_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_down_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_down_alt1_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_down_alt1_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_up_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_up_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_up_alt1_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_up_alt1_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\check_alt_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\check_alt_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\x_14x14.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\x_21x21.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\x_alt_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\x_alt_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Apache_License_2.0.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\arrow_left_16x16.png" />
+    <None Include="Resources\arrow_left_24x24.png" />
+    <None Include="Resources\arrow_left_alt1_16x16.png" />
+    <None Include="Resources\arrow_left_alt1_24x24.png" />
+    <None Include="Resources\arrow_right_16x16.png" />
+    <None Include="Resources\arrow_right_24x24.png" />
+    <None Include="Resources\arrow_right_alt1_16x16.png" />
+    <None Include="Resources\arrow_right_alt1_24x24.png" />
+    <None Include="Resources\check_16x13.png" />
+    <None Include="Resources\check_24x19.png" />
+    <Content Include="Resources\icon.ico" />
+    <Content Include="README.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\text4201.png" />
+    <None Include="Resources\icon.png" />
+    <None Include="Resources\plus_alt_24x24.png" />
+    <None Include="Resources\plus_alt_16x16.png" />
+    <None Include="Resources\plus_24x24.png" />
+    <None Include="Resources\plus_16x16.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
