@@ -42,11 +42,11 @@
             this.comboBoxParameter.BackColor = System.Drawing.SystemColors.Window;
             this.comboBoxParameter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxParameter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBoxParameter.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxParameter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxParameter.FormattingEnabled = true;
             this.comboBoxParameter.Location = new System.Drawing.Point(3, 4);
             this.comboBoxParameter.Name = "comboBoxParameter";
-            this.comboBoxParameter.Size = new System.Drawing.Size(175, 23);
+            this.comboBoxParameter.Size = new System.Drawing.Size(175, 21);
             this.comboBoxParameter.TabIndex = 1;
             // 
             // buttonClose

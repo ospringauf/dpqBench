@@ -17,7 +17,6 @@
 namespace Paguru.DpBench
 {
     using System;
-    using System.Globalization;
     using System.Threading;
     using System.Windows.Forms;
 
@@ -52,6 +51,7 @@ namespace Paguru.DpBench
             }
 
             Application.Run(MainWindow.Instance);
+            //Application.Run(new DetailEditor());
         }
 
         private static void HandleUnhandledException(object sender, UnhandledExceptionEventArgs e)

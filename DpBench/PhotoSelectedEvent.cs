@@ -22,7 +22,7 @@ namespace Paguru.DpBench
 
     /// <summary>
     /// Event triggered by the project window when a photo is selected.
-    /// <see cref="PhotoPropertyWindow"/> and <see cref="DetailEditor"/> are listening and updating themselves.
+    /// <see cref="PhotoPropertyWindow"/> and <see cref="OldDetailEditor"/> are listening and updating themselves.
     /// </summary>
     public class PhotoSelectedEvent : EventArgs
     {

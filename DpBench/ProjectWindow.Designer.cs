@@ -35,9 +35,10 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addFilesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.createBenchmarkChartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
             this.contextMenuPhoto.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -83,19 +84,20 @@
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.projectToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(134, 9);
+            this.menuStrip1.Location = new System.Drawing.Point(490, 78);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(64, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(156, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // projectToolStripMenuItem
             // 
             this.projectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveToolStripMenuItem1,
-            this.saveAsToolStripMenuItem,
             this.addFilesToolStripMenuItem1,
-            this.createBenchmarkChartToolStripMenuItem});
+            this.createBenchmarkChartToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.saveToolStripMenuItem1,
+            this.saveAsToolStripMenuItem});
             this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
             this.projectToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.projectToolStripMenuItem.Text = "Project";
@@ -107,6 +109,13 @@
             this.saveToolStripMenuItem1.Size = new System.Drawing.Size(215, 22);
             this.saveToolStripMenuItem1.Text = "&Save";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.saveAsToolStripMenuItem.Text = "Save &As ...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // addFilesToolStripMenuItem1
             // 
@@ -122,12 +131,10 @@
             this.createBenchmarkChartToolStripMenuItem.Text = "Create Benchmark Chart ...";
             this.createBenchmarkChartToolStripMenuItem.Click += new System.EventHandler(this.groupLevelEditorToolStripMenuItem_Click);
             // 
-            // saveAsToolStripMenuItem
+            // toolStripSeparator1
             // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
-            this.saveAsToolStripMenuItem.Text = "Save &As ...";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(212, 6);
             // 
             // ProjectWindow
             // 
@@ -166,5 +173,6 @@
         private System.Windows.Forms.ToolStripMenuItem addFilesToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem createBenchmarkChartToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

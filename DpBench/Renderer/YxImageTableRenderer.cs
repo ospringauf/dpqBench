@@ -60,7 +60,7 @@ namespace Paguru.DpBench.Renderer
             LabelFont = new Font("Calibri", 12, FontStyle.Bold);
             Padding = 2;
             BoundingBox = new Size(250, 250);
-            ScaleToBoundingBox = true;
+            ScaleToBoundingBox = false; // make 1:1 setting the default
         }
 
         /// <summary>

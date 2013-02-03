@@ -32,6 +32,7 @@ namespace Paguru.DpBench
 
         private static MainWindow _instance;
 
+        //private OldDetailEditor oldDetailEditor;
         private DetailEditor detailEditor;
 
         private PhotoPropertyWindow propertyWindow;
@@ -63,6 +64,28 @@ namespace Paguru.DpBench
                 return _instance ?? (_instance = new MainWindow());
             }
         }
+
+        //public OldDetailEditor OldDetailEditor
+        //{
+        //    get
+        //    {
+        //        return oldDetailEditor;
+        //    }
+        //    set
+        //    {
+        //        oldDetailEditor = value;
+        //        imagePreviewToolStripMenuItem.Image = oldDetailEditor != null ? Properties.Resources.check_16x13 : null;
+        //        if (oldDetailEditor != null)
+        //        {
+        //            OnSelectPhoto += OldDetailEditor.ShowPreview;
+        //            OldDetailEditor.FormClosing += (s, ev) =>
+        //            {
+        //                OnSelectPhoto -= OldDetailEditor.ShowPreview;
+        //                OldDetailEditor = null;
+        //            };
+        //        }
+        //    }
+        //}
 
         public DetailEditor DetailEditor
         {
@@ -203,18 +226,18 @@ namespace Paguru.DpBench
             MenuDetailEditorClick(null, null);
         }
 
-        private void MenuDetailEditorClick(object sender, EventArgs e)
-        {
-            if (DetailEditor != null)
-            {
-                DetailEditor.Close();
-            }
-            else
-            {
-                DetailEditor = new DetailEditor();
-                DetailEditor.Show(dockPanel);
-            }
-        }
+        //private void MenuDetailEditorClick(object sender, EventArgs e)
+        //{
+        //    if (OldDetailEditor != null)
+        //    {
+        //        OldDetailEditor.Close();
+        //    }
+        //    else
+        //    {
+        //        OldDetailEditor = new OldDetailEditor();
+        //        OldDetailEditor.Show(dockPanel);
+        //    }
+        //}
 
         private void MenuFileAboutClick(object sender, EventArgs e)
         {
@@ -257,5 +280,18 @@ namespace Paguru.DpBench
         }
 
         #endregion
+
+        private void MenuDetailEditorClick(object sender, EventArgs e)
+        {
+            if (DetailEditor != null)
+            {
+                DetailEditor.Close();
+            }
+            else
+            {
+                DetailEditor = new DetailEditor();
+                DetailEditor.Show(dockPanel);
+            }
+        }
     }
 }
