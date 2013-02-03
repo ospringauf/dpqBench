@@ -96,6 +96,9 @@
     <Compile Include="Controls\GroupFilterControl.Designer.cs">
       <DependentUpon>GroupFilterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RubberbandControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\SelectionPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -107,6 +110,12 @@
     </Compile>
     <Compile Include="Controls\TextInputMessage.Designer.cs">
       <DependentUpon>TextInputMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DetailEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DetailEditor.Designer.cs">
+      <DependentUpon>DetailEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="GroupFilterEditor.cs">
       <SubType>Form</SubType>
@@ -138,6 +147,7 @@
     </Compile>
     <Compile Include="Model\ProjectColumnComparer.cs" />
     <Compile Include="Model\SelectableValueList.cs" />
+    <Compile Include="Other\Goheer.EXIF.cs" />
     <Compile Include="Other\JpegParser.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
@@ -157,11 +167,11 @@
       <DependentUpon>PhotoPropertyWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageConverter.cs" />
-    <Compile Include="DetailEditor.cs">
+    <Compile Include="OldDetailEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DetailEditor.Designer.cs">
-      <DependentUpon>DetailEditor.cs</DependentUpon>
+    <Compile Include="OldDetailEditor.Designer.cs">
+      <DependentUpon>OldDetailEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\DetailArea.cs" />
     <Compile Include="Model\Photo.cs" />
@@ -199,6 +209,9 @@
     <EmbeddedResource Include="Controls\TextInputMessage.resx">
       <DependentUpon>TextInputMessage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DetailEditor.resx">
+      <DependentUpon>DetailEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GroupFilterEditor.resx">
       <DependentUpon>GroupFilterEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -220,8 +233,8 @@
     <EmbeddedResource Include="PhotoPropertyWindow.resx">
       <DependentUpon>PhotoPropertyWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DetailEditor.resx">
-      <DependentUpon>DetailEditor.cs</DependentUpon>
+    <EmbeddedResource Include="OldDetailEditor.resx">
+      <DependentUpon>OldDetailEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

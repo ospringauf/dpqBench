@@ -41,7 +41,6 @@ namespace Paguru.DpBench.Controls
             this.textInput.Name = "textInput";
             this.textInput.Size = new System.Drawing.Size(247, 20);
             this.textInput.TabIndex = 0;
-            this.textInput.TextChanged += new System.EventHandler(this.textInput_TextChanged);
             // 
             // buttonOK
             // 

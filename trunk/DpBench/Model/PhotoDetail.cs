@@ -46,9 +46,9 @@ namespace Paguru.DpBench.Model
         {
             get
             {
-                var pimg = Photo.Image;
-                var img = ImageConverter.Crop(pimg, Area.Crop);
-                pimg.Dispose();
+                var photoImage = Photo.Image;
+                var img = ImageConverter.Crop(photoImage, Area.Crop);
+                photoImage.Dispose();
                 return img;
             }
         }

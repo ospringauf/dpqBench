@@ -18,6 +18,7 @@ namespace Paguru.DpBench
 {
     using System;
     using System.ComponentModel;
+    using System.IO;
     using System.Windows.Forms;
 
     using BrightIdeasSoftware;
@@ -194,7 +195,13 @@ namespace Paguru.DpBench
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var fsd = new SaveFileDialog() { DefaultExt = ".xml", AddExtension = true, Filter = "Project files (*.xml)|*.xml" };
+            var fsd = new SaveFileDialog()
+                {
+                    DefaultExt = ".xml", 
+                    AddExtension = true, 
+                    Filter = "Project files (*.xml)|*.xml",
+                    FileName = Path.GetFileName(Project.ProjectFile)
+                };
             if (fsd.ShowDialog(this) == DialogResult.OK)
             {
                 Project.Save(fsd.FileName);

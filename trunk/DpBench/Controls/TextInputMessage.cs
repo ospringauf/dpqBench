@@ -16,7 +16,6 @@
 
 namespace Paguru.DpBench.Controls
 {
-    using System;
     using System.Windows.Forms;
 
     public partial class TextInputMessage : Form
@@ -32,15 +31,16 @@ namespace Paguru.DpBench.Controls
 
         #region Public Properties
 
-        public string InputText { get; set; }
-
-        #endregion
-
-        #region Methods
-
-        private void textInput_TextChanged(object sender, EventArgs e)
+        public string InputText
         {
-            InputText = textInput.Text;
+            get
+            {
+                return textInput.Text;
+            }
+            set
+            {
+                textInput.Text = value;
+            }
         }
 
         #endregion

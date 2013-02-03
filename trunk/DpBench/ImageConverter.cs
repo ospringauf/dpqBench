@@ -56,10 +56,10 @@ namespace Paguru.DpBench
             Rectangle destRect = new Rectangle(new Point(0, 0), detail.Size);
 
             Bitmap b = new Bitmap(detail.Size.Width, detail.Size.Height);
-            using (Graphics g = Graphics.FromImage((Image)b))
+            using (Graphics g = Graphics.FromImage(b))
             {
                 g.DrawImage(imgToCrop, destRect, detail, GraphicsUnit.Pixel);
-                return (Image)b;
+                return b;
             }
         }
 
