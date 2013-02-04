@@ -84,7 +84,7 @@ namespace Paguru.DpBench.Renderer
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 81);
+            this.groupBox1.Size = new System.Drawing.Size(200, 68);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tile size";
@@ -198,7 +198,7 @@ namespace Paguru.DpBench.Renderer
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
             this.Name = "YxTableRendererSettingsControl";
-            this.Size = new System.Drawing.Size(586, 92);
+            this.Size = new System.Drawing.Size(586, 78);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBBHeight)).EndInit();

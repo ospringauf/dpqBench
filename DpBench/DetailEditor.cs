@@ -343,8 +343,14 @@ namespace Paguru.DpBench
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            var p = _detailControls.Find(x => x.DetailArea == SelectedDetailArea);
-            DeleteDetail(p);
+            if (SelectedDetailArea != null)
+            {
+                var p = _detailControls.Find(x => x.DetailArea == SelectedDetailArea);
+                if (p != null)
+                {
+                    DeleteDetail(p);
+                }
+            }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)

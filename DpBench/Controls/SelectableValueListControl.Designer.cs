@@ -44,6 +44,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.checkedListBox1.BackColor = System.Drawing.SystemColors.Window;
             this.checkedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.checkedListBox1.CheckOnClick = true;
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Location = new System.Drawing.Point(1, 0);
             this.checkedListBox1.Name = "checkedListBox1";

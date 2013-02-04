@@ -32,7 +32,6 @@ namespace Paguru.DpBench
 
         private static MainWindow _instance;
 
-        //private OldDetailEditor oldDetailEditor;
         private DetailEditor detailEditor;
 
         private PhotoPropertyWindow propertyWindow;
@@ -51,6 +50,9 @@ namespace Paguru.DpBench
 
         #region Public Events
 
+        /// <summary>
+        /// Occurs when a photo is selected in the project window.
+        /// </summary>
         public event EventHandler<PhotoSelectedEvent> OnSelectPhoto;
 
         #endregion
@@ -65,28 +67,6 @@ namespace Paguru.DpBench
             }
         }
 
-        //public OldDetailEditor OldDetailEditor
-        //{
-        //    get
-        //    {
-        //        return oldDetailEditor;
-        //    }
-        //    set
-        //    {
-        //        oldDetailEditor = value;
-        //        imagePreviewToolStripMenuItem.Image = oldDetailEditor != null ? Properties.Resources.check_16x13 : null;
-        //        if (oldDetailEditor != null)
-        //        {
-        //            OnSelectPhoto += OldDetailEditor.ShowPreview;
-        //            OldDetailEditor.FormClosing += (s, ev) =>
-        //            {
-        //                OnSelectPhoto -= OldDetailEditor.ShowPreview;
-        //                OldDetailEditor = null;
-        //            };
-        //        }
-        //    }
-        //}
-
         public DetailEditor DetailEditor
         {
             get
@@ -96,15 +76,16 @@ namespace Paguru.DpBench
             set
             {
                 detailEditor = value;
-                imagePreviewToolStripMenuItem.Image = detailEditor != null ? Properties.Resources.check_16x13 : null;
+                imagePreviewToolStripMenuItem.Checked = detailEditor != null;
                 if (detailEditor != null)
                 {
+                    // detail editor receives "photo selected" events
                     OnSelectPhoto += DetailEditor.ShowPreview;
                     DetailEditor.FormClosing += (s, ev) =>
-                    {
-                        OnSelectPhoto -= DetailEditor.ShowPreview;
-                        DetailEditor = null;
-                    };
+                        {
+                            OnSelectPhoto -= DetailEditor.ShowPreview;
+                            DetailEditor = null;
+                        };
                 }
             }
         }
@@ -131,15 +112,15 @@ namespace Paguru.DpBench
             set
             {
                 propertyWindow = value;
-                propertiesToolStripMenuItem.Image = propertyWindow != null ? Properties.Resources.check_16x13 : null;
+                propertiesToolStripMenuItem.Checked = propertyWindow != null;
                 if (propertyWindow != null)
                 {
                     OnSelectPhoto += PropertyWindow.ShowPhotoProperties;
                     PropertyWindow.FormClosing += (s, ev) =>
-                    {
-                        OnSelectPhoto -= PropertyWindow.ShowPhotoProperties;
-                        PropertyWindow = null;
-                    };
+                        {
+                            OnSelectPhoto -= PropertyWindow.ShowPhotoProperties;
+                            PropertyWindow = null;
+                        };
                 }
             }
         }
@@ -212,32 +193,31 @@ namespace Paguru.DpBench
 
         #region Methods
 
+        /// <summary>
+        /// Initialize desktop after start.
+        /// Show selected project or empty project, and the "detail" and "properties" views
+        /// </summary>
         private void MainWindow_Shown(object sender, EventArgs e)
         {
-            if (StartupProjectFile != null)
+            OpenProjectWindow(StartupProjectFile != null ? Project.Load(StartupProjectFile) : new Project());
+            MenuPropertiesClick(null, null);
+            MenuDetailEditorClick(null, null);
+
+            StatusMessage("ready");
+        }
+
+        private void MenuDetailEditorClick(object sender, EventArgs e)
+        {
+            if (DetailEditor != null)
             {
-                OpenProjectWindow(Project.Load(StartupProjectFile));
+                DetailEditor.Close();
             }
             else
             {
-                OpenProjectWindow(new Project());
+                DetailEditor = new DetailEditor();
+                DetailEditor.Show(dockPanel);
             }
-            MenuPropertiesClick(null, null);
-            MenuDetailEditorClick(null, null);
         }
-
-        //private void MenuDetailEditorClick(object sender, EventArgs e)
-        //{
-        //    if (OldDetailEditor != null)
-        //    {
-        //        OldDetailEditor.Close();
-        //    }
-        //    else
-        //    {
-        //        OldDetailEditor = new OldDetailEditor();
-        //        OldDetailEditor.Show(dockPanel);
-        //    }
-        //}
 
         private void MenuFileAboutClick(object sender, EventArgs e)
         {
@@ -280,18 +260,5 @@ namespace Paguru.DpBench
         }
 
         #endregion
-
-        private void MenuDetailEditorClick(object sender, EventArgs e)
-        {
-            if (DetailEditor != null)
-            {
-                DetailEditor.Close();
-            }
-            else
-            {
-                DetailEditor = new DetailEditor();
-                DetailEditor.Show(dockPanel);
-            }
-        }
     }
 }

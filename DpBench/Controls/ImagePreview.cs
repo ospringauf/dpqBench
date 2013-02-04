@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------
 // DpBench - ImagePreview.cs
 // http://sourceforge.net/projects/dpbench/
 // -----------------------------------------------------------------------------------------
@@ -14,10 +14,12 @@
 // limitations under the License.
 // -----------------------------------------------------------------------------------------
 
-namespace Paguru.DpBench
+namespace Paguru.DpBench.Controls
 {
     using System.Drawing;
     using System.Windows.Forms;
+
+    using ImageConverter = Paguru.DpBench.ImageConverter;
 
     /// <summary>
     /// Image preview window with save to file option (context menu)
