@@ -36,6 +36,8 @@ namespace Paguru.DpBench
 
         private PhotoPropertyWindow propertyWindow;
 
+        public string[] StartupFiles;
+
         #endregion
 
         #region Constructors and Destructors
@@ -199,7 +201,15 @@ namespace Paguru.DpBench
         /// </summary>
         private void MainWindow_Shown(object sender, EventArgs e)
         {
-            OpenProjectWindow(StartupProjectFile != null ? Project.Load(StartupProjectFile) : new Project());
+            var firstProject = StartupProjectFile != null ? Project.Load(StartupProjectFile) : new Project(); 
+            OpenProjectWindow(firstProject);
+
+            // open files given on command line (or from external tool)
+            if (StartupFiles != null)
+            {
+                firstProject.AddFiles(StartupFiles);
+            }
+
             MenuPropertiesClick(null, null);
             MenuDetailEditorClick(null, null);
 

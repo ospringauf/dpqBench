@@ -10,6 +10,18 @@ dpqBench is Open Source Software, licensed under the conditions of the Apache Li
 (http://www.apache.org/licenses/LICENSE-2.0.html)
 
 
+Version History
+
+v0.4
+internal refactoring
+command line interface supports multiple image file names to be opened in a new project
+(for integration with other software)
+
+v0.3 - 03 Feb 2013
+improved details editor, move/resize detail areas by dragging with the mouse
+
+v0.2 - 02 Feb 2013
+initial public release
 
 Acknowledgements
 
