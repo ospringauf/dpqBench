@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -96,14 +97,14 @@
     <Compile Include="Controls\GroupFilterControl.Designer.cs">
       <DependentUpon>GroupFilterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ImagePreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\ImagePreview.Designer.cs">
+      <DependentUpon>ImagePreview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RubberbandControl.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\SelectionPictureBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\SelectionPictureBox.Designer.cs">
-      <DependentUpon>SelectionPictureBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\TextInputMessage.cs">
       <SubType>Form</SubType>
@@ -124,12 +125,6 @@
       <DependentUpon>GroupFilterEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageCache.cs" />
-    <Compile Include="ImagePreview.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ImagePreview.Designer.cs">
-      <DependentUpon>ImagePreview.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\SelectableValueListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -167,12 +162,6 @@
       <DependentUpon>PhotoPropertyWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageConverter.cs" />
-    <Compile Include="OldDetailEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OldDetailEditor.Designer.cs">
-      <DependentUpon>OldDetailEditor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Model\DetailArea.cs" />
     <Compile Include="Model\Photo.cs" />
     <Compile Include="Model\Project.cs" />
@@ -206,6 +195,9 @@
     <EmbeddedResource Include="Controls\GroupFilterControl.resx">
       <DependentUpon>GroupFilterControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ImagePreview.resx">
+      <DependentUpon>ImagePreview.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\TextInputMessage.resx">
       <DependentUpon>TextInputMessage.cs</DependentUpon>
     </EmbeddedResource>
@@ -214,9 +206,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GroupFilterEditor.resx">
       <DependentUpon>GroupFilterEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ImagePreview.resx">
-      <DependentUpon>ImagePreview.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SelectableValueListControl.resx">
       <DependentUpon>SelectableValueListControl.cs</DependentUpon>
@@ -232,9 +221,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PhotoPropertyWindow.resx">
       <DependentUpon>PhotoPropertyWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="OldDetailEditor.resx">
-      <DependentUpon>OldDetailEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

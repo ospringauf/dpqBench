@@ -26,6 +26,9 @@ namespace Paguru.DpBench.Controls
     /// <summary>
     /// A moveable, sizeable rubber-band control to select a detail area of the underlying image
     /// see http://social.msdn.microsoft.com/forums/en-US/winforms/thread/55509105-949f-404e-819b-12d38aebecfd/
+    /// 
+    /// Implemented as a transparent panel with a "resize" handle area in its SE corner.
+    /// The "real" image detail data are stored in the "DetailArea" member.
     /// </summary>
     internal class RubberbandControl : Panel
     {
@@ -78,7 +81,7 @@ namespace Paguru.DpBench.Controls
                     {
                         return;
                     }
-                    sizing = Width - e.X < MoveHandleArea && Height - e.Location.Y < MoveHandleArea;
+                    sizing = InMoveHandleArea(e);
                     moving = !sizing;
                     wasMoved = wasSized = false;
                     startLoc = e.Location;
@@ -116,7 +119,7 @@ namespace Paguru.DpBench.Controls
 
                     if (moving)
                     {   
-                        // are we still withing the image bounds?
+                        // are we still within the image bounds?
                         var newControlRect =
                                     new Rectangle(
                                         ctrl.Left + newLocationOffset.X,
@@ -136,7 +139,7 @@ namespace Paguru.DpBench.Controls
                     }
                     else if (sizing)
                     {
-                        // are we still withing the image bounds?
+                        // are we still within the image bounds?
                         var newControlRect =
                                     new Rectangle(
                                         ctrl.Left,
@@ -170,10 +173,14 @@ namespace Paguru.DpBench.Controls
                     else
                     {
                         // is the cursor in the lower right corner of the control?
-                        var overSizingHandle = Width - e.X < MoveHandleArea && Height - e.Location.Y < MoveHandleArea;
-                        Cursor = overSizingHandle ? Cursors.SizeNWSE : Cursors.SizeAll;
+                        Cursor = InMoveHandleArea(e) ? Cursors.SizeNWSE : Cursors.SizeAll;
                     }
                 };
+        }
+
+        private bool InMoveHandleArea(MouseEventArgs e)
+        {
+            return Width - e.X < MoveHandleArea && Height - e.Location.Y < MoveHandleArea;
         }
 
         #endregion

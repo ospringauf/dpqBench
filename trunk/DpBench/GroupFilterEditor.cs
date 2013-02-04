@@ -17,7 +17,6 @@
 namespace Paguru.DpBench
 {
     using System;
-    using System.Drawing;
     using System.Windows.Forms;
 
     using Paguru.DpBench.Controls;
@@ -34,7 +33,8 @@ namespace Paguru.DpBench
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupFilterEditor"/> class.
         /// </summary>
-        /// <param name="root">The root.</param>
+        /// <param name="project">the dpqb project</param>
+        /// <param name="root">The root filter</param>
         public GroupFilterEditor(Project project, GroupFilter root)
         {
             InitializeComponent();
@@ -55,6 +55,7 @@ namespace Paguru.DpBench
             // propagate size change to group columns
             this.Layout += AdjustGroupLevelControlSizes;
 
+            // TODO support custom renderers
             panelRendererSettings.Controls.Add(new YxTableRendererSettingsControl(new YxImageTableRenderer(project), Root));
         }
 
@@ -100,31 +101,9 @@ namespace Paguru.DpBench
 
         #endregion
 
-        private void buttonTest_Click(object sender, EventArgs e)
-        {
-            var r = new YxTextTableRenderer();
-            var x = r.Render(Root);
-
-            Console.Out.WriteLine(x);
-        }
-
-        private void buttonTestImage_Click(object sender, EventArgs e)
-        {
-            var r = new YxImageTableRenderer(Project);
-            r.BoundingBox = new Size(200, 200);
-            var img = r.Render(Root) as Image;
-            new ImagePreview(img).Show(this);
-        }
-
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             AddGroupFilterControl(Root.Last.BuildNextLevel());
-        }
-
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            var xml = Util.SerializeToXmlDocument(Root);
-            Console.Out.WriteLine(xml.OuterXml);
         }
     }
 }

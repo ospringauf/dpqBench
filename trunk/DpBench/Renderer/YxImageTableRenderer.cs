@@ -72,7 +72,9 @@ namespace Paguru.DpBench.Renderer
         /// </returns>
         public object Render(GroupFilter f)
         {
+            // max size of any matching tile
             TileSize = f.GetMaxOutputTileSize();
+
             using (var ic = ImageCache.CreateCache())
             {
                 MainWindow.Instance.ScaleProgress("rendering", f.TotalTiles);
@@ -99,58 +101,59 @@ namespace Paguru.DpBench.Renderer
         /// Renders a group. The selected parameter names are written (-90° ccw) at the left, the images
         /// are displayed on the right.
         /// </summary>
-        /// <param name="f">The f.</param>
-        /// <param name="input">The input.</param>
+        /// <param name="f">The filter</param>
+        /// <param name="input">The input image details</param>
         /// <returns></returns>
         private Image RenderGroup(GroupFilter f, PhotoDetailCollection input = null)
         {
-            Console.Out.WriteLine("rendering " + f);
+            //Console.Out.WriteLine("rendering " + f);
             if (f.IsLast)
             {
                 return RenderRow(f, input);
             }
-            else
+
+            // otherwise: render sub-groups and combine into one image
+            var rowImages = new List<Image>();
+
+            // render row for each value of the filter parameter
+            foreach (var pv in f.ParameterValues.SelectedValues)
             {
-                var rowImages = new List<Image>();
-                foreach (var pv in f.ParameterValues.SelectedValues)
+                // Console.Out.WriteLine("--> " + f.Parameter + "=" + pv);
+                var renderedRows = RenderGroup(f.NextGroupFilter, f.Filter(pv, input));
+                rowImages.Add(renderedRows);
+            }
+
+            // calculate total size of group
+            var h = rowImages.Sum(rowImage => rowImage.Height) + (Padding * (rowImages.Count + 1));
+            var w = rowImages.Max(rowImage => rowImage.Width);
+
+            // create destination bitmap: text | rowImage
+            var tableSize = new Size(TextHeight + (3 * Padding) + w, h);
+
+            Bitmap b = new Bitmap(tableSize.Width, tableSize.Height);
+            using (Graphics g = Graphics.FromImage(b))
+            {
+                g.FillRectangle(new SolidBrush(Color.White), new Rectangle(new Point(0, 0), tableSize));
+
+                var destRect = new Rectangle(Padding, Padding, TextHeight, 1);
+                for (int i = 0; i < f.ParameterValues.SelectedValues.Count; i++)
                 {
-                    Console.Out.WriteLine("--> " + f.Parameter + "=" + pv);
-                    var renderedRows = RenderGroup(f.NextGroupFilter, f.Filter(pv, input));
-                    rowImages.Add(renderedRows);
+                    // draw text
+                    var text = f.ParameterValues.SelectedValues[i];
+                    destRect.Height = rowImages[i].Height;
+                    RenderLabel(g, text, destRect, true);
+
+                    // draw strips
+                    destRect.Offset(TextHeight + Padding, 0);
+                    g.DrawImage(rowImages[i], destRect.Location);
+                    rowImages[i].Dispose();
+
+                    // move to next row (left edge and down)
+                    destRect.Offset((-1 * destRect.X) + Padding, destRect.Height + Padding);
                 }
 
-                // calculate total size of group
-                var h = rowImages.Sum(rowImage => rowImage.Height) + (Padding * (rowImages.Count + 1));
-                var w = rowImages.Max(rowImage => rowImage.Width);
-
-                // create destination bitmap: text | rowImage
-                var tableSize = new Size(TextHeight + (3 * Padding) + w, h);
-
-                Bitmap b = new Bitmap(tableSize.Width, tableSize.Height);
-                using (Graphics g = Graphics.FromImage(b))
-                {
-                    g.FillRectangle(new SolidBrush(Color.White), new Rectangle(new Point(0, 0), tableSize));
-
-                    var destRect = new Rectangle(Padding, Padding, TextHeight, 1);
-                    for (int i = 0; i < f.ParameterValues.SelectedValues.Count; i++)
-                    {
-                        // draw text
-                        var text = f.ParameterValues.SelectedValues[i];
-                        destRect.Height = rowImages[i].Height;
-                        RenderLabel(g, text, destRect, true);
-
-                        // draw strips
-                        destRect.Offset(TextHeight + Padding, 0);
-                        g.DrawImage(rowImages[i], destRect.Location);
-                        rowImages[i].Dispose();
-
-                        // move to next row (left edge and down)
-                        destRect.Offset((-1 * destRect.X) + Padding, destRect.Height + Padding);
-                    }
-
-                    var strip = (Image)b;
-                    return strip;
-                }
+                var strip = (Image)b;
+                return strip;
             }
         }
 
@@ -253,7 +256,7 @@ namespace Paguru.DpBench.Renderer
                 //g.DrawString(labelText, LabelFont, Brushes.Black, new RectangleF(0, 0, destRect.Height, destRect.Width), format);
                 //g.ResetTransform(); 
 
-                // -90 degrees
+                // -90 = 270 degrees
                 g.TranslateTransform(destRect.X, destRect.Bottom);
                 g.RotateTransform(270);
                 g.DrawString(labelText, LabelFont, Brushes.Black, new RectangleF(0, 0, destRect.Height, destRect.Width), format);
@@ -269,6 +272,7 @@ namespace Paguru.DpBench.Renderer
                 //g.DrawString(labelText, LabelFont, new SolidBrush(Color.DarkSlateGray), destRect.Location + new Size(Padding, Padding));
                 //g.DrawString(labelText, LabelFont, new SolidBrush(Color.White), destRect.Location);
 
+                // dark shadow under text to improve readability
                 g.DrawString(labelText, LabelFont, Brushes.DarkSlateGray, textRect, format);
                 textRect.Offset(-1, -1);
                 g.DrawString(labelText, LabelFont, Brushes.White, textRect, format);

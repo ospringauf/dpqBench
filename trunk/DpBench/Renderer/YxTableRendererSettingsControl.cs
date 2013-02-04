@@ -19,6 +19,7 @@ namespace Paguru.DpBench.Renderer
     using System.Drawing;
     using System.Windows.Forms;
 
+    using Paguru.DpBench.Controls;
     using Paguru.DpBench.Model;
 
     /// <summary>
