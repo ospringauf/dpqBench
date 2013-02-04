@@ -45,9 +45,17 @@ namespace Paguru.DpBench
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (args != null & args.Length > 0)
+
+
+            if (args != null && args.Length == 1 && args[1].EndsWith("xml", StringComparison.OrdinalIgnoreCase))
             {
+                // start with existing project file
                 MainWindow.Instance.StartupProjectFile = args[0];
+            }
+            else if (args != null && args.Length > 0)
+            {
+                // multiple image file names given on the command line, open in new project
+                MainWindow.Instance.StartupFiles = args;
             }
 
             Application.Run(MainWindow.Instance);

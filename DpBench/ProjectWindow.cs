@@ -98,6 +98,7 @@ namespace Paguru.DpBench
         private void RefreshListContent(object sender, ListChangedEventArgs e)
         {
             objectListView1.RefreshObjects(Project.Photos);
+            objectListView1.SetObjects(Project.Photos);
         }
 
         private void addFilesToolStripMenuItem_Click(object sender, EventArgs e)
