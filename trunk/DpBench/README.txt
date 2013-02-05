@@ -12,6 +12,9 @@ dpqBench is Open Source Software, licensed under the conditions of the Apache Li
 
 Version History
 
+v0.5
+fixed IndexOutOfRangeException when started with one file name on command line
+
 v0.4
 internal refactoring
 command line interface supports multiple image file names to be opened in a new project
