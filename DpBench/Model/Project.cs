@@ -16,6 +16,8 @@
 
 namespace Paguru.DpBench.Model
 {
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
@@ -151,6 +153,17 @@ namespace Paguru.DpBench.Model
                 keywords = parser.KeywordString;
             }
 
+            // TODO EXIF data for TIFF files are incomplete
+            // http://bitmiracle.com/libtiff/ ?
+            // http://bitmiracle.com/libtiff/help/read-exif-metadata.aspx
+            // http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/exif.html
+
+            //var er2 = new Goheer.EXIF.EXIFextractor(filename, string.Empty, string.Empty);
+            //foreach (DictionaryEntry de in er2)
+            //{
+            //    Console.Out.WriteLine(de.Key +"=" + de.Value);
+            //}
+
             // this is the WPF solution
             //var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
             //var decoder = new JpegBitmapDecoder(stream, BitmapCreateOptions.None, BitmapCacheOption.None);
@@ -158,6 +171,15 @@ namespace Paguru.DpBench.Model
             //string keywords = (metadata != null && metadata.Keywords != null)
             //                      ? metadata.Keywords.Aggregate((old, val) => old + "; " + val)
             //                      : null;
+
+            //// property item solution
+            //using (var img = Image.FromFile(filename))
+            //{
+            //    foreach (var pi in img.PropertyItems)
+            //    {
+            //        Console.Out.WriteLine(pi.Id +"=" + pi.Value);
+            //    }
+            //}
 
             var photo = new Photo()
                 {

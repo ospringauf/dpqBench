@@ -47,7 +47,7 @@ namespace Paguru.DpBench
             Application.SetCompatibleTextRenderingDefault(false);
 
 
-            if (args != null && args.Length == 1 && args[1].EndsWith("xml", StringComparison.OrdinalIgnoreCase))
+            if (args != null && args.Length == 1 && args[0].EndsWith("xml", StringComparison.OrdinalIgnoreCase))
             {
                 // start with existing project file
                 MainWindow.Instance.StartupProjectFile = args[0];
