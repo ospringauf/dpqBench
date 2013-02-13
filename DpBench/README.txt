@@ -14,6 +14,7 @@ Version History
 
 v0.5
 fixed IndexOutOfRangeException when started with one file name on command line
+treated "OverflowException: Der Wert für einen UInt32 war zu groß oder zu klein." during EXIF extraction
 
 v0.4
 internal refactoring

@@ -129,7 +129,15 @@ namespace Paguru.DpBench.Model
 
         public void AddFile(string filename)
         {
-            var exif = new List<ExifTag>(new ExifTagCollection(filename));
+            List<ExifTag> exif = new List<ExifTag>();
+            try
+            {
+                exif.AddRange(new ExifTagCollection(filename));
+            }
+            catch (Exception)
+            {
+                // ignore
+            }
             var camera = exif.Find(t => t.Id == 0x110);
             var iso = exif.Find(t => t.Id == 34855);
             var aperture = exif.Find(t => t.Id == 0x9202);
@@ -141,16 +149,23 @@ namespace Paguru.DpBench.Model
             // read the IPTC keywords
             // http://stackoverflow.com/questions/680654/reading-iptc-information-with-c-net-framework-2
             // we could do this with the .NET 3.5 WPF libs (see below), but I prefer the simple solution
-            JpegParser parser = new JpegParser(filename);
-            if (parser.ParseDocument())
+            try
             {
-                //Console.WriteLine("Parsed {0} {1}", System.IO.Path.GetFileName(filename), parser.Title);
-                //Console.WriteLine("Tags: {0}", parser.KeywordString);
-                //Console.WriteLine("Description: {0}", parser.Description);
-                //Console.WriteLine("Title: {0}", parser.Title);
-                //Console.WriteLine("Rating: {0}", parser.Rating);
+                JpegParser parser = new JpegParser(filename);
+                if (parser.ParseDocument())
+                {
+                    //Console.WriteLine("Parsed {0} {1}", System.IO.Path.GetFileName(filename), parser.Title);
+                    //Console.WriteLine("Tags: {0}", parser.KeywordString);
+                    //Console.WriteLine("Description: {0}", parser.Description);
+                    //Console.WriteLine("Title: {0}", parser.Title);
+                    //Console.WriteLine("Rating: {0}", parser.Rating);
 
-                keywords = parser.KeywordString;
+                    keywords = parser.KeywordString;
+                }
+            }
+            catch (Exception)
+            {
+                // ignore
             }
 
             // TODO EXIF data for TIFF files are incomplete
