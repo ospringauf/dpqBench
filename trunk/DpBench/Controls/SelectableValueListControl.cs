@@ -53,7 +53,9 @@ namespace Paguru.DpBench.Controls
             set
             {
                 values = value;
+                //MessageBox.Show("SLVC set Value");
                 checkedListBox1.Items.Clear();
+
                 if (values != null)
                 {
                     values.ForEach(x => checkedListBox1.Items.Add(x, x.Selected));

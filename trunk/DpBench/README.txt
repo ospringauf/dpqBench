@@ -12,6 +12,12 @@ dpqBench is Open Source Software, licensed under the conditions of the Apache Li
 
 Version History
 
+v0.6
+compatible with Mono (tested on Mono 2.10.8.1/Ubuntu) with some restrictions:
+- drag and drop might not work
+- dock layout does not work, controls are opened in separate windows
+- ObjectListView does not work, project window uses simple table
+
 v0.5
 fixed IndexOutOfRangeException when started with one file name on command line
 treated "OverflowException: Der Wert für einen UInt32 war zu groß oder zu klein." during EXIF extraction

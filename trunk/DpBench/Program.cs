@@ -24,6 +24,8 @@ namespace Paguru.DpBench
 
     internal static class Program
     {
+        public static bool MonoMode { get; set; }
+
         #region Methods
 
         /// <summary>
@@ -32,6 +34,8 @@ namespace Paguru.DpBench
         [STAThread]
         private static void Main(string[] args)
         {
+            MonoMode = IsRunningOnMono();
+
             // Add the event handler for handling UI thread exceptions to the event.
             Application.ThreadException += HandleUIThreadException;
 
@@ -71,6 +75,11 @@ namespace Paguru.DpBench
         {
             Exception exception = e.Exception;
             new ExceptionDialog(exception).ShowDialog();
+        }
+
+        public static bool IsRunningOnMono()
+        {
+            return Type.GetType("Mono.Runtime") != null;
         }
 
         #endregion

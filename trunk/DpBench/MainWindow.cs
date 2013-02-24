@@ -46,6 +46,13 @@ namespace Paguru.DpBench
         {
             InitializeComponent();
             dockPanel.DocumentStyle = DocumentStyle.DockingMdi;
+
+            //if (Program.MonoMode)
+            //{
+            //    dockPanel.DocumentStyle = DocumentStyle.SystemMdi;    
+            //    this.IsMdiContainer = true;
+            //    Controls.Remove(dockPanel);
+            //}
         }
 
         #endregion
@@ -171,6 +178,7 @@ namespace Paguru.DpBench
 
         public void ShowPreview(Photo photo)
         {
+            //Console.Out.WriteLine("show preview " + photo.BaseFilename);
             if (OnSelectPhoto != null)
             {
                 OnSelectPhoto(this, new PhotoSelectedEvent(photo));
@@ -210,7 +218,10 @@ namespace Paguru.DpBench
                 firstProject.AddFiles(StartupFiles);
             }
 
-            MenuPropertiesClick(null, null);
+            if (!Program.MonoMode)
+            {
+                MenuPropertiesClick(null, null);
+            }
             MenuDetailEditorClick(null, null);
 
             StatusMessage("ready");
@@ -224,8 +235,26 @@ namespace Paguru.DpBench
             }
             else
             {
-                DetailEditor = new DetailEditor();
-                DetailEditor.Show(dockPanel);
+                ShowSubWindow(DetailEditor = new DetailEditor());
+            }
+        }
+
+        private void ShowSubWindow(Form f)
+        {
+            if (Program.MonoMode)
+            {
+                //if (dockPanel.DocumentStyle == DocumentStyle.SystemMdi)
+                //{
+                //    f.MdiParent = this;
+                //}
+                f.Show();
+            }
+            else
+            {
+                var dc = f as DockContent;
+
+
+                dc.Show(dockPanel);
             }
         }
 
@@ -258,15 +287,14 @@ namespace Paguru.DpBench
             }
             else
             {
-                PropertyWindow = new PhotoPropertyWindow();
-                PropertyWindow.Show(dockPanel);
+                ShowSubWindow(PropertyWindow = new PhotoPropertyWindow());
             }
         }
 
         private void OpenProjectWindow(Project p)
         {
-            var projectWindow = new ProjectWindow(p);
-            projectWindow.Show(dockPanel);
+            Form projectWindow = Program.MonoMode ? (Form)new SimpleProjectWindow(p) : new ProjectWindow(p);
+            ShowSubWindow(projectWindow);
         }
 
         #endregion
