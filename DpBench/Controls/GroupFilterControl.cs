@@ -51,7 +51,8 @@ namespace Paguru.DpBench.Controls
             // comboBoxParameter.DataBindings.Add("Text", GroupFilter, "Parameter");
             GroupFilter.PropertyChanged += GlPropertyChanged;
             GroupFilter.ParameterValues.PropertyChanged += SelectedParameterValuesChanged;
-            comboBoxParameter.TextChanged += ParameterChanged;
+            //comboBoxParameter.TextChanged += ParameterChanged;
+            comboBoxParameter.SelectedValueChanged += ParameterChanged;
             CheckValid();
         }
 
@@ -67,6 +68,7 @@ namespace Paguru.DpBench.Controls
 
         private void GlPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            //MessageBox.Show("GlPropertyChanged");
             if (e.PropertyName == "Parameter")
             {
                 // parameter changed --> update values list

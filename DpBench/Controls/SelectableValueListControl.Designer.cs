@@ -48,7 +48,7 @@
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Location = new System.Drawing.Point(1, 0);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(156, 255);
+            this.checkedListBox1.Size = new System.Drawing.Size(121, 255);
             this.checkedListBox1.TabIndex = 0;
             // 
             // labelNone
@@ -56,7 +56,7 @@
             this.labelNone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelNone.AutoSize = true;
             this.labelNone.Image = global::Paguru.DpBench.Properties.Resources.x_alt_16x16;
-            this.labelNone.Location = new System.Drawing.Point(130, 267);
+            this.labelNone.Location = new System.Drawing.Point(95, 267);
             this.labelNone.MinimumSize = new System.Drawing.Size(24, 24);
             this.labelNone.Name = "labelNone";
             this.labelNone.Size = new System.Drawing.Size(24, 24);
@@ -69,7 +69,7 @@
             this.labelAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelAll.AutoSize = true;
             this.labelAll.Image = global::Paguru.DpBench.Properties.Resources.check_alt_16x16;
-            this.labelAll.Location = new System.Drawing.Point(100, 267);
+            this.labelAll.Location = new System.Drawing.Point(65, 267);
             this.labelAll.MinimumSize = new System.Drawing.Size(24, 24);
             this.labelAll.Name = "labelAll";
             this.labelAll.Size = new System.Drawing.Size(24, 24);
@@ -113,8 +113,9 @@
             this.Controls.Add(this.labelUp);
             this.Controls.Add(this.labelDown);
             this.Controls.Add(this.checkedListBox1);
+            this.MinimumSize = new System.Drawing.Size(120, 0);
             this.Name = "SelectableValueListControl";
-            this.Size = new System.Drawing.Size(157, 294);
+            this.Size = new System.Drawing.Size(122, 294);
             this.ResumeLayout(false);
             this.PerformLayout();
 

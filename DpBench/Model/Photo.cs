@@ -125,7 +125,7 @@ namespace Paguru.DpBench.Model
         }
 
         [XmlElement("File")]
-        [Browsable(false)]
+        //[Browsable(false)]
         [OLVColumn("File", Width = 170, DisplayIndex = 0, TextAlign = HorizontalAlignment.Right)]
         public string RelFile
         {

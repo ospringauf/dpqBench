@@ -130,11 +130,11 @@ namespace Paguru.DpBench.Model
         public void AddFile(string filename)
         {
             List<ExifTag> exif = new List<ExifTag>();
-            try
+            //try
             {
                 exif.AddRange(new ExifTagCollection(filename));
             }
-            catch (Exception)
+            //catch (Exception)
             {
                 // ignore
             }

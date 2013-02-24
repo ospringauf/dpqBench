@@ -39,11 +39,11 @@ namespace Paguru.DpBench
 
         private readonly List<RubberbandControl> _detailControls = new List<RubberbandControl>();
 
-        private readonly PropertyInfo _imgRectProperty;
-
         private readonly Size defaultCropSize = new Size(250, 250);
 
         private readonly ToolTip toolTip;
+
+        private IPictureBoxTransform _pbt;
 
         #endregion
 
@@ -55,9 +55,8 @@ namespace Paguru.DpBench
             pictureBox1.ContextMenuStrip = contextMenuStrip1;
             toolTip = new ToolTip();
 
-            // http://stackoverflow.com/questions/3307271/how-to-get-the-value-of-non-public-members-of-picturebox            
-            _imgRectProperty = pictureBox1.GetType().GetProperty(
-                "ImageRectangle", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            _pbt = Program.MonoMode ? 
+                (IPictureBoxTransform)new PictureBoxTransformMono(pictureBox1) : new PictureBoxTransform(pictureBox1);
 
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -71,7 +70,7 @@ namespace Paguru.DpBench
                     // translate the detail rubberbands to the new coordinates
                     foreach (var panel in _detailControls)
                     {
-                        var r = ToScreenCoords(panel.DetailArea.Crop);
+                        var r = _pbt.ToScreenCoords(panel.DetailArea.Crop);
                         panel.Location = r.Location;
                         panel.Size = r.Size;
                     }
@@ -82,30 +81,7 @@ namespace Paguru.DpBench
 
         #region Properties
 
-        /// <summary>
-        /// ImageRectangle is a private property in PictureBox, containing the location and size of the (zoomed)
-        /// Image. This is very useful for translating the detail areas to screeen coordinates.
-        /// 
-        /// alternative approach here:
-        /// http://stackoverflow.com/questions/10473582/how-to-retrieve-zoom-factor-of-a-winforms-picturebox
-        /// </summary>
-        private Rectangle ImageRectangle
-        {
-            get
-            {
-                return (Rectangle)_imgRectProperty.GetValue(pictureBox1, null);
-            }
-        }
-
         private Photo Photo { get; set; }
-
-        private Size RealImageSize
-        {
-            get
-            {
-                return pictureBox1.Image.Size;
-            }
-        }
 
         private DetailArea SelectedDetailArea { get; set; }
 
@@ -121,12 +97,12 @@ namespace Paguru.DpBench
         {
             using (var pen = new Pen(Color.Orange, 3))
             {
-                Bitmap b = new Bitmap(ImageRectangle.Width, ImageRectangle.Height);
+                Bitmap b = new Bitmap(_pbt.ImageRectangle.Width, _pbt.ImageRectangle.Height);
                 using (Graphics g = Graphics.FromImage((Image)b))
                 {
                     // scale the image to picturebox size
-                    var f = ImageConverter.ScaleFactor(pictureBox1.Image.Size, ImageRectangle.Size);
-                    var scaledImage = ImageConverter.ResizeImage(pictureBox1.Image, ImageRectangle.Size);
+                    var f = ImageConverter.ScaleFactor(pictureBox1.Image.Size, _pbt.ImageRectangle.Size);
+                    var scaledImage = ImageConverter.ResizeImage(pictureBox1.Image, _pbt.ImageRectangle.Size);
                     g.DrawImage(scaledImage, 0, 0);
                     scaledImage.Dispose();
                     foreach (var detail in Photo.Project.DetailAreas)
@@ -149,43 +125,12 @@ namespace Paguru.DpBench
             _detailControls.Clear();
             foreach (var detailArea in Photo.Project.DetailAreas)
             {
-                var r = ToScreenCoords(detailArea.Crop);
+                var r = _pbt.ToScreenCoords(detailArea.Crop);
                 var p = new RubberbandControl() { Location = r.Location, Size = r.Size, DetailArea = detailArea };
                 AddRubberbandControl(p);
             }
         }
 
-        public Rectangle ToImageCoords(Rectangle screenRect)
-        {
-            var scalef = ImageConverter.ScaleFactor(RealImageSize, ImageRectangle.Size);
-            var result = new Rectangle(
-                screenRect.X - ImageRectangle.X, screenRect.Y - ImageRectangle.Y, screenRect.Width, screenRect.Height);
-            result = ImageConverter.ScaleRectangle(result, 1.0 / scalef);
-            return result;
-        }
-
-        public Point ToImageCoords(Point p)
-        {
-            var scalef = ImageConverter.ScaleFactor(RealImageSize, ImageRectangle.Size);
-            var result = new Point((int)((p.X - ImageRectangle.X) / scalef), (int)((p.Y - ImageRectangle.Y) / scalef));
-
-            return result;
-        }
-
-        public Rectangle ToScreenCoords(Rectangle imageRect)
-        {
-            var scalef = ImageConverter.ScaleFactor(RealImageSize, ImageRectangle.Size);
-            var result = ImageConverter.ScaleRectangle(imageRect, scalef);
-            result.Offset(ImageRectangle.Location);
-            return result;
-        }
-
-        public Size ToScreenCoords(Size imageRect)
-        {
-            var scalef = ImageConverter.ScaleFactor(RealImageSize, ImageRectangle.Size);
-            var result = ImageConverter.ScaleRectangle(new Rectangle(0, 0, imageRect.Width, imageRect.Height), scalef);
-            return result.Size;
-        }
 
         #endregion
 
@@ -198,7 +143,7 @@ namespace Paguru.DpBench
                 return;
             }
 
-            var crop = new Rectangle(ToImageCoords(e.Location), defaultCropSize);
+            var crop = new Rectangle(_pbt.ToImageCoords(e.Location), defaultCropSize);
                 
                 // ToImageCoords(new Rectangle(p.Location, p.Size));
             var newDetail = new DetailArea() { Name = "area" + _detailControls.Count, Crop = crop };
@@ -206,7 +151,9 @@ namespace Paguru.DpBench
 
             var p = new RubberbandControl()
                 {
-                   Location = e.Location, Size = ToScreenCoords(defaultCropSize), DetailArea = newDetail 
+                    Location = e.Location,
+                    Size = _pbt.ToScreenCoords(defaultCropSize),
+                    DetailArea = newDetail 
                 };
 
             AddRubberbandControl(p);
@@ -230,10 +177,10 @@ namespace Paguru.DpBench
             p.RubberbandSizeChanged += SelectDetailArea;
 
             // set coordinate translation method
-            p.ToScreenCoords = ToScreenCoords;
-            p.ToImageCoords = ToImageCoords;
+            p.ToScreenCoords = _pbt.ToScreenCoords;
+            p.ToImageCoords = _pbt.ToImageCoords;
             //p.IntersectImage = (r) => { return Rectangle.Intersect(r, new Rectangle(new Point(0, 0), RealImageSize)); };
-            p.IntersectImage = (r) => Rectangle.Intersect(r, ImageRectangle);
+            p.IntersectImage = (r) => Rectangle.Intersect(r, _pbt.ImageRectangle);
 
             _detailControls.Add(p);
 
@@ -310,7 +257,7 @@ namespace Paguru.DpBench
             var p = sender as RubberbandControl;
 
             // var r = new Rectangle(p.Location, p.Size);
-            p.DetailArea.Crop = ToImageCoords(new Rectangle(p.Location, p.Size));
+            p.DetailArea.Crop = _pbt.ToImageCoords(new Rectangle(p.Location, p.Size));
         }
 
         /// <summary>
@@ -324,7 +271,7 @@ namespace Paguru.DpBench
 
             // var r = new Rectangle(p.Location, p.Size);
             var oldSize = p.DetailArea.Crop.Size;
-            p.DetailArea.Crop = ToImageCoords(new Rectangle(p.Location, p.Size));
+            p.DetailArea.Crop = _pbt.ToImageCoords(new Rectangle(p.Location, p.Size));
 
             // keep old size
             p.DetailArea.Crop = new Rectangle(p.DetailArea.Crop.Location, oldSize);

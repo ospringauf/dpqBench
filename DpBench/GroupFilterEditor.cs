@@ -75,8 +75,8 @@ namespace Paguru.DpBench
         {
             var glc = new GroupFilterControl(root);
 
-            glc.Height = tableLayoutPanel1.Height;
-            glc.Width = 150;
+            glc.Height = tableLayoutPanel1.Height - 2;
+            glc.Width = 205;
             glc.buttonClose.Click += RemoveGroupControl;
             tableLayoutPanel1.Controls.Add(glc);
             return glc;
