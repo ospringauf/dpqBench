@@ -34,15 +34,6 @@ namespace Paguru.DpBench.Controls
     {
         #region Constants and Fields
 
-        public Transform ToScreenCoords;
-        public Transform ToImageCoords;
-
-
-        /// <summary>
-        /// calculate the intersection between this control and the picturebox's image rect
-        /// </summary>
-        public Transform IntersectImage;
-
         private const int MoveHandleArea = 15;
 
         private DetailArea detailArea;
@@ -127,7 +118,7 @@ namespace Paguru.DpBench.Controls
                                         ctrl.Width,
                                         ctrl.Height);
 
-                        var leavingImage = IntersectImage(newControlRect) != newControlRect;
+                        var leavingImage = !IsInsideImage(newControlRect);
                         if (leavingImage)
                         {
                             return;
@@ -147,7 +138,7 @@ namespace Paguru.DpBench.Controls
                                         startSize.Width + newLocationOffset.X,
                                         startSize.Height + newLocationOffset.Y);
 
-                        var leavingImage = IntersectImage(newControlRect) != newControlRect;
+                        var leavingImage = !IsInsideImage(newControlRect);
                         if (leavingImage)
                         {
                             return;
@@ -185,25 +176,30 @@ namespace Paguru.DpBench.Controls
 
         #endregion
 
-        #region Delegates
-
-        /// <summary>
-        /// Coordinate transformation 
-        /// </summary>
-        public delegate Rectangle Transform(Rectangle r);
-
-        #endregion
-
         #region Public Events
 
+        /// <summary>
+        /// Occurs when the rubberband control has been moved.
+        /// </summary>
         public event EventHandler<EventArgs> RubberbandMoved;
 
+        /// <summary>
+        /// Occurs when the rubberband control's size has changed.
+        /// </summary>
         public event EventHandler<EventArgs> RubberbandSizeChanged;
 
         #endregion
 
         #region Public Properties
 
+        /// <summary>
+        /// Coordinate transformation 
+        /// </summary>
+        public IPictureBoxTransform Transform { get; set; }
+
+        /// <summary>
+        /// Gets or sets the detail area represented by this rubberband control.
+        /// </summary>
         public DetailArea DetailArea
         {
             get
@@ -234,23 +230,23 @@ namespace Paguru.DpBench.Controls
         private void DetailChanged(object sender, PropertyChangedEventArgs e)
         {
             //Console.Out.WriteLine("DetailChanged");
-            var r = ToScreenCoords(DetailArea.Crop);
+            var r = Transform.ToScreenCoords(DetailArea.Crop);
             Location = r.Location + new Size(1, 1); // why 1,1? control border?
             Size = r.Size;
 
             // RubberbandSizeChanged(this, null);
         }
 
-        #endregion
 
-        // protected override CreateParams CreateParams
-        // {
-        // get
-        // {
-        // CreateParams cp = base.CreateParams;
-        // cp.ExStyle |= 0x20; // Turn on WS_EX_TRANSPARENT
-        // return cp;
-        // }
-        // }
+        /// <summary>
+        /// Determines whether the specified rectangle r lies completely inside the 
+        /// picture box's image bounds (via rect intersect)
+        /// </summary>
+        private bool IsInsideImage(Rectangle r)
+        {
+            return Rectangle.Intersect(r, Transform.ImageRectangle) == r;
+        }
+
+        #endregion
     }
 }

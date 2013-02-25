@@ -21,11 +21,13 @@ namespace Paguru.DpBench
     using System.Reflection;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// Coordinate transformation functions for mapping between screen coords
+    /// and image coords (wrt. a zoomed image in a picturebox)
+    /// </summary>
     public interface IPictureBoxTransform
     {
         Rectangle ImageRectangle { get; }
-
-        //Size RealImageSize { get; }
 
         Rectangle ToImageCoords(Rectangle screenRect);
 
@@ -36,6 +38,11 @@ namespace Paguru.DpBench
         Size ToScreenCoords(Size imageRect);
     }
 
+    /// <summary>
+    /// "Clean" implementation.
+    /// Since PictureBox does not expose the size and position of the zoomed image,
+    /// we try to re-implement the layout logic here.
+    /// </summary>
     class PictureBoxTransformMono : IPictureBoxTransform
     {
         private readonly PictureBox _pictureBox;
@@ -79,14 +86,6 @@ namespace Paguru.DpBench
                 }
             }
         }
-
-        //public Size RealImageSize
-        //{
-        //    get
-        //    {
-        //        throw new System.NotImplementedException();
-        //    }
-        //}
 
         public Rectangle ToImageCoords(Rectangle screenRect)
         {
@@ -191,6 +190,8 @@ namespace Paguru.DpBench
     /// <summary>
     /// Transforms screen coordinates to/from image coordinates for a 
     /// zoomed image in a picture box.
+    /// Not-so-clean implementation: uses reflection to access the private "ImageRectangle"
+    /// property of the PictureBox. Fails on Mono.
     /// </summary>
     public class PictureBoxTransform : IPictureBoxTransform
     {
@@ -217,13 +218,13 @@ namespace Paguru.DpBench
 
         #region Public Properties
 
-        ///// <summary>
-        ///// ImageRectangle is a private property in PictureBox, containing the location and size of the (zoomed)
-        ///// Image. This is very useful for translating the detail areas to screeen coordinates.
-        ///// 
-        ///// alternative approach here:
-        ///// http://stackoverflow.com/questions/10473582/how-to-retrieve-zoom-factor-of-a-winforms-picturebox
-        ///// </summary>
+        /// <summary>
+        /// ImageRectangle is a private property in PictureBox, containing the location and size of the (zoomed)
+        /// Image. This is very useful for translating the detail areas to screeen coordinates.
+        /// 
+        /// alternative approach here:
+        /// http://stackoverflow.com/questions/10473582/how-to-retrieve-zoom-factor-of-a-winforms-picturebox
+        /// </summary>
         public Rectangle ImageRectangle
         {
             get
