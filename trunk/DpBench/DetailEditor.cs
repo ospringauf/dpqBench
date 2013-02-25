@@ -19,7 +19,6 @@ namespace Paguru.DpBench
     using System;
     using System.Collections.Generic;
     using System.Drawing;
-    using System.Reflection;
     using System.Windows.Forms;
 
     using Paguru.DpBench.Controls;
@@ -55,8 +54,8 @@ namespace Paguru.DpBench
             pictureBox1.ContextMenuStrip = contextMenuStrip1;
             toolTip = new ToolTip();
 
-            _pbt = Program.MonoMode ? 
-                (IPictureBoxTransform)new PictureBoxTransformMono(pictureBox1) : new PictureBoxTransform(pictureBox1);
+            //_pbt = Program.MonoMode ? (IPictureBoxTransform)new PictureBoxTransformMono(pictureBox1) : new PictureBoxTransform(pictureBox1);
+            _pbt = new PictureBoxTransformMono(pictureBox1);
 
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -81,8 +80,14 @@ namespace Paguru.DpBench
 
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the current photo.
+        /// </summary>
         private Photo Photo { get; set; }
 
+        /// <summary>
+        /// Gets or sets the currently selected detail area.
+        /// </summary>
         private DetailArea SelectedDetailArea { get; set; }
 
         #endregion
@@ -90,10 +95,10 @@ namespace Paguru.DpBench
         #region Public Methods
 
         /// <summary>
-        /// Gets the image with detail rectangle areas painted onto it (same size as current display).
+        /// Paints an overview image with detail rectangle areas painted onto it (same size as current display).
         /// </summary>
         /// <returns></returns>
-        public Image GetImageWithDetailAreas()
+        public Image PaintOverviewImage()
         {
             using (var pen = new Pen(Color.Orange, 3))
             {
@@ -114,6 +119,11 @@ namespace Paguru.DpBench
             }
         }
 
+        /// <summary>
+        /// Shows the preview for the specified image (selected in the project window)
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The e.</param>
         public void ShowPreview(object sender, PhotoSelectedEvent e)
         {
             Photo = e.Photo;
@@ -143,9 +153,9 @@ namespace Paguru.DpBench
                 return;
             }
 
+            // initial size and position of the detail area
             var crop = new Rectangle(_pbt.ToImageCoords(e.Location), defaultCropSize);
                 
-                // ToImageCoords(new Rectangle(p.Location, p.Size));
             var newDetail = new DetailArea() { Name = "area" + _detailControls.Count, Crop = crop };
             Photo.Project.DetailAreas.Add(newDetail);
 
@@ -176,11 +186,8 @@ namespace Paguru.DpBench
             p.RubberbandMoved += SelectDetailArea;
             p.RubberbandSizeChanged += SelectDetailArea;
 
-            // set coordinate translation method
-            p.ToScreenCoords = _pbt.ToScreenCoords;
-            p.ToImageCoords = _pbt.ToImageCoords;
-            //p.IntersectImage = (r) => { return Rectangle.Intersect(r, new Rectangle(new Point(0, 0), RealImageSize)); };
-            p.IntersectImage = (r) => Rectangle.Intersect(r, _pbt.ImageRectangle);
+            // set coordinate translation methods
+            p.Transform = _pbt;
 
             _detailControls.Add(p);
 
@@ -255,8 +262,6 @@ namespace Paguru.DpBench
         {
             //Console.Out.WriteLine("UpdateRubberbandCoordinates");
             var p = sender as RubberbandControl;
-
-            // var r = new Rectangle(p.Location, p.Size);
             p.DetailArea.Crop = _pbt.ToImageCoords(new Rectangle(p.Location, p.Size));
         }
 
@@ -269,7 +274,6 @@ namespace Paguru.DpBench
             //Console.Out.WriteLine("UpdateRubberbandCoordinatesMove");
             var p = sender as RubberbandControl;
 
-            // var r = new Rectangle(p.Location, p.Size);
             var oldSize = p.DetailArea.Crop.Size;
             p.DetailArea.Crop = _pbt.ToImageCoords(new Rectangle(p.Location, p.Size));
 
@@ -304,7 +308,7 @@ namespace Paguru.DpBench
         {
             if (pictureBox1.Image != null)
             {
-                using (var i = GetImageWithDetailAreas())
+                using (var i = PaintOverviewImage())
                 {
                     var fd = new SaveFileDialog() { DefaultExt = ".jpg", Filter = "JPEG images|*.jpg" };
                     if (fd.ShowDialog(this) == DialogResult.OK)
