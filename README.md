@@ -1,6 +1,6 @@
-# dpqBench
+# dpqBench ![alt text](https://github.com/ospringauf/dpqBench/blob/master/doc/icon.png "dpqb logo")
 
-**TODO** migrate project description & other files from https://sourceforge.net/projects/dpbench/
+    Migration from https://sourceforge.net/projects/dpbench/ in progress
 
 dpqBench lets you create side-by-side comparisons of digital images. Evaluate the performance of camera sensors and lenses by comparing the image quality at different aperture, ISO setting, or focal length.
 
@@ -20,7 +20,7 @@ Installation: Extract the ZIP file into a directory of your choice and start the
 
 ## Getting started with dpqBench
 
-This section explains the steps for creating benchmark charts with dpqBench. Some examples of benchmark charts can be found in the [Gallery].
+This section explains the steps for creating benchmark charts with dpqBench. Some examples of benchmark charts can be found below.
 
 ### Prepare images
 
@@ -31,7 +31,7 @@ Save these images as JPG files, but without any image processing (like sharpenin
 
 dpqBench will start with an empty project window. Add the prepared JPGs by using the Project/Add File(s) menu or by dragging the files into the project. dpqBench will try to read the images parameters from the file's EXIF data. You can add any missing parameters in the project table or in the Properties view.
 
-**TODO** image
+![alt text](https://github.com/ospringauf/dpqBench/blob/master/doc/main_window_800.jpg "main window")
 
 
 ### Define detail areas for comparison
@@ -43,7 +43,8 @@ The detail areas are shown on the image preview. You can save the preview togeth
 
 Finally! Select "Create Benchmark Chart" from the Project menu. This will open the Group filter/Render editor.
 
-**TODO** image
+![alt text](https://github.com/ospringauf/dpqBench/blob/master/doc/filter_window.jpg "filter window")
+
 
 This editor lets you define the layout of the benchmark chart. You can use multiple grouping/filtering levels. The last filter defines the columns - eg. the different aperture values. The other filter levels define rows or row groups - eg. detail area, lens, camera.
 On each level, you can select a parameter and the parameter values. You can also arrange the values in any order you like.
@@ -54,38 +55,51 @@ Here's an example with three filter levels (1st level: detail "mid", 2nd level: 
 
 To save your benchmark chart, right-click on the preview image.
 
-**TODO** image
-
+![alt text](https://github.com/ospringauf/dpqBench/blob/master/doc/chart1.jpg "chart")
 
 ## Gallery (examples)
 
-**TODO** images
+Simple aperture series
+
+![alt text](https://github.com/ospringauf/dpqBench/blob/master/doc/chart2.jpg "Simple aperture series")
+
+
+
+Comparing aperture series of two lenses
+
+![alt text](https://github.com/ospringauf/dpqBench/blob/master/doc/chart3.jpg "Comparing aperture series of two lenses")
+
+
+Comparing sharpness of different image areas for two lenses at various aperture settings
+
+![alt text](https://github.com/ospringauf/dpqBench/blob/master/doc/chart3_preview.jpg "Comparing sharpness of different image areas")
+
 
 
 
 
 ## Version History
 
-v0.6
+### v0.6
 compatible with Mono (tested on Mono 2.10.8.1/Ubuntu) with some restrictions:
 - drag and drop might not work
 - dock layout does not work, controls are opened in separate windows
 - ObjectListView does not work, project window uses simple table
 
-v0.5
+### v0.5
 fixed IndexOutOfRangeException when started with one file name on command line
 treated "OverflowException: Der Wert für einen UInt32 war zu groß oder zu klein." during EXIF extraction
 
-v0.4
+### v0.4
 internal refactoring
 command line interface supports multiple image file names to be opened in a new project
 (for integration with other software)
 
-v0.3 - 03 Feb 2013
-improved details editor, move/resize detail areas by dragging with the mouse
+### v0.3
+03 Feb 2013 - improved details editor, move/resize detail areas by dragging with the mouse
 
-v0.2 - 02 Feb 2013
-initial public release
+### v0.2
+02 Feb 2013 - initial public release
 
 ## Acknowledgements
 
